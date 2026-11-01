@@ -122,10 +122,6 @@ a:focus-visible,button:focus-visible,[tabindex]:focus-visible{outline:2px solid 
 .note{text-transform:none;letter-spacing:.02em}
 
 /* honey photos */
-.today{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:1.4rem;align-items:center}
-.today figure{margin:0;display:flex;flex-direction:column;gap:.5rem}
-.today img{width:100%;height:auto;display:block;border-radius:2px}
-.today p{color:#3f4f43;font-size:.95rem;margin:0}
 .photos{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:1rem}
 .photos figure{grid-column:span 3}
 .photos figure:nth-child(-n+3){grid-column:span 4}
@@ -175,7 +171,7 @@ footer a{color:var(--muted)}
   .flat>.lb>.pf-fit,.flat>.lb>.elb-fit{min-width:40rem}
   .sealbox{width:6rem}
   .cards{grid-template-columns:1fr}
-  .v3,.today,.hero,.v3-cta{grid-template-columns:1fr}
+  .v3,.hero,.v3-cta{grid-template-columns:1fr}
   .photos{grid-template-columns:repeat(2,minmax(0,1fr));gap:.7rem}
   .photos figure,.photos figure:nth-child(-n+3){grid-column:span 1}
   .photos figure:first-child{grid-column:1/-1}
@@ -233,13 +229,7 @@ footer a{color:var(--muted)}
     </div>
     <div class="plate">
       <div class="pad">
-        <div class="today">
-          <figure><img src="img/real-shelf.jpg" alt="Le rayon de miel de la boutique aujourd’hui, avec des pots à couvercle noir ou doré" loading="lazy"><span class="cap">Le rayon aujourd’hui</span></figure>
-          <p>Aujourd’hui, les pots se ressemblent de loin : même petite étiquette noire, et il faut s’approcher pour lire le nom.</p>
-        </div>
-      </div>
-      <div class="pad">
-        <span class="cap">La proposition · les sept miels du rayon, du plus clair au plus foncé</span>
+        <span class="cap">Les sept miels, du plus clair au plus foncé</span>
         <div class="photos" id="photos"></div>
         <span class="cap note">Images d’illustration faites à partir des étiquettes proposées, pas encore des photos de vrais pots. La teinte du miel est indicative.</span>
       </div>

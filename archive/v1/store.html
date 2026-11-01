@@ -1,0 +1,407 @@
+<!doctype html>
+<html lang="fr" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<link rel="icon" type="image/png" href="img/mark-green.png">
+<link rel="apple-touch-icon" href="img/mark-green.png">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Herboristerie El Baraka · Boutique</title>
+<meta name="description" content="Herboristerie El Baraka, Mohammedia, depuis 1998. Miels, produits maison et produits de la ruche. Aperçu de boutique en ligne.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Tajawal:wght@700&family=Amiri:wght@400;700&family=Reem+Kufi:wght@500;700&family=Aref+Ruqaa:wght@400;700&family=IM+Fell+English+SC&family=IM+Fell+English:ital@0;1&family=Readex+Pro:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a quiet shop window. One idea per screen: a hero still life, then three shelves of large product tiles; detail and cart open as panels instead of crowding the page. */
+:root{
+  /* one look only: cream paper, whatever the device's light or dark setting */
+  --paper:#f6f1e4; --card:#fcf9f1; --tile:#efe8d7; --ink:#1b281e; --muted:#615d4b; --green:#1d5631; --on-green:#f6f1e4;
+  --honey:#8f5c0a; --rule:#e0d7c2; --shade:rgba(27,40,30,.38);
+  --f-ar:'Aref Ruqaa','Amiri','Noto Naskh Arabic',serif; --f-fr:'IM Fell English',Georgia,serif; --f-sc:'IM Fell English SC','IM Fell English',Georgia,serif;
+  --f-body:'Readex Pro',system-ui,-apple-system,'Segoe UI',sans-serif; --f-mono:'IBM Plex Mono',ui-monospace,Menlo,monospace;
+  --mk-ink:var(--green); --mk-paper:var(--paper); --mk-honey:#c68517;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--f-body);font-weight:300;font-size:16px;line-height:1.55}
+.wrap{max-width:72rem;margin-inline:auto;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid #c68517;outline-offset:2px}
+[hidden]{display:none!important}
+.num{font-variant-numeric:tabular-nums}
+:lang(ar) .t-fr{display:none} :lang(fr) .t-ar{display:none}
+
+.ribbon{background:var(--green);color:var(--on-green);text-align:center;font-size:.74rem;letter-spacing:.08em;padding-block:.35rem}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:31;background:var(--paper)}
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;background:color-mix(in srgb,var(--paper) 94%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--rule)}
+.top .wrap{display:flex;align-items:center;gap:1.2rem;padding-block:.7rem}
+.brand{display:flex;align-items:center;gap:.65rem;text-decoration:none;color:inherit;margin-inline-end:auto;min-width:0}
+.brand img{display:block;height:42px;width:auto}
+.nav{display:flex;gap:1.4rem;font-size:.9rem}
+.nav a{color:inherit;text-decoration:none;opacity:.8}.nav a:hover{opacity:1;color:var(--green)}
+.lang{display:flex;border:1px solid var(--rule);border-radius:2rem;overflow:hidden}
+.lang button{border:0;background:transparent;padding:.25rem .65rem;cursor:pointer;font-size:.82rem}
+.lang button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.cartbtn{display:flex;align-items:center;gap:.45rem;border:0;background:transparent;cursor:pointer;padding:.3rem 0;font-size:.9rem}
+.cartbtn svg{width:20px;height:20px}
+.cartbtn .c{min-width:1.35rem;height:1.35rem;display:inline-grid;place-items:center;border-radius:1rem;background:var(--green);color:var(--on-green);font-size:.72rem}
+
+/* hero */
+.hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:3rem;align-items:center;padding-block:3.5rem 3rem}
+.eyebrow{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.hero h1{margin:.7rem 0 0;font-weight:400;font-size:clamp(2.3rem,5.5vw,3.9rem);line-height:1.05;text-wrap:balance}
+:lang(fr) .hero h1{font-family:var(--f-fr)} :lang(ar) .hero h1{font-family:var(--f-ar);font-weight:700;line-height:1.3}
+.hero p{margin:1rem 0 0;font-size:1.05rem;color:var(--muted);max-width:30em}
+.btn{display:inline-flex;align-items:center;gap:.5rem;margin-top:1.6rem;background:var(--ink);color:var(--paper);text-decoration:none;padding:.8rem 1.3rem;border-radius:2rem;font-weight:500;font-size:.95rem;border:0;cursor:pointer}
+.btn:hover{background:var(--green)}
+.still{position:relative;display:flex;justify-content:center;align-items:flex-end;gap:calc(var(--jar-mm)*6);padding:2.4rem 1rem 0;--jar-mm:2px;background:radial-gradient(120% 90% at 50% 100%,var(--tile),transparent 70%)}
+.still::after{content:"";position:absolute;left:8%;right:8%;bottom:-1px;height:10px;border-radius:50%;background:rgba(0,0,0,.12);filter:blur(6px)}
+
+/* shelves */
+section.shelf{padding-block:3rem;border-top:1px solid var(--rule);scroll-margin-top:4rem}
+.sh{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;margin-bottom:1.6rem;flex-wrap:wrap}
+.sh h2{margin:0;font-weight:400;font-size:clamp(1.7rem,3.5vw,2.3rem)}
+:lang(fr) .sh h2{font-family:var(--f-fr)} :lang(ar) .sh h2{font-family:var(--f-ar);font-weight:700}
+.sh p{margin:0;color:var(--muted);font-size:.92rem;max-width:30em}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.4rem}
+.card{display:flex;flex-direction:column;gap:.75rem;min-width:0}
+.tile{all:unset;box-sizing:border-box;cursor:pointer;position:relative;display:flex;justify-content:center;align-items:flex-end;aspect-ratio:4/4.3;width:100%;padding-top:8%;--jar-mm:2.15px;
+  background:color-mix(in srgb,var(--tint,#d8d1c0) 16%,var(--tile));border-radius:3px;overflow:hidden;transition:transform .35s ease}
+.tile:hover{transform:translateY(-3px)}
+.tile .pj{transform-origin:50% 100%;margin-bottom:9%}
+.meta{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:.15rem .8rem;align-items:start}
+.meta h3{margin:0;font-weight:400;font-size:1.18rem;line-height:1.25}
+:lang(fr) .meta h3{font-family:var(--f-fr)} :lang(ar) .meta h3{font-family:var(--f-ar);font-weight:700;font-size:1.3rem}
+.meta .s{grid-column:1;font-size:.82rem;color:var(--muted)}
+.meta .p{grid-row:1;grid-column:2;font-weight:500;white-space:nowrap}
+.meta .ctl{grid-row:2;grid-column:2;justify-self:end}
+.add{width:2.1rem;height:2.1rem;border-radius:50%;border:1px solid var(--ink);background:transparent;cursor:pointer;font-size:1.15rem;line-height:1;display:grid;place-items:center}
+.add:hover{background:var(--ink);color:var(--paper)}
+.qty{display:inline-flex;align-items:center;border:1px solid var(--ink);border-radius:2rem;height:2.1rem}
+.qty button{border:0;background:transparent;width:2rem;height:100%;cursor:pointer;font-size:1rem}
+.qty span{min-width:1.2rem;text-align:center;font-size:.9rem}
+
+.promise{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.4rem;padding-block:2.6rem;border-top:1px solid var(--rule);list-style:none;margin:0}
+.promise li{display:flex;gap:.8rem;align-items:flex-start}
+.promise i{flex:none;width:.85rem;height:.85rem;margin-top:.35rem;background:var(--green);clip-path:polygon(25% 5%,75% 5%,100% 50%,75% 95%,25% 95%,0 50%)}
+.promise b{display:block;font-weight:500}
+.promise span{font-size:.88rem;color:var(--muted)}
+footer{border-top:1px solid var(--rule);padding-block:2rem 3rem;font-size:.84rem;color:var(--muted)}
+footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:1rem}
+footer a{color:inherit}
+
+/* panels: product detail and cart */
+.shade{position:fixed;inset:0;background:var(--shade);z-index:40}
+.panel{position:fixed;top:0;bottom:0;inset-inline-end:0;width:min(30rem,100%);background:var(--paper);z-index:41;display:flex;flex-direction:column;box-shadow:0 0 40px rgba(0,0,0,.2);
+  padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);padding-inline-end:env(safe-area-inset-right,0px)}
+.panel header{display:flex;justify-content:space-between;align-items:center;padding:1rem 1.2rem;border-bottom:1px solid var(--rule)}
+.panel header h2{margin:0;font-weight:400;font-size:1.4rem}
+:lang(fr) .panel header h2{font-family:var(--f-fr)} :lang(ar) .panel header h2{font-family:var(--f-ar);font-weight:700}
+.x{border:0;background:transparent;font-size:1.6rem;line-height:1;cursor:pointer;padding:.1rem .4rem}
+.panel .sc{flex:1;overflow-y:auto;padding:1.2rem;display:flex;flex-direction:column;gap:1.1rem}
+.panel .act{padding:1rem 1.2rem;border-top:1px solid var(--rule);display:flex;flex-direction:column;gap:.55rem}
+.dview{display:flex;justify-content:center;align-items:flex-end;padding:1.6rem 0 0;--jar-mm:2.5px;border-radius:3px;background:color-mix(in srgb,var(--tint,#d8d1c0) 16%,var(--tile))}
+.dview .pj{margin-bottom:1.4rem}
+.dname{font-size:1.7rem;line-height:1.2}
+:lang(fr) .dname{font-family:var(--f-fr)} :lang(ar) .dname{font-family:var(--f-ar);font-weight:700}
+.dsub{color:var(--muted);font-size:.92rem}
+.dtxt{font-size:.98rem}
+.dl{display:grid;grid-template-columns:auto 1fr;gap:.4rem 1rem;font-size:.9rem;margin:0}
+.dl dt{color:var(--muted)} .dl dd{margin:0}
+.meter{display:inline-flex;gap:.22rem;vertical-align:middle}
+.meter i{width:.55rem;height:.55rem;border-radius:50%;border:1px solid var(--ink)}
+.meter i.on{background:var(--ink)}
+.dprice{display:flex;justify-content:space-between;align-items:center;font-size:1.1rem;font-weight:500}
+.primary{display:flex;justify-content:center;align-items:center;gap:.5rem;border:0;border-radius:2rem;background:var(--ink);color:var(--paper);padding:.85rem;font-weight:500;cursor:pointer;text-decoration:none;font-size:.98rem}
+.primary:hover{background:var(--green)}
+.primary.wa{background:#1f7a4a;color:#fff}
+.primary[aria-disabled="true"]{opacity:.4;pointer-events:none}
+.primary svg{width:19px;height:19px}
+.ghost{border:1px solid var(--rule);background:transparent;border-radius:2rem;padding:.6rem;cursor:pointer}
+.lines{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.lines li{display:grid;grid-template-columns:3.4rem 1fr auto;gap:.8rem;align-items:center;padding:.7rem 0;border-bottom:1px solid var(--rule)}
+.lines .th{display:flex;justify-content:center;align-items:flex-end;height:4.4rem;--jar-mm:.6px;background:var(--tile);border-radius:2px;padding-bottom:.3rem}
+.lines .n{font-weight:500;line-height:1.25}
+.lines .s{font-size:.8rem;color:var(--muted)}
+.lines .r{display:flex;flex-direction:column;align-items:flex-end;gap:.35rem}
+.totals{display:flex;flex-direction:column;gap:.25rem;font-size:.92rem}
+.totals div{display:flex;justify-content:space-between}
+.totals .g{font-weight:500;font-size:1.05rem;border-top:1px solid var(--rule);padding-top:.4rem;margin-top:.2rem}
+fieldset{border:0;margin:0;padding:0;display:flex;flex-direction:column;gap:.45rem}
+legend{font-weight:500;margin-bottom:.4rem;padding:0}
+.opt{display:flex;align-items:center;gap:.6rem;border:1px solid var(--rule);padding:.6rem .75rem;border-radius:3px;background:var(--card);cursor:pointer}
+.opt input{accent-color:var(--green)}
+.opt span{flex:1}
+.opt small{color:var(--muted)}
+label.f{display:flex;flex-direction:column;gap:.25rem;font-size:.85rem}
+label.f input,label.f textarea{font:inherit;font-size:1rem;padding:.6rem .7rem;border:1px solid var(--rule);background:var(--card);color:var(--ink);border-radius:3px}
+label.f textarea{min-height:3.2rem;resize:vertical}
+details.pv summary{cursor:pointer;font-size:.85rem;color:var(--muted)}
+.preview{white-space:pre-wrap;font-size:.82rem;background:var(--tile);padding:.8rem;border-inline-start:3px solid #25d366;margin:.5rem 0 0;font-family:var(--f-body)}
+.msg{font-size:.8rem;color:var(--muted);text-align:center;min-height:1.2em}
+.empty{color:var(--muted);text-align:center;padding:2.5rem 0}
+
+@media (max-width:820px){
+  .nav{display:none}
+  .hero{grid-template-columns:1fr;gap:2rem;padding-block:2.2rem 2rem}
+  .still{--jar-mm:1.15px;overflow:hidden}
+  .grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem}
+  .tile{--jar-mm:1.15px}
+  .promise{grid-template-columns:1fr}
+  .brand img{height:34px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body class="elb-sheet">
+<div class="ribbon" data-t="ribbon"></div>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="Herboristerie El Baraka, accueil"><img src="img/logo-green.png" alt="Herboristerie El Baraka"></a>
+    <nav class="nav" aria-label="Rayons"><a href="#miels" data-t="honey"></a><a href="#maison" data-t="house"></a><a href="#ruche" data-t="hive"></a></nav>
+    <div class="lang" role="group" aria-label="Langue / اللغة"><button type="button" data-lang="fr" aria-pressed="true">FR</button><button type="button" data-lang="ar" aria-pressed="false">ع</button></div>
+    <button class="cartbtn" type="button" id="openCart" aria-haspopup="dialog"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3.5 6.5h13l-1.2 10H4.7z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><path d="M7 8V5.5a3 3 0 0 1 6 0V8" fill="none" stroke="currentColor" stroke-width="1.4"/></svg><span data-t="cart"></span><span class="c num" id="count">0</span></button>
+  </div>
+</header>
+
+<main id="top">
+  <div class="wrap hero">
+    <div>
+      <span class="eyebrow" data-t="eyebrow"></span>
+      <h1 data-t="h1"></h1>
+      <p data-t="lede"></p>
+      <a class="btn" href="#miels" data-t="cta"></a>
+    </div>
+    <div class="still" id="still" aria-hidden="true"></div>
+  </div>
+
+  <section class="shelf" id="miels"><div class="wrap"><div class="sh"><h2 data-t="honey"></h2><p data-t="honeyP"></p></div><div class="grid" id="g-honey"></div></div></section>
+  <section class="shelf" id="maison"><div class="wrap"><div class="sh"><h2 data-t="house"></h2><p data-t="houseP"></p></div><div class="grid" id="g-house"></div></div></section>
+  <section class="shelf" id="ruche"><div class="wrap"><div class="sh"><h2 data-t="hive"></h2><p data-t="hiveP"></p></div><div class="grid" id="g-hive"></div></div></section>
+
+  <div class="wrap"><ul class="promise">
+    <li><i></i><div><b data-t="p1"></b><span data-t="p1s"></span></div></li>
+    <li><i></i><div><b data-t="p2"></b><span data-t="p2s"></span></div></li>
+    <li><i></i><div><b data-t="p3"></b><span data-t="p3s"></span></div></li>
+  </ul></div>
+</main>
+<footer><div class="wrap"><span data-t="addr"></span><span class="num" dir="ltr">06 71 51 29 54 · 05 23 32 95 72</span><a href="https://www.instagram.com/herboristerieelbaraka/" dir="ltr">@herboristerieelbaraka</a><span data-t="legal"></span></div></footer>
+
+<div class="shade" id="shade" hidden></div>
+
+<aside class="panel" id="detail" role="dialog" aria-modal="true" aria-labelledby="dTitle" hidden>
+  <header><h2 id="dTitle" data-t="dTitle"></h2><button class="x" type="button" data-close aria-label="Fermer">×</button></header>
+  <div class="sc" id="dBody"></div>
+  <div class="act"><div class="dprice"><span id="dPrice" class="num"></span><span id="dCtl"></span></div><button class="primary" type="button" id="dAdd" data-t="addCart"></button></div>
+</aside>
+
+<aside class="panel" id="cart" role="dialog" aria-modal="true" aria-labelledby="cTitle" hidden>
+  <header><h2 id="cTitle" data-t="cTitle"></h2><button class="x" type="button" data-close aria-label="Fermer">×</button></header>
+  <div class="sc">
+    <ul class="lines" id="lines"></ul>
+    <p class="empty" id="empty" data-t="empty"></p>
+    <form id="form" novalidate>
+      <fieldset>
+        <legend data-t="mode"></legend>
+        <label class="opt"><input type="radio" name="mode" id="m-pick" value="pick" checked><span data-t="mPick"></span><small data-t="free"></small></label>
+        <label class="opt"><input type="radio" name="mode" id="m-moh" value="moh"><span data-t="mMoh"></span><small class="num">15 <span data-t="cur"></span></small></label>
+        <label class="opt"><input type="radio" name="mode" id="m-far" value="far"><span data-t="mFar"></span><small data-t="tbc"></small></label>
+      </fieldset>
+      <div style="display:flex;flex-direction:column;gap:.6rem;margin-top:1rem">
+        <label class="f"><span data-t="name"></span><input id="f-name" autocomplete="name"></label>
+        <label class="f"><span data-t="phone"></span><input id="f-phone" type="tel" inputmode="tel" autocomplete="tel" dir="ltr"></label>
+        <label class="f" id="addrWrap" hidden><span data-t="address"></span><input id="f-addr" autocomplete="street-address"></label>
+        <label class="f"><span data-t="noteL"></span><textarea id="f-note"></textarea></label>
+      </div>
+    </form>
+    <div class="totals" id="totals"></div>
+    <details class="pv"><summary data-t="pv"></summary><pre class="preview" id="preview"></pre></details>
+  </div>
+  <div class="act">
+    <a class="primary wa" id="send" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.9 11.9 0 0 0 4.6 4c1.7.7 2.4.8 3.2.7.5-.1 1.5-.6 1.8-1.2.2-.6.2-1.1.1-1.2l-.4-.2z"/></svg><span data-t="send"></span></a>
+    <button class="ghost" type="button" id="copy" data-t="copy"></button>
+    <div class="msg" id="msg" aria-live="polite"></div>
+  </div>
+</aside>
+
+<script src="baraka.js"></script>
+<script src="producer.js"></script>
+<script>
+(function(){
+  'use strict';
+  const E = window.ElBaraka, PR = window.Producer;
+  const WHATSAPP = '212671512954';   // the shop's WhatsApp line, international format
+  const FEE_MOH = 15;                // example delivery fee inside Mohammedia, DH
+  const $ = (id) => document.getElementById(id);
+  for (const css of [E.LABEL_CSS, PR.CSS]) { const st = document.createElement('style'); st.textContent = css; document.head.appendChild(st); }
+
+  const T = {
+    fr: {
+      ribbon: 'Aperçu · boutique de test : produits, prix et livraison donnés à titre d’exemple', cart: 'Panier', cur: 'DH',
+      eyebrow: 'Mohammedia · boulevard de Palestine', h1: 'Herbes, miels et produits de la ruche',
+      lede: 'La boutique du boulevard de Palestine, en ligne. Par exemple : commande sur WhatsApp, paiement à la livraison ou retrait en boutique.',
+      cta: 'Voir les miels',
+      honey: 'Les miels', honeyP: 'Miels du Maroc.',
+      house: 'Produits maison', houseP: 'Nos mélanges maison.',
+      hive: 'Produits de la ruche', hiveP: 'Pollen, gelée royale et propolis.',
+      p1: 'Depuis 1998', p1s: 'La même adresse, 593 bd de Palestine.', p2: 'Paiement à la livraison', p2s: 'Vous payez quand vous recevez.', p3: 'Retrait en boutique', p3s: 'Commandez, passez prendre sans attendre.',
+      addr: 'Herboristerie El Baraka · 593 bd de Palestine, Mohammedia', legal: 'Aperçu non officiel · hypothèses à vérifier',
+      dTitle: 'Le produit', addCart: 'Ajouter au panier', added: 'Dans le panier', taste: 'Goût', pair: 'À essayer', origin: 'Origine', sweet: 'Douceur', strong: 'Intensité', use: 'Utilisation', size: 'Format',
+      cTitle: 'Votre commande', empty: 'Le panier est vide.',
+      mode: 'Comment recevoir la commande ?', mPick: 'Retrait en boutique', mMoh: 'Livraison à Mohammedia', mFar: 'Autre ville', free: 'gratuit', tbc: 'prix à confirmer',
+      name: 'Nom', phone: 'Téléphone', address: 'Adresse', noteL: 'Remarque (facultatif)', sub: 'Sous-total', fee: 'Livraison', total: 'Total',
+      pv: 'Voir le message envoyé', send: 'Envoyer sur WhatsApp', copy: 'Copier le message', copied: 'Message copié.', copyFail: 'Copie impossible : sélectionnez le texte.',
+      mHead: 'Bonjour, nouvelle commande pour Herboristerie El Baraka :', mPay: 'Paiement : à la livraison', mName: 'Nom', mPhone: 'Téléphone', mAddr: 'Adresse', mNote: 'Remarque',
+      mPickL: 'Retrait : en boutique', mMohL: 'Livraison : Mohammedia', mFarL: 'Livraison : autre ville (prix à confirmer)', need: 'Ajoutez un produit pour envoyer la commande.'
+    },
+    ar: {
+      ribbon: 'نسخة تجريبية · المنتجات والأثمنة والتوصيل للتوضيح فقط', cart: 'السلة', cur: 'درهم',
+      eyebrow: 'المحمدية · شارع فلسطين', h1: 'أعشاب، عسل ومنتجات الخلية',
+      lede: 'حانوت شارع فلسطين، على الإنترنت. اطلب عبر واتساب، وخلّص عند الاستلام أو خذ طلبك من الحانوت.',
+      cta: 'شوف العسل',
+      honey: 'العسل', honeyP: 'عسل مغربي.',
+      house: 'منتجات الدار', houseP: 'خلطات الدار.',
+      hive: 'منتجات الخلية', hiveP: 'حبوب اللقاح، غذاء ملكات النحل والعكبر.',
+      p1: 'منذ 1998', p1s: 'نفس العنوان، 593 شارع فلسطين.', p2: 'الدفع عند الاستلام', p2s: 'كتخلص ملي توصلك السلعة.', p3: 'الاستلام من الحانوت', p3s: 'اطلب ودوز تاخذ بلا ما تتسنى.',
+      addr: 'أعشاب البركة · 593 شارع فلسطين، المحمدية', legal: 'نسخة غير رسمية',
+      dTitle: 'المنتوج', addCart: 'زيد للسلة', added: 'فالسلة', taste: 'الذوق', pair: 'جربه', origin: 'الأصل', sweet: 'الحلاوة', strong: 'القوة', use: 'الاستعمال', size: 'الحجم',
+      cTitle: 'طلبك', empty: 'السلة خاوية.',
+      mode: 'كيفاش بغيتي تتسلم؟', mPick: 'ناخذو من الحانوت', mMoh: 'توصيل فالمحمدية', mFar: 'مدينة أخرى', free: 'مجانا', tbc: 'الثمن نأكدوه معاك',
+      name: 'الاسم', phone: 'الهاتف', address: 'العنوان', noteL: 'ملاحظة (اختياري)', sub: 'المجموع الفرعي', fee: 'التوصيل', total: 'المجموع',
+      pv: 'شوف الميساج', send: 'صيفط الطلب فواتساب', copy: 'نسخ الميساج', copied: 'تنسخ الميساج.', copyFail: 'ما قدرناش ننسخو، حدد النص.',
+      mHead: 'السلام عليكم، طلب جديد لأعشاب البركة:', mPay: 'الدفع: عند الاستلام', mName: 'الاسم', mPhone: 'الهاتف', mAddr: 'العنوان', mNote: 'ملاحظة',
+      mPickL: 'الاستلام: من الحانوت', mMohL: 'التوصيل: المحمدية', mFarL: 'التوصيل: مدينة أخرى (الثمن للتأكيد)', need: 'زيد منتوج باش تصيفط الطلب.'
+    }
+  };
+
+  let lang = 'fr', cart = {}, current = null;
+  try { const s = JSON.parse(localStorage.getItem('elb-cart2') || '{}'); if (s && typeof s === 'object') cart = s; } catch (e) {}
+  try { const l = localStorage.getItem('elb-lang2'); if (l === 'fr' || l === 'ar') lang = l; } catch (e) {}
+  const save = () => { try { localStorage.setItem('elb-cart2', JSON.stringify(cart)); localStorage.setItem('elb-lang2', lang); } catch (e) {} };
+  const t = (k) => T[lang][k] ?? k;
+  const money = (n) => `${n} ${t('cur')}`;
+
+  /* products: catalog + how each one looks on the shelf */
+  const C = E.CATALOG, byId = Object.fromEntries(C.map(p => [p.id, p]));
+  const PH = Object.fromEntries(PR.HONEYS.map(h => [h.id, h]));
+  const neutral = (p) => `<div style="position:absolute;inset:0;background:#f7efd9"><div style="position:absolute;left:calc(var(--mm)*59);width:calc(var(--mm)*76);top:0;bottom:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:calc(var(--mm)*2);color:#3a2410;text-align:center"><b style="font:700 calc(var(--mm)*8.5) Amiri,serif;direction:rtl">${p.ar}</b><span style="font:calc(var(--mm)*4.4) 'IM Fell English SC',serif;letter-spacing:.08em">${p.fr}</span></div></div>`;
+  function jar(p){
+    if (p.kind === 'honey') return PR.jar(PH[p.id]);
+    if (p.kind === 'house') return PR.jar({}, { label: E.houseWrap(p), tail: false, lid: 'green', fill: p.fill });
+    return PR.jar({}, { label: neutral(p), tail: false, fill: p.tint });
+  }
+  const tint = (p) => p.kind === 'honey' ? PH[p.id].acc : p.kind === 'house' ? E.LINES[p.line].band : p.tint;
+  const nameOf = (p) => lang === 'ar' ? p.ar : (p.kind === 'house' ? `${p.fr}` : p.fr);
+  const subOf = (p) => p.kind === 'house' ? (lang === 'ar' ? p.arSub : p.frSub) : p.kind === 'honey' ? (lang === 'ar' ? 'عسل مغربي' : (p.frSub ? p.frSub + ' · ' : '') + 'Miel du Maroc') : (lang === 'ar' ? p.fr : p.ar);
+
+  $('still').innerHTML = ['thy', 'zak', 'ora'].map(id => PR.jar(PH[id])).join('');
+
+  function control(p){
+    const q = cart[p.id] || 0;
+    if (!q) return `<button class="add" type="button" data-add="${p.id}" aria-label="${t('addCart')} : ${nameOf(p)}">+</button>`;
+    return `<span class="qty"><button type="button" data-dec="${p.id}" aria-label="−">−</button><span class="num">${q}</span><button type="button" data-inc="${p.id}" aria-label="+">+</button></span>`;
+  }
+  function card(p){
+    return `<article class="card"><button class="tile" type="button" data-open="${p.id}" style="--tint:${tint(p)}" aria-label="${nameOf(p)}">${jar(p)}</button>
+      <div class="meta"><h3>${nameOf(p)}</h3><span class="p num">${money(p.price)}</span><span class="s">${subOf(p)} · <bdi class="num">${p.size}</bdi></span><span class="ctl" data-ctl="${p.id}">${control(p)}</span></div></article>`;
+  }
+  function grids(){
+    $('g-honey').innerHTML = C.filter(p => p.kind === 'honey').map(card).join('');
+    $('g-house').innerHTML = C.filter(p => p.kind === 'house').map(card).join('');
+    $('g-hive').innerHTML = C.filter(p => p.kind === 'hive').map(card).join('');
+  }
+
+  function meter(n){ let s = ''; for (let i = 1; i <= 5; i++) s += `<i class="${i <= n ? 'on' : ''}"></i>`; return `<span class="meter" aria-label="${n}/5">${s}</span>`; }
+  function detail(p){
+    current = p;
+    let rows = `<dt>${t('size')}</dt><dd class="num"><bdi>${p.size}</bdi></dd>`;
+    if (p.kind === 'honey') {
+      rows += `<dt>${t('taste')}</dt><dd>${lang === 'ar' ? p.noteAr : p.noteFr}</dd><dt>${t('sweet')}</dt><dd>${meter(p.sweet)}</dd><dt>${t('strong')}</dt><dd>${meter(p.strong)}</dd>` +
+        `<dt>${t('pair')}</dt><dd>${lang === 'ar' ? p.pairAr : p.pairFr}</dd><dt>${t('origin')}</dt><dd>${lang === 'ar' ? 'عسل مغربي · ' + p.region.ar : 'Miel du Maroc · ' + p.region.fr}</dd>`;
+    }
+    if (p.kind === 'house' && (p.useFr || p.useAr)) rows += `<dt>${t('use')}</dt><dd>${lang === 'ar' ? p.useAr : p.useFr}</dd>`;
+    $('dBody').innerHTML = `<div class="dview" style="--tint:${tint(p)}">${jar(p)}</div><div><div class="dname">${nameOf(p)}</div><div class="dsub">${subOf(p)}</div></div><dl class="dl">${rows}</dl>`;
+    renderDetailBar();
+    open('detail');
+  }
+  function renderDetailBar(){
+    if (!current) return;
+    $('dPrice').textContent = money(current.price);
+    $('dCtl').innerHTML = cart[current.id] ? control(current) : '';
+    $('dAdd').textContent = cart[current.id] ? t('added') + ' ✓' : t('addCart');
+  }
+  $('dAdd').onclick = () => { if (current) setQty(current.id, (cart[current.id] || 0) + (cart[current.id] ? 0 : 1)); if (current && cart[current.id]) { close(); open('cart'); } };
+
+  function setQty(id, q){
+    if (q <= 0) delete cart[id]; else cart[id] = Math.min(q, 99);
+    save();
+    document.querySelectorAll(`[data-ctl="${id}"]`).forEach(el => el.innerHTML = control(byId[id]));
+    renderCart(); renderDetailBar();
+  }
+  document.addEventListener('click', (e) => {
+    const o = e.target.closest('[data-open]'); if (o) { detail(byId[o.dataset.open]); return; }
+    const b = e.target.closest('[data-add],[data-inc],[data-dec]'); if (!b) return;
+    const id = b.dataset.add || b.dataset.inc || b.dataset.dec;
+    setQty(id, (cart[id] || 0) + (b.dataset.dec ? -1 : 1));
+  });
+
+  const mode = () => (document.querySelector('input[name=mode]:checked') || {}).value || 'pick';
+  function message(){
+    const ids = Object.keys(cart).filter(id => byId[id]);
+    const L = ids.map(id => { const p = byId[id], q = cart[id]; return `• ${lang === 'ar' ? p.ar : p.fr} (⁦${p.size}⁩) × ${q} = ${money(p.price * q)}`; });
+    const sub = ids.reduce((s, id) => s + byId[id].price * cart[id], 0);
+    const m = mode(), fee = m === 'moh' ? FEE_MOH : 0;
+    const name = $('f-name').value.trim(), phone = $('f-phone').value.trim(), addr = $('f-addr').value.trim(), note = $('f-note').value.trim();
+    const out = [t('mHead'), ...L, '', `${t('total')}: ${money(sub + fee)}${fee ? ` (${t('fee')} ${money(fee)})` : ''}`, t('mPay'), m === 'pick' ? t('mPickL') : m === 'moh' ? t('mMohL') : t('mFarL')];
+    if (name) out.push(`${t('mName')}: ${name}`);
+    if (phone) out.push(`${t('mPhone')}: ${phone}`);
+    if (m !== 'pick' && addr) out.push(`${t('mAddr')}: ${addr}`);
+    if (note) out.push(`${t('mNote')}: ${note}`);
+    return { text: out.join('\n'), sub, fee, n: ids.length };
+  }
+  function renderCart(){
+    const ids = Object.keys(cart).filter(id => byId[id]);
+    $('count').textContent = ids.reduce((s, id) => s + cart[id], 0);
+    $('lines').innerHTML = ids.map(id => { const p = byId[id]; return `<li><div class="th">${jar(p)}</div><div><div class="n">${nameOf(p)}</div><div class="s num"><bdi>${p.size}</bdi> · <bdi>${money(p.price)}</bdi></div></div><div class="r"><span class="num">${money(p.price * cart[id])}</span><span data-ctl="${id}">${control(p)}</span></div></li>`; }).join('');
+    $('empty').hidden = ids.length > 0;
+    $('form').hidden = ids.length === 0;
+    $('addrWrap').hidden = mode() === 'pick';
+    const m = message();
+    $('totals').hidden = ids.length === 0;
+    $('totals').innerHTML = `<div><span>${t('sub')}</span><span class="num">${money(m.sub)}</span></div><div><span>${t('fee')}</span><span class="num">${mode() === 'far' ? t('tbc') : money(m.fee)}</span></div><div class="g"><span>${t('total')}</span><span class="num">${money(m.sub + m.fee)}</span></div>`;
+    $('preview').textContent = m.n ? m.text : t('need');
+    $('send').href = m.n ? `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(m.text)}` : '#';
+    $('send').setAttribute('aria-disabled', m.n ? 'false' : 'true');
+  }
+  $('form').addEventListener('input', renderCart);
+  $('form').addEventListener('change', renderCart);
+  $('form').addEventListener('submit', (e) => e.preventDefault());
+
+  let lastFocus = null, openId = null;
+  function open(id){ if (openId) $(openId).hidden = true; lastFocus = lastFocus || document.activeElement; openId = id; $(id).hidden = false; $('shade').hidden = false; if (id === 'cart') renderCart(); $(id).querySelector('[data-close]').focus(); }
+  function close(){ if (openId) $(openId).hidden = true; openId = null; $('shade').hidden = true; if (lastFocus) lastFocus.focus(); lastFocus = null; }
+  $('openCart').onclick = () => open('cart');
+  $('shade').onclick = close;
+  document.querySelectorAll('[data-close]').forEach(b => b.onclick = close);
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && openId) close(); });
+
+  $('copy').onclick = () => {
+    const text = message().text;
+    const fallback = () => { const r = document.createRange(); r.selectNodeContents($('preview')); $('preview').parentElement.open = true; const s = getSelection(); s.removeAllRanges(); s.addRange(r); $('msg').textContent = t('copyFail'); };
+    try { navigator.clipboard.writeText(text).then(() => { $('msg').textContent = t('copied'); }, fallback); } catch (e) { fallback(); }
+  };
+
+  function applyStatic(){
+    document.documentElement.lang = lang;
+    document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+    document.querySelectorAll('[data-t]').forEach(el => { el.textContent = t(el.dataset.t); });
+    document.querySelectorAll('.lang button').forEach(b => b.setAttribute('aria-pressed', b.dataset.lang === lang ? 'true' : 'false'));
+  }
+  document.querySelectorAll('.lang button').forEach(b => b.onclick = () => { lang = b.dataset.lang; save(); render(); });
+  function render(){ applyStatic(); grids(); renderCart(); if (openId === 'detail' && current) detail(current); }
+  render();
+})();
+</script>
+</body>
+</html>

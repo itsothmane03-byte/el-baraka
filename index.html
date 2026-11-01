@@ -126,7 +126,9 @@ a:focus-visible,button:focus-visible,[tabindex]:focus-visible{outline:2px solid 
 .today figure{margin:0;display:flex;flex-direction:column;gap:.5rem}
 .today img{width:100%;height:auto;display:block;border-radius:2px}
 .today p{color:#3f4f43;font-size:.95rem;margin:0}
-.photos{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem}
+.photos{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:1rem}
+.photos figure{grid-column:span 3}
+.photos figure:nth-child(-n+3){grid-column:span 4}
 .photos figure{margin:0;display:flex;flex-direction:column;gap:.45rem;min-width:0}
 .photos img{display:block;width:100%;height:auto;border-radius:2px}
 .photos figcaption{display:flex;justify-content:space-between;gap:.6rem;font-size:.88rem;color:#3f4f43}
@@ -175,6 +177,8 @@ footer a{color:var(--muted)}
   .cards{grid-template-columns:1fr}
   .v3,.today,.hero,.v3-cta{grid-template-columns:1fr}
   .photos{grid-template-columns:repeat(2,minmax(0,1fr));gap:.7rem}
+  .photos figure,.photos figure:nth-child(-n+3){grid-column:span 1}
+  .photos figure:first-child{grid-column:1/-1}
   .v3-stage{aspect-ratio:1}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
@@ -187,7 +191,7 @@ footer a{color:var(--muted)}
     <div class="lockup"><img class="lg-img" src="img/logo-green.png" alt="Herboristerie El Baraka, أعشاب البركة"></div>
     <h1>Le même El Baraka, mieux mis en valeur</h1>
     <p class="lede">Quelques idées pour la boutique. On garde tout ce que les clients connaissent, à commencer par le logo, et on donne à chaque produit une étiquette qui se lit de loin.</p>
-    <p class="draft"><span><b>Première ébauche.</b> Elle part de ce qu’on voit de l’extérieur : la façade, le logo, les étiquettes actuelles. Les produits, les prix, les formats et les miels montrés sont des hypothèses, là pour donner une idée.</span></p>
+    <p class="draft"><span><b>Première ébauche.</b> Elle part de ce qu’on voit de l’extérieur : la façade, le logo, les étiquettes actuelles. Les miels sont ceux du rayon d’aujourd’hui, avec leurs noms actuels ; les produits maison, les prix et les formats sont des hypothèses, là pour donner une idée.</span></p>
     <ul class="toc" aria-label="Les propositions">
       <li><a href="#logo">La date sur le logo</a></li><li><a href="#miel">Le miel</a></li><li><a href="#maison">Les produits maison</a></li><li><a href="#sac">Le sac</a></li><li><a href="#facade">La façade</a></li>
     </ul>
@@ -224,7 +228,7 @@ footer a{color:var(--muted)}
   <section id="miel" aria-labelledby="h-miel">
     <div class="sh"><h2 id="h-miel">Le miel : une couleur par miel</h2><span class="ar" dir="rtl">العسل</span></div>
     <div class="prose">
-      <p class="lede">Sur l’étagère, chaque miel aurait sa couleur et le nom de sa fleur en grand, lisibles à trois mètres.</p>
+      <p class="lede">Sur l’étagère, chacun des sept miels aurait sa couleur et le nom de sa fleur en grand, lisibles à trois mètres.</p>
       <p>Le pot garde l’étiquette de la coopérative, avec son nom et son autorisation ONSSA. Si nous y mettions le nôtre, la boutique deviendrait un atelier d’étiquetage, avec l’autorisation et les contrôles qui vont avec. L’idée est donc de leur proposer ce dessin pour leurs pots.</p>
     </div>
     <div class="plate">
@@ -235,9 +239,9 @@ footer a{color:var(--muted)}
         </div>
       </div>
       <div class="pad">
-        <span class="cap">La proposition · un pot par miel</span>
+        <span class="cap">La proposition · les sept miels du rayon, du plus clair au plus foncé</span>
         <div class="photos" id="photos"></div>
-        <span class="cap note">Images d’illustration faites à partir des étiquettes proposées, pas encore des photos de vrais pots. Six miels pris comme exemples.</span>
+        <span class="cap note">Images d’illustration faites à partir des étiquettes proposées, pas encore des photos de vrais pots. La teinte du miel est indicative.</span>
       </div>
       <div class="pad">
         <ul class="dist">
@@ -245,14 +249,14 @@ footer a{color:var(--muted)}
           <li><b>À 1 mètre</b>«عسل», le nom en français, «Miel du Maroc», et le poids sur sa petite étiquette crème, en bas à droite.</li>
           <li><b>Dans la main</b>Valeurs, conditionneur, autorisation, lot, dates, et le dessin gravé de la fleur.</li>
         </ul>
-        <div class="srow"><span class="cap">Les six pots, à la taille où on les voit à 3 mètres</span><div class="far" id="far"></div></div>
+        <div class="srow"><span class="cap">Les sept pots, à la taille où on les voit à 3 mètres</span><div class="far" id="far"></div></div>
       </div>
       <div class="pad">
         <div class="pick" id="hPick" role="group" aria-label="Choisir un miel"></div>
         <div class="flat"><div class="lb" id="hLabel" tabindex="0" aria-label="Étiquette à plat du miel choisi"></div><div class="sealbox" id="hSeal"></div></div>
-        <span class="cap note">Étiquette à plat, 200 × 60 mm (dos · face · côté), et scellé de 40 × 85 mm. Six miels pris comme exemples ; les champs en pointillés sont ceux de la coopérative.</span>
+        <span class="cap note">Étiquette à plat, 200 × 60 mm (dos · face · côté), et scellé de 40 × 85 mm. Les champs en pointillés sont ceux de la coopérative.</span>
         <ul class="why">
-          <li><b>Une couleur par miel</b>Oranger, thym, zakkoum, caroube, eucalyptus, toutes fleurs. Comme un rayon d’épices bien rangé.</li>
+          <li><b>Une couleur par miel</b>Oranger, romarin, lavande, caroubier, jujubier, asperge, origan. Comme un rayon d’épices bien rangé.</li>
           <li><b>Le nom de la fleur en très grand</b>En lettres kufi épaisses, parce que les traits fins disparaissent à distance. Le mot répète la couleur.</li>
           <li><b>La fleur gravée en filigrane</b>On ne la voit que de près, et c’est ce qui donne envie de prendre le pot en main.</li>
           <li><b>Les coins, discrets</b>«100 % pur · خالص» en petit cachet en haut à gauche, le poids en bas à droite, à la même distance du bord.</li>
@@ -303,7 +307,7 @@ footer a{color:var(--muted)}
             <div><span class="cap">Les miels</span><div class="pick" id="v3honey" role="group" aria-label="Choisir un miel"></div></div>
             <div><span class="cap">Les produits maison</span><div class="pick" id="v3house" role="group" aria-label="Choisir un produit maison"></div></div>
             <div><span class="cap">Vue</span><div class="seg" id="v3views" role="group" aria-label="Vue">
-              <button type="button" data-v="three" aria-pressed="true">Trois quarts</button><button type="button" data-v="front" aria-pressed="false">Face</button><button type="button" data-v="back" aria-pressed="false">Dos</button><button type="button" data-v="top" aria-pressed="false">Couvercle</button><button type="button" data-v="shelf" aria-pressed="false">Les six miels</button>
+              <button type="button" data-v="three" aria-pressed="true">Trois quarts</button><button type="button" data-v="front" aria-pressed="false">Face</button><button type="button" data-v="back" aria-pressed="false">Dos</button><button type="button" data-v="top" aria-pressed="false">Couvercle</button><button type="button" data-v="shelf" aria-pressed="false">Toute la gamme</button>
             </div></div>
             <div id="v3lidrow"><span class="cap">Couvercle</span><div class="seg" id="v3lid" role="group" aria-label="Couleur du couvercle"><button type="button" data-l="gold" aria-pressed="true">Doré</button><button type="button" data-l="black" aria-pressed="false">Noir</button></div></div>
           </div>
@@ -391,7 +395,7 @@ footer a{color:var(--muted)}
 
   /* the jar in 3D: loaded only when the section comes near the screen */
   // honey looks far darker in a full jar than in the thin layer the colour scale measures
-  const HONEY3D = { ora: '#a35a0e', mul: '#9a5a0e', thy: '#6a2e08', zak: '#7a3208', euc: '#8f520e', car: '#3a1806' };
+  const HONEY3D = { ora: '#a35a0e', rom: '#b0700f', lav: '#7a3e0c', crb: '#8f4f0e', juj: '#6a2e08', asp: '#4a2008', ori: '#3a1806' };
   const shade = (hex, f) => '#' + [1, 3, 5].map(i => Math.round(parseInt(hex.substr(i, 2), 16) * f).toString(16).padStart(2, '0')).join('');
   const v3items = PH.map(h => ({ id: h.id, kind: 'honey', name: h.fr, chip: `<i style="background:${h.acc}"></i><span dir="rtl">${h.big}</span>`,
       color: HONEY3D[h.id] || shade(E.pfundColor(h.pfund), .6), label: `img/tex/${h.id}-label.jpg`, disc: `img/tex/${h.id}-disc.png`, tail: `img/tex/${h.id}-tail.png` }))

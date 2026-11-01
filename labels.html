@@ -49,7 +49,7 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:'Readex Pro',sys
   const PR = window.Producer, PH = PR.HONEYS;
   const pst = document.createElement('style'); pst.textContent = PR.CSS; document.head.appendChild(pst);
   for (let i = 0; i < PH.length; i += 2) {
-    h += `<section class="page land"><h1><span>Miel · étiquette de la coopérative 200 × 60 mm + scellé 40 × 85 mm · taille réelle · champs [ ] à remplir par la coopérative · scellé : papier destructible</span><span>${i / 2 + 1} / 3</span></h1>
+    h += `<section class="page land"><h1><span>Miel · étiquette de la coopérative 200 × 60 mm + scellé 40 × 85 mm · taille réelle · champs [ ] à remplir par la coopérative · scellé : papier destructible</span><span>${i / 2 + 1} / ${Math.ceil(PH.length / 2)}</span></h1>
       ${PH.slice(i, i + 2).map(x => `<div class="row" style="align-items:center"><div class="cut" style="width:200mm">${PR.label(x)}</div><div class="cut" style="width:40mm">${PR.seal(x)}</div></div>`).join('')}
 </section>`;
   }

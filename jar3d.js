@@ -170,7 +170,7 @@ export async function mount(stage, items) {
 
   function frame() {
     const narrow = stage.clientWidth < 560;
-    if (state.view === 'shelf') { camera.position.set(0, 145, narrow ? 1150 : 720); camera.lookAt(0, 54, 0); }
+    if (state.view === 'shelf') { const n = jars.length || 6; camera.position.set(0, 145, (narrow ? 192 : 122) * n); camera.lookAt(0, 54, 0); }
     else if (state.view === 'top') { camera.position.set(0, 310, 80); camera.lookAt(0, 58, 0); }
     else { camera.position.set(0, 120, narrow ? 285 : 265); camera.lookAt(0, 54, 0); }
     jars.forEach((j) => { j.rotation.y = THREE.MathUtils.degToRad(state.angle); });

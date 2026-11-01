@@ -28,15 +28,18 @@
   /* One code colour per honey. Hues are spread so neighbours never look alike,
      and the big word carries the meaning for anyone who can't tell colours apart. */
   const BLANK_NUT = { kj: '[ ]', kcal: '[ ]', fat: '[ ]', carb: '[ ]', prot: '[ ]', salt: '[ ]' };
+  // The seven honeys on the shop's shelf today, named as on its own labels.
   const HONEYS = [
     { id: 'ora', ar: 'عسل البرتقال', big: 'البرتقال', fr: 'Miel d’oranger', acc: '#bf5f17', flora: 'orange', fit: 0.92, pfund: 16,
       nut: { kj: '1377', kcal: '324', fat: '0,0', carb: '80,06', prot: '0,4', salt: '0,0' } },
-    { id: 'thy', ar: 'عسل الزعتر', big: 'الزعتر', fr: 'Miel de thym', acc: '#634987', flora: 'thyme', fit: 1, pfund: 64 },
-    { id: 'zak', ar: 'عسل الزقوم', big: 'الزقوم', fr: 'Miel d’euphorbe', acc: '#9c2f1d', flora: 'euphorbia', fit: 1, pfund: 72 },
-    { id: 'car', ar: 'عسل الخروب', big: 'الخروب', fr: 'Miel de caroube', acc: '#4a2c1c', flora: 'carob', fit: 1, pfund: 118 },
-    { id: 'euc', ar: 'عسل الكاليتوس', big: 'الكاليتوس', fr: 'Miel d’eucalyptus', acc: '#2c6965', flora: 'eucalyptus', fit: 0.78, pfund: 82 },
-    { id: 'mul', ar: 'عسل الأزهار', big: 'الأزهار', fr: 'Miel toutes fleurs', acc: '#557629', flora: 'meadow', fit: 1, pfund: 48 }
+    { id: 'rom', ar: 'عسل أزير', big: 'أزير', fr: 'Miel de romarin', acc: '#2c6965', flora: 'rosemary', fit: 1, pfund: 25 },
+    { id: 'lav', ar: 'عسل الخزامة', big: 'الخزامة', fr: 'Miel de lavande', acc: '#634987', flora: 'lavender', fit: 0.92, pfund: 60 },
+    { id: 'crb', ar: 'عسل الخروب', big: 'الخروب', fr: 'Miel de caroubier', acc: '#4a2c1c', flora: 'carob', fit: 1, pfund: 70 },
+    { id: 'juj', ar: 'عسل السدر', big: 'السدر', fr: 'Miel de jujubier', acc: '#9c2f1d', flora: 'jujube', fit: 1, pfund: 90 },
+    { id: 'asp', ar: 'عسل الزكوم', big: 'الزكوم', fr: 'Miel d’asperge', acc: '#33507e', flora: 'asparagus', fit: 1, pfund: 95 },
+    { id: 'ori', ar: 'عسل الزعتر', big: 'الزعتر', fr: 'Miel d’origan', acc: '#557629', flora: 'thyme', fit: 1, pfund: 105 }
   ];
+
 
   const BLANK = {
     brandAr: '[اسم التعاونية]', brandFr: '[NOM DE LA COOPÉRATIVE]', phone: '[téléphone]',
@@ -102,20 +105,6 @@
       }
       return o;
     },
-    euphorbia(R) {
-      // Euphorbia resinifera: square, spined columns with tiny yellow cyathia on top
-      let o = '';
-      [[24, 44, 9], [38, 60, 10], [54, 72, 11], [70, 64, 10], [86, 52, 9], [100, 38, 8], [112, 28, 7]].forEach(([x, h, w], i) => {
-        const y0 = 80, y1 = y0 - h, l = x - w / 2, r = x + w / 2;
-        o += `<path class="f-pt" d="M${l} ${y0}L${l} ${y1 + w / 2}Q${l} ${y1} ${x} ${y1}Q${r} ${y1} ${r} ${y1 + w / 2}L${r} ${y0}"/>`;
-        o += `<path class="f-pl" d="M${x} ${y1 + 2.5}L${x} ${y0}"/>`;
-        let sp = '';
-        for (let y = y1 + 4.5; y < y0 - 2; y += 4.4) sp += `M${l} ${P(y)}l-1.7 -1.3M${l} ${P(y)}l-1.7 1.3M${r} ${P(y)}l1.7 -1.3M${r} ${P(y)}l1.7 1.3`;
-        o += `<path class="f-sm" d="${sp}"/>`;
-        if (i % 2 === 0) for (let k = -1; k <= 1; k++) o += `<circle class="f-an" cx="${P(x + k * 2.7)}" cy="${P(y1 - 1.7 - (k ? 0 : 1.3))}" r="1.2"/>`;
-      });
-      return o;
-    },
     carob(R) {
       const br = [[0, 16], [60, 2], [122, 20]], on = (t) => quad(br[0], br[1], br[2], t);
       let o = curve(...br);
@@ -138,43 +127,68 @@
       });
       return o;
     },
-    eucalyptus(R) {
-      const br = [[4, 2], [66, 6], [116, 46]], on = (t) => quad(br[0], br[1], br[2], t);
-      let o = curve(...br);
-      [[0.12, 1, 32], [0.24, -1, 26], [0.36, 1, 34], [0.5, -1, 28], [0.62, 1, 30], [0.84, 1, 24]].forEach(([t, s, L]) => {
-        const p = on(t); o += leaf(p[0], p[1], 180 + s * (16 + R() * 18), L, 4.4, 0);
-      });
-      const fluff = (cx, cy, r) => {
-        let g = '';
-        for (let k = 0; k < 26; k++) {
-          const a = (k / 26) * Math.PI * 2 + R() * 0.1, rr = r * (0.8 + R() * 0.25);
-          g += `<path class="f-sm" d="M${P(cx + Math.cos(a) * 1.6)} ${P(cy + Math.sin(a) * 1.6)}L${P(cx + Math.cos(a) * rr)} ${P(cy + Math.sin(a) * rr)}"/>`;
-          if (k % 2) g += `<circle class="f-an" cx="${P(cx + Math.cos(a) * rr)}" cy="${P(cy + Math.sin(a) * rr)}" r=".45"/>`;
+    lavender(R) {
+      // spikes of small paired flowers on long bare stems
+      let o = '';
+      for (let i = 0; i < 6; i++) {
+        const f = i / 5 - 0.5, a = (f * 70 + (R() - 0.5) * 8) * Math.PI / 180, L = 64 + (1 - Math.abs(f) * 1.4) * 12 + R() * 4;
+        const p0 = [60 + f * 6, 80], p2 = [60 + Math.sin(a) * L, 80 - Math.cos(a) * L], p1 = [(p0[0] + p2[0]) / 2 + f * 8, (p0[1] + p2[1]) / 2 + 3];
+        o += curve(p0, p1, p2);
+        for (let j = 0; j < 3; j++) { const t = 0.12 + j * 0.09, q = quad(p0, p1, p2, t), d = tangentDeg(p0, p1, p2, t); o += leaf(q[0], q[1], d + (j % 2 ? 22 : -22), 11 - j * 2, 1.3); }
+        for (let j = 0; j < 9; j++) {
+          const t = 0.62 + j * 0.044, q = quad(p0, p1, p2, Math.min(t, 1)), d = tangentDeg(p0, p1, p2, Math.min(t, 1)), r = 2.5 - j * 0.15;
+          for (const side of [-1, 1]) o += `<ellipse class="${j % 3 ? 'f-pt' : 'f-an'}" transform="translate(${P(q[0])} ${P(q[1])}) rotate(${P(d + side * 30)}) translate(${P(side * 1.3)} 0)" rx="${P(r * 0.62)}" ry="${P(r)}"/>`;
         }
-        return g + `<circle class="f-ct" cx="${cx}" cy="${cy}" r="1.8"/>`;
-      };
-      const hub = on(0.72);
-      [[86, 20, 7], [100, 28, 6.5], [80, 34, 6]].forEach(([x, y, r]) => { o += curve(hub, [(hub[0] + x) / 2, (hub[1] + y) / 2 - 3], [x, y]) + fluff(x, y, r); });
-      [[94, 44], [106, 40]].forEach(([x, y]) => {
-        o += curve(hub, [(hub[0] + x) / 2, (hub[1] + y) / 2], [x, y - 2]);
-        o += `<path class="f-pt" d="M${x - 2.6} ${y - 2}Q${x - 2.6} ${y + 2.6} ${x} ${y + 3}Q${x + 2.6} ${y + 2.6} ${x + 2.6} ${y - 2}Z"/><path class="f-pl" d="M${x - 1.6} ${y - 2}h3.2"/>`;
+      }
+      return o;
+    },
+    rosemary(R) {
+      // woody stems crowded with needle leaves, a few small two-lipped flowers
+      let o = '';
+      [[18, 80, 70, 10, 104, 20], [40, 80, 62, 30, 72, 4], [58, 80, 92, 46, 116, 40]].forEach(([x0, y0, cx, cy, x2, y2]) => {
+        const p0 = [x0, y0], p1 = [cx, cy], p2 = [x2, y2];
+        o += curve(p0, p1, p2);
+        for (let j = 0; j < 22; j++) {
+          const t = 0.08 + j * 0.042, q = quad(p0, p1, p2, t), d = tangentDeg(p0, p1, p2, t), L = 7.5 - t * 3.5 + R();
+          o += leaf(q[0], q[1], d + 62 + R() * 10, L, 1.05) + leaf(q[0], q[1], d - 62 - R() * 10, L, 1.05);
+        }
+        for (let k = 0; k < 3; k++) {
+          const t = 0.3 + k * 0.22, q = quad(p0, p1, p2, t), side = k % 2 ? 1 : -1;
+          o += `<g transform="translate(${P(q[0] + side * 4)} ${P(q[1] - 3)}) rotate(${side * 25})"><path class="f-pt" d="M0 0C-2.4 -1 -3 -4 -1.2 -5.2C0 -4.2 .4 -2 0 0ZM0 0C2.6 -.6 3.4 -3.6 2 -4.8C.8 -4 .2 -2 0 0Z"/><circle class="f-an" cx="0" cy="0" r=".7"/></g>`;
+        }
       });
       return o;
     },
-    meadow(R) {
+    asparagus(R) {
+      // wild asparagus: thin arching stems with tufts of fine needles and a few berries
       let o = '';
-      [[-34, 44], [-14, 52], [8, 40], [26, 48], [42, 34]].forEach(([a, L]) => { o += leaf(60 + a * 0.2, 80, a, L, 2.6, 0); });
-      // daisy
-      o += curve([52, 80], [44, 50], [36, 26]);
-      let d = '<g transform="translate(36 26)">';
-      for (let k = 0; k < 16; k++) d += `<ellipse class="f-pt" transform="rotate(${k * 22.5}) translate(0 -5.6)" rx="1.2" ry="4.2"/>`;
-      o += d + '<circle class="f-an" r="2.8"/></g>';
-      // five-petal
-      o += curve([60, 80], [62, 46], [66, 14]) + flower5(R, 66, 14, 9, 8);
-      // bell
-      o += curve([68, 80], [84, 54], [92, 30]);
-      o += `<g transform="translate(94 32) rotate(-28)"><path class="f-pt" d="M-4.4 -5.6Q-5.6 3 -4 6Q-2 4.6 0 6.4Q2 4.6 4 6Q5.6 3 4.4 -5.6Q0 -8 -4.4 -5.6Z"/><path class="f-pl" d="M0 -6L0 4"/></g>`;
-      return o + bud(80, 44, 30, 2, 3.8) + bud(48, 46, -20, 2, 3.8);
+      [[30, 80, 26, 30, 64, 6], [56, 80, 74, 38, 112, 18], [44, 80, 46, 52, 84, 36]].forEach(([x0, y0, cx, cy, x2, y2]) => {
+        const p0 = [x0, y0], p1 = [cx, cy], p2 = [x2, y2];
+        o += curve(p0, p1, p2);
+        for (let j = 0; j < 13; j++) {
+          const t = 0.14 + j * 0.066, q = quad(p0, p1, p2, t), d = tangentDeg(p0, p1, p2, t) * Math.PI / 180;
+          let tuft = '';
+          for (let k = 0; k < 6; k++) {
+            const a = d + (k / 5 - 0.5) * 1.9 + (j % 2 ? 0.5 : -0.5), L = 4.2 + R() * 2.2;
+            tuft += `M${P(q[0])} ${P(q[1])}l${P(Math.sin(a) * L)} ${P(-Math.cos(a) * L)}`;
+          }
+          o += `<path class="f-sm" d="${tuft}"/>`;
+          if (j % 4 === 2) o += `<circle class="f-pt" cx="${P(q[0] + 3)}" cy="${P(q[1] + 2.5)}" r="1.5"/>`;
+        }
+      });
+      return o;
+    },
+    jujube(R) {
+      // a zigzag branch with paired thorns, oval three-veined leaves and round fruits
+      const pts = [[6, 70], [26, 56], [44, 60], [62, 42], [80, 46], [98, 26], [116, 30]];
+      let o = `<path class="f-st" d="M${pts.map(pt).join('L')}"/>`;
+      pts.slice(1, -1).forEach(([x, y], i) => {
+        o += `<path class="f-sm" d="M${x} ${y}l-2.5 -4.5M${x} ${y}l3.5 -3"/>`;
+        const up = i % 2 ? -1 : 1;
+        o += leaf(x, y, up > 0 ? -40 + R() * 10 : 140 + R() * 10, 15, 5.6, 2) + leaf(x, y, up > 0 ? 25 + R() * 8 : 205 + R() * 8, 12, 4.8, 2);
+        if (i % 2 === 0) o += `<path class="f-st" d="M${x} ${y}q3 6 2 11"/><circle class="f-pt" cx="${x + 2}" cy="${y + 14}" r="4.2"/><path class="f-pl" d="M${x + .3} ${y + 12.4}q1.4 -1.6 3 -.6"/>`;
+      });
+      return o;
     }
   };
   function flora(kind, seed) {

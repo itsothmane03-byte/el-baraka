@@ -73,6 +73,8 @@ section.shelf{padding-block:3rem;border-top:1px solid var(--rule);scroll-margin-
 :lang(fr) .sh h2{font-family:var(--f-fr)} :lang(ar) .sh h2{font-family:var(--f-ar);font-weight:700}
 .sh p{margin:0;color:var(--muted);font-size:.92rem;max-width:30em}
 .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.4rem}
+#g-honey{grid-template-columns:repeat(4,minmax(0,1fr));gap:1.1rem}
+#g-honey .card:nth-child(-n+3){grid-column:span 1}
 .card{display:flex;flex-direction:column;gap:.75rem;min-width:0}
 .tile{all:unset;box-sizing:border-box;cursor:pointer;position:relative;display:flex;justify-content:center;align-items:flex-end;aspect-ratio:4/4.3;width:100%;padding-top:8%;--jar-mm:2.15px;
   background:color-mix(in srgb,var(--tint,#d8d1c0) 16%,var(--tile));border-radius:3px;overflow:hidden;transition:transform .35s ease}
@@ -155,6 +157,8 @@ details.pv summary{cursor:pointer;font-size:.85rem;color:var(--muted)}
   .hero{grid-template-columns:1fr;gap:2rem;padding-block:2.2rem 2rem}
   .still{--jar-mm:1.15px;overflow:hidden}
   .grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem}
+  #g-honey{grid-template-columns:repeat(2,minmax(0,1fr))}
+  #g-honey .card:first-child,#g-house .card:first-child{grid-column:1/-1}
   .tile{--jar-mm:1.15px}
   .promise{grid-template-columns:1fr}
   .brand img{height:34px}
@@ -304,7 +308,7 @@ details.pv summary{cursor:pointer;font-size:.85rem;color:var(--muted)}
   const nameOf = (p) => lang === 'ar' ? p.ar : (p.kind === 'house' ? `${p.fr}` : p.fr);
   const subOf = (p) => p.kind === 'house' ? (lang === 'ar' ? p.arSub : p.frSub) : p.kind === 'honey' ? (lang === 'ar' ? 'عسل مغربي' : (p.frSub ? p.frSub + ' · ' : '') + 'Miel du Maroc') : (lang === 'ar' ? p.fr : p.ar);
 
-  $('still').innerHTML = `<img src="img/photos/thy.jpg" alt="Pot de miel de thym avec l’étiquette proposée">`;
+  $('still').innerHTML = `<img src="img/photos/lav.jpg" alt="Pot de miel de lavande avec l’étiquette proposée">`;
 
   function control(p){
     const q = cart[p.id] || 0;

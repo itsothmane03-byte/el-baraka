@@ -183,19 +183,23 @@
     { id: 'n21', kind: 'house', line: 'beauty', ar: 'غاسول بالأعشاب', arSub: 'للشعر والبشرة', pre: 'بالأعشاب', big: 'الغاسول', fit: 0.92, fill: '#9c8a72', fr: 'Ghassoul aux plantes', frSub: 'Cheveux et peau', size: '200 g', price: 40 },
     { id: 'n30', kind: 'house', line: 'oils', ar: 'زيت حبة البركة', arSub: 'معصور على البارد', pre: 'زيت', big: 'حبة البركة', fit: 0.8, fill: '#3a3618', fr: 'Huile de nigelle', frSub: 'Pressée à froid', size: '100 ml', price: 60 },
 
-    // Honeys: bought from the contractor, sold in the contractor's labelled jar. El Baraka never labels the jar.
-    { id: 'zak', kind: 'honey', ar: 'عسل الزقوم', fr: 'Miel d’euphorbe', frSub: 'Zakkoum', pfund: 72, region: { ar: 'تادلة · سوس', fr: 'Tadla · Souss' }, sweet: 2, strong: 5, size: '500 g', price: 220,
-      noteAr: 'قوي، بلسعة خفيفة في الحلق', noteFr: 'Puissant, légère chaleur en gorge', pairAr: 'ملعقة صباحا، أو مع الزميتة', pairFr: 'Une cuillère le matin, ou avec la zemmita' },
-    { id: 'thy', kind: 'honey', ar: 'عسل الزعتر', fr: 'Miel de thym', frSub: 'Atlas', pfund: 64, region: { ar: 'الأطلس', fr: 'Atlas' }, sweet: 3, strong: 4, size: '500 g', price: 180,
-      noteAr: 'عشبي ودافئ، يدوم في الفم', noteFr: 'Herbacé, chaud, très persistant', pairAr: 'مع أتاي أو الحليب الساخن', pairFr: 'Dans l’atay ou le lait chaud' },
-    { id: 'ora', kind: 'honey', ar: 'عسل زهر الليمون', fr: 'Miel de fleur d’oranger', frSub: 'Gharb', pfund: 16, region: { ar: 'الغرب · سوس', fr: 'Gharb · Souss' }, sweet: 5, strong: 2, size: '500 g', price: 120,
+    // Honeys: the seven on the shop's shelf today, named as on its own labels. Bought from the
+    // cooperative and sold in its labelled jar: El Baraka never labels the jar.
+    // Taste notes are general descriptions of each honey; prices are examples.
+    { id: 'ora', kind: 'honey', ar: 'عسل البرتقال', fr: 'Miel d’oranger', frSub: '', pfund: 16, region: { ar: 'حسب الدفعة', fr: 'Selon le lot' }, sweet: 5, strong: 2, size: '500 g', price: 120,
       noteAr: 'زهري وناعم، يتبلور بنعومة', noteFr: 'Floral et doux, cristallise fin', pairAr: 'للأطفال، مع البغرير والملوي', pairFr: 'Pour les enfants, avec baghrir et msemen' },
-    { id: 'car', kind: 'honey', ar: 'عسل الخروب', fr: 'Miel de caroube', frSub: 'Moyen Atlas', pfund: 118, region: { ar: 'حسب الدفعة', fr: 'Selon le lot' }, sweet: 3, strong: 4, size: '500 g', price: 170,
-      noteAr: 'داكن، بنكهة الكراميل والكاكاو', noteFr: 'Sombre, notes de malt et de cacao', pairAr: 'مع الجبن الطري أو الخبز المحمص', pairFr: 'Avec un fromage frais ou du pain grillé' },
-    { id: 'euc', kind: 'honey', ar: 'عسل الكاليتوس', fr: 'Miel d’eucalyptus', frSub: '', pfund: 82, region: { ar: 'حسب الدفعة', fr: 'Selon le lot' }, sweet: 3, strong: 4, size: '500 g', price: 130,
-      noteAr: 'خشبي بلمسة منعشة', noteFr: 'Boisé, une pointe mentholée', pairAr: 'في المشروبات الساخنة شتاء', pairFr: 'Dans les boissons chaudes l’hiver' },
-    { id: 'mul', kind: 'honey', ar: 'عسل الأزهار', fr: 'Miel toutes fleurs', frSub: 'Printemps', pfund: 48, region: { ar: 'حسب الدفعة', fr: 'Selon le lot' }, sweet: 4, strong: 3, size: '500 g', price: 100,
-      noteAr: 'متوازن، للاستعمال اليومي', noteFr: 'Équilibré, pour tous les jours', pairAr: 'للفطور والحلويات', pairFr: 'Petit-déjeuner et pâtisseries' },
+    { id: 'rom', kind: 'honey', ar: 'عسل أزير', fr: 'Miel de romarin', frSub: '', pfund: 20, region: { ar: 'حسب الدفعة', fr: 'Selon le lot' }, sweet: 5, strong: 1, size: '500 g', price: 110,
+      noteAr: 'حلو جدا، يتبلور بسرعة وبنعومة', noteFr: 'Très doux, cristallise vite et fin', pairAr: 'مع الخبز المحمص في الفطور', pairFr: 'Sur du pain grillé au petit-déjeuner' },
+    { id: 'lav', kind: 'honey', ar: 'عسل الخزامة', fr: 'Miel de lavande', frSub: '', pfund: 45, region: { ar: 'حسب الدفعة', fr: 'Selon le lot' }, sweet: 4, strong: 2, size: '500 g', price: 150,
+      noteAr: 'زهري ورقيق بنفحة الخزامة', noteFr: 'Floral et délicat, une note de lavande', pairAr: 'في الأعشاب المنقوعة أو مع الياغورت', pairFr: 'Dans une infusion ou un yaourt' },
+    { id: 'crb', kind: 'honey', ar: 'عسل الخروب', fr: 'Miel de caroubier', frSub: '', pfund: 70, region: { ar: 'حسب الدفعة', fr: 'Selon le lot' }, sweet: 3, strong: 3, size: '500 g', price: 140,
+      noteAr: 'بنكهة الكراميل والكاكاو، قليل الحلاوة', noteFr: 'Notes de caramel et de cacao, peu sucré', pairAr: 'مع الجبن الطري أو الخبز المحمص', pairFr: 'Avec un fromage frais ou du pain grillé' },
+    { id: 'juj', kind: 'honey', ar: 'عسل السدر', fr: 'Miel de jujubier', frSub: '', pfund: 85, region: { ar: 'حسب الدفعة', fr: 'Selon le lot' }, sweet: 3, strong: 4, size: '500 g', price: 250,
+      noteAr: 'غني، بنكهة الكراميل والفواكه الجافة', noteFr: 'Riche, notes de caramel et de fruits secs', pairAr: 'خالص بالملعقة، أو مع اللوز', pairFr: 'Pur, à la cuillère, ou avec des amandes' },
+    { id: 'asp', kind: 'honey', ar: 'عسل الزكوم', fr: 'Miel d’asperge', frSub: '', pfund: 100, region: { ar: 'حسب الدفعة', fr: 'Selon le lot' }, sweet: 2, strong: 4, size: '500 g', price: 180,
+      noteAr: 'داكن، بمرارة خفيفة في آخره', noteFr: 'Sombre, une légère amertume en fin de bouche', pairAr: 'ملعقة صباحا', pairFr: 'Une cuillère le matin' },
+    { id: 'ori', kind: 'honey', ar: 'عسل الزعتر', fr: 'Miel d’origan', frSub: '', pfund: 105, region: { ar: 'حسب الدفعة', fr: 'Selon le lot' }, sweet: 2, strong: 5, size: '500 g', price: 160,
+      noteAr: 'قوي وعشبي، بلمسة حارة', noteFr: 'Puissant et herbacé, un peu poivré', pairAr: 'ملعقة صباحا، أو في أتاي', pairFr: 'Une cuillère le matin, ou dans l’atay' },
 
     // Other hive products, also bought in
     { id: 'pol', kind: 'hive', ar: 'حبوب اللقاح', fr: 'Pollen frais', size: '250 g', price: 90, tint: '#d9a230' },

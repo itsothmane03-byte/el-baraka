@@ -57,6 +57,14 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .btn:hover{background:var(--green)}
 .still{position:relative;display:flex;justify-content:center;align-items:flex-end;gap:calc(var(--jar-mm)*6);padding:2.4rem 1rem 0;--jar-mm:2px;background:radial-gradient(120% 90% at 50% 100%,var(--tile),transparent 70%)}
 .still::after{content:"";position:absolute;left:8%;right:8%;bottom:-1px;height:10px;border-radius:50%;background:rgba(0,0,0,.12);filter:blur(6px)}
+.still:has(img){padding:0;background:none}
+.still:has(img)::after{display:none}
+.still img{display:block;width:100%;max-width:30rem;height:auto;border-radius:3px;box-shadow:0 18px 40px rgba(40,30,10,.18)}
+.tile .photo,.dview .photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.tile:has(.photo){padding:0;background:#2b2b28}
+.dview:has(.photo){position:relative;aspect-ratio:1;padding:0;background:#2b2b28;overflow:hidden}
+.lines .th.ph{padding:0;overflow:hidden}
+.lines .th .photo{width:100%;height:100%;object-fit:cover;display:block}
 
 /* shelves */
 section.shelf{padding-block:3rem;border-top:1px solid var(--rule);scroll-margin-top:4rem}
@@ -286,8 +294,9 @@ details.pv summary{cursor:pointer;font-size:.85rem;color:var(--muted)}
   const C = E.CATALOG, byId = Object.fromEntries(C.map(p => [p.id, p]));
   const PH = Object.fromEntries(PR.HONEYS.map(h => [h.id, h]));
   const neutral = (p) => `<div style="position:absolute;inset:0;background:#f7efd9"><div style="position:absolute;left:calc(var(--mm)*59);width:calc(var(--mm)*76);top:0;bottom:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:calc(var(--mm)*2);color:#3a2410;text-align:center"><b style="font:700 calc(var(--mm)*8.5) Amiri,serif;direction:rtl">${p.ar}</b><span style="font:calc(var(--mm)*4.4) 'IM Fell English SC',serif;letter-spacing:.08em">${p.fr}</span></div></div>`;
-  function jar(p){
-    if (p.kind === 'honey') return PR.jar(PH[p.id]);
+  // honey is shown as a photo of the proposed jar; house and hive products as drawn jars
+  function jar(p, small){
+    if (p.kind === 'honey') return `<img class="photo" src="img/photos/${p.id}${small ? '-s' : ''}.jpg" alt="" loading="lazy">`;
     if (p.kind === 'house') return PR.jar({}, { label: E.houseWrap(p), tail: false, lid: 'green', fill: p.fill });
     return PR.jar({}, { label: neutral(p), tail: false, fill: p.tint });
   }
@@ -295,7 +304,7 @@ details.pv summary{cursor:pointer;font-size:.85rem;color:var(--muted)}
   const nameOf = (p) => lang === 'ar' ? p.ar : (p.kind === 'house' ? `${p.fr}` : p.fr);
   const subOf = (p) => p.kind === 'house' ? (lang === 'ar' ? p.arSub : p.frSub) : p.kind === 'honey' ? (lang === 'ar' ? 'عسل مغربي' : (p.frSub ? p.frSub + ' · ' : '') + 'Miel du Maroc') : (lang === 'ar' ? p.fr : p.ar);
 
-  $('still').innerHTML = ['thy', 'zak', 'ora'].map(id => PR.jar(PH[id])).join('');
+  $('still').innerHTML = `<img src="img/photos/thy.jpg" alt="Pot de miel de thym avec l’étiquette proposée">`;
 
   function control(p){
     const q = cart[p.id] || 0;
@@ -363,7 +372,7 @@ details.pv summary{cursor:pointer;font-size:.85rem;color:var(--muted)}
   function renderCart(){
     const ids = Object.keys(cart).filter(id => byId[id]);
     $('count').textContent = ids.reduce((s, id) => s + cart[id], 0);
-    $('lines').innerHTML = ids.map(id => { const p = byId[id]; return `<li><div class="th">${jar(p)}</div><div><div class="n">${nameOf(p)}</div><div class="s num"><bdi>${p.size}</bdi> · <bdi>${money(p.price)}</bdi></div></div><div class="r"><span class="num">${money(p.price * cart[id])}</span><span data-ctl="${id}">${control(p)}</span></div></li>`; }).join('');
+    $('lines').innerHTML = ids.map(id => { const p = byId[id]; return `<li><div class="th${p.kind === 'honey' ? ' ph' : ''}">${jar(p, true)}</div><div><div class="n">${nameOf(p)}</div><div class="s num"><bdi>${p.size}</bdi> · <bdi>${money(p.price)}</bdi></div></div><div class="r"><span class="num">${money(p.price * cart[id])}</span><span data-ctl="${id}">${control(p)}</span></div></li>`; }).join('');
     $('empty').hidden = ids.length > 0;
     $('form').hidden = ids.length === 0;
     $('addrWrap').hidden = mode() === 'pick';

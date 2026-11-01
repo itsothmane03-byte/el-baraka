@@ -243,7 +243,7 @@
      Security slits at the lid/glass line make it tear instead of peel. */
   function seal(h, c = BLANK, o = {}) {
     const id = 'ps' + Math.floor(Math.random() * 1e9).toString(36), acc = h.acc;
-    const vb = o.part === 'tail' ? '24 74 32 96' : '0 0 80 170';
+    const vb = o.part === 'tail' ? '24 74 32 96' : o.part === 'disc' ? '3.6 .6 72.8 72.8' : '0 0 80 170';
     let g = '';
     guillocheRing(40, 37, 26.6, 32.4, { n: 24, copies: 4, steps: 720 }).forEach(d => { g += `<path d="${d}" fill="none" stroke="${CREAM}" stroke-width=".22" opacity=".8"/>`; });
     let micro = '';

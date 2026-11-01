@@ -23,35 +23,23 @@
 <style>
 /* Layout: an herbalist's ledger. A calm reading column for the words, and wide "specimen plates" for what he should look at: the mark, the shelves, the bag, the shopfront. */
 :root{
-  --paper:#eff2ea;      /* page ground, sage-tinted */
-  --ink:#15251b;        /* text */
-  --muted:#4d5d51;      /* secondary text */
+  /* one look only: cream paper, whatever the device's light or dark setting */
+  --paper:#f6f1e4;      /* page ground, cream */
+  --ink:#1b281e;        /* text */
+  --muted:#5e5b49;      /* secondary text, warm */
   --green:#1d5631;      /* Baraka green */
-  --honey:#9a6309;      /* honey, dark enough for text on paper */
+  --honey:#8f5c0a;      /* honey, dark enough for text on cream */
   --honey-fill:#c68517; /* honey as a fill */
-  --rule:#c7d0c1;
-  --plate:#f6f7f1;      /* specimen plates: physical paper, both themes */
-  --plate-edge:#d4dbcd;
+  --rule:#dcd2bc;
+  --plate:#fcf9f1;      /* specimen plates */
+  --plate-edge:#e3d9c3;
   --mk-ink:var(--green); --mk-paper:var(--paper); --mk-honey:var(--honey-fill);
   --f-display:'IM Fell English',Georgia,'Times New Roman',serif;
   --f-ar:'Aref Ruqaa','Amiri','Noto Naskh Arabic',serif;
   --f-body:'Readex Pro',system-ui,-apple-system,'Segoe UI',sans-serif;
   --f-mono:'IBM Plex Mono',ui-monospace,Menlo,monospace;
   --col:42rem; --wide:68rem;
-}
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]) .lg-l{display:none}
-  :root:not([data-theme="light"]) .lg-d{display:block}
-  :root:not([data-theme="light"]){
-    --paper:#0e1912; --ink:#e2e8dc; --muted:#a2b1a4; --green:#8cc59b; --honey:#e3a845; --honey-fill:#d8952a;
-    --rule:#2a3b2f; --plate:#e9ece2; --plate-edge:#33463a; color-scheme:dark;
-  }
-}
-:root[data-theme="dark"] .lg-l{display:none}
-:root[data-theme="dark"] .lg-d{display:block}
-:root[data-theme="dark"]{
-  --paper:#0e1912; --ink:#e2e8dc; --muted:#a2b1a4; --green:#8cc59b; --honey:#e3a845; --honey-fill:#d8952a;
-  --rule:#2a3b2f; --plate:#e9ece2; --plate-edge:#33463a; color-scheme:dark;
+  color-scheme:light;
 }
 *{box-sizing:border-box}
 body{background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:16.5px;line-height:1.6;font-weight:300;
@@ -103,7 +91,6 @@ a:focus-visible,button:focus-visible,[tabindex]:focus-visible{outline:2px solid 
 
 /* the original logo: green on paper, cream on the dark theme */
 .lg-img{display:block;width:100%;height:auto}
-.lg-d{display:none}
 .logos{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--plate-edge)}
 .logos figure{margin:0;padding:1.3rem;display:flex;flex-direction:column;justify-content:space-between;gap:1rem;min-width:0;background:var(--plate)}
 .logos figure.dk{background:#10291a}
@@ -131,6 +118,25 @@ a:focus-visible,button:focus-visible,[tabindex]:focus-visible{outline:2px solid 
 .sealbox svg{width:100%;height:auto;display:block}
 .note{text-transform:none;letter-spacing:.02em}
 
+/* the jar in 3D */
+.v3{display:grid;grid-template-columns:minmax(0,1fr) 17rem;gap:1.6rem;align-items:start}
+.v3-stage{position:relative;aspect-ratio:4/3;width:100%;max-width:100%;background:radial-gradient(120% 90% at 50% 28%,#fffdf8,#efe7d6);border:1px solid #e6dcc8;border-radius:3px;overflow:hidden;cursor:grab}
+.v3-stage:active{cursor:grabbing}
+.v3-stage canvas{display:block}
+.v3-stage .flat{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;gap:.8rem;padding:1rem}
+.v3-stage .flat img{width:100%;height:auto;display:block}
+.v3-wait{position:absolute;inset:0;display:grid;place-items:center;margin:0;color:#6b6553;font-size:.9rem;pointer-events:none}
+.v3-side{display:flex;flex-direction:column;gap:1.1rem;min-width:0}
+.v3-side .pick,.seg{margin-top:.45rem}
+.seg{display:flex;flex-wrap:wrap;gap:.35rem}
+.seg button{all:unset;box-sizing:border-box;cursor:pointer;padding:.32rem .75rem;border:1px solid #d9cfba;border-radius:2rem;font-size:.84rem;color:#1b281e;background:#fff}
+.seg button[aria-pressed="true"]{background:#1b281e;border-color:#1b281e;color:#fcf9f1}
+.seg button:focus-visible{outline:2px solid #c68517;outline-offset:2px}
+.shelfcmp{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:1.4rem;align-items:center}
+.shelfcmp figure{margin:0;display:flex;flex-direction:column;gap:.5rem}
+.shelfcmp img{width:100%;height:auto;display:block;border-radius:2px}
+.shelfcmp p{color:#3f4f43;font-size:.95rem;margin:0}
+
 /* bag + card, shopfront */
 .mock svg{display:block;width:100%;height:auto}
 .cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem;max-width:44rem}
@@ -152,6 +158,8 @@ footer a{color:var(--muted)}
   .flat>.lb>.pf-fit,.flat>.lb>.elb-fit{min-width:40rem}
   .sealbox{width:6rem}
   .cards{grid-template-columns:1fr}
+  .v3,.shelfcmp{grid-template-columns:1fr}
+  .v3-stage{aspect-ratio:1}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
@@ -159,12 +167,12 @@ footer a{color:var(--muted)}
 <main>
   <header class="hero">
     <span class="eyebrow">Herboristerie El Baraka · Mohammedia</span>
-    <div class="lockup"><img class="lg-img lg-l" src="img/logo-green.png" alt="Herboristerie El Baraka, أعشاب البركة"><img class="lg-img lg-d" src="img/logo-cream.png" alt="Herboristerie El Baraka, أعشاب البركة"></div>
+    <div class="lockup"><img class="lg-img" src="img/logo-green.png" alt="Herboristerie El Baraka, أعشاب البركة"></div>
     <h1>Le même El Baraka, mieux mis en valeur</h1>
     <p class="lede">Quelques idées pour la boutique. On garde tout ce que les clients connaissent, à commencer par le logo, et on donne à chaque produit une étiquette qui se lit de loin.</p>
     <p class="draft"><span><b>Première ébauche.</b> Elle part de ce qu’on voit de l’extérieur : la façade, le logo, les étiquettes actuelles. Les produits, les prix, les formats et les miels montrés sont des hypothèses, là pour donner une idée.</span></p>
     <ul class="toc" aria-label="Les propositions">
-      <li><a href="#logo">La date sur le logo</a></li><li><a href="#miel">Le miel</a></li><li><a href="#maison">Les produits maison</a></li><li><a href="#sac">Le sac</a></li><li><a href="#facade">La façade</a></li>
+      <li><a href="#logo">La date sur le logo</a></li><li><a href="#miel">Le miel</a></li><li><a href="#maison">Les produits maison</a></li><li><a href="#pot3d">Le pot en 3D</a></li><li><a href="#sac">Le sac</a></li><li><a href="#facade">La façade</a></li>
     </ul>
   </header>
 
@@ -253,6 +261,34 @@ footer a{color:var(--muted)}
     </div>
   </section>
 
+  <section id="pot3d" aria-labelledby="h-3d">
+    <div class="sh"><h2 id="h-3d">Le pot en 3D</h2><span class="ar" dir="rtl">العلبة</span></div>
+    <div class="prose"><p class="lede">Pour voir le pot comme en vrai : tournez-le du doigt ou à la souris.</p>
+      <p>On voit l’étiquette tout autour, le miel à travers le verre, et le scellé qui passe sur le couvercle et descend sur l’épaule du pot, à côté de la face.</p></div>
+    <div class="plate">
+      <div class="pad">
+        <div class="v3">
+          <div class="v3-stage" id="v3" role="img" aria-label="Le pot en 3D : glissez pour le tourner"><p class="v3-wait" id="v3wait">Le pot se prépare…</p></div>
+          <div class="v3-side">
+            <div><span class="cap">Les miels</span><div class="pick" id="v3honey" role="group" aria-label="Choisir un miel"></div></div>
+            <div><span class="cap">Les produits maison</span><div class="pick" id="v3house" role="group" aria-label="Choisir un produit maison"></div></div>
+            <div><span class="cap">Vue</span><div class="seg" id="v3views" role="group" aria-label="Vue">
+              <button type="button" data-v="three" aria-pressed="true">Trois quarts</button><button type="button" data-v="front" aria-pressed="false">Face</button><button type="button" data-v="back" aria-pressed="false">Dos</button><button type="button" data-v="top" aria-pressed="false">Couvercle</button><button type="button" data-v="shelf" aria-pressed="false">Les six miels</button>
+            </div></div>
+            <div id="v3lidrow"><span class="cap">Couvercle</span><div class="seg" id="v3lid" role="group" aria-label="Couleur du couvercle"><button type="button" data-l="gold" aria-pressed="true">Doré</button><button type="button" data-l="black" aria-pressed="false">Noir</button></div></div>
+          </div>
+        </div>
+        <span class="cap note">Glissez sur le pot pour le tourner. Le pot dessiné est un pot de 500 g pris comme exemple ; ses vraies dimensions restent à mesurer.</span>
+      </div>
+      <div class="pad">
+        <div class="shelfcmp">
+          <figure><img src="img/real-shelf.jpg" alt="Le rayon de miel de la boutique aujourd’hui, avec des pots à couvercle noir ou doré" loading="lazy"><span class="cap">Le rayon aujourd’hui</span></figure>
+          <p>Pour comparer, le rayon de la boutique aujourd’hui. Beaucoup de pots ont un couvercle noir : le pot en 3D peut donc se voir avec un couvercle doré ou noir.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section id="sac" aria-labelledby="h-sac">
     <div class="sh"><h2 id="h-sac">Le sac : notre nom à la main de chaque client</h2><span class="ar" dir="rtl">الكيس</span></div>
     <div class="prose"><p class="lede">Le pot de miel ne peut pas porter notre nom, le sac si. Chaque client repart avec «أعشاب البركة» à la main, dans la rue et jusque chez lui.</p></div>
@@ -327,6 +363,47 @@ footer a{color:var(--muted)}
   const mJars = PR.jar({}, { today: 'img/label-original.jpg', todayFront: true, tail: false, lid: 'green', fill: house[0].fill }) + house.map(jarOf).join('');
   $('mShelf1').innerHTML = mJars; $('mShelf3').innerHTML = mJars;
   picker($('mPick'), house, p => `<i style="background:${E.LINES[p.line].band}"></i><span dir="rtl">${p.big}</span> · ${p.fr}`, p => { $('mLabel').innerHTML = E.houseWrap(p); });
+
+  /* the jar in 3D: loaded only when the section comes near the screen */
+  // honey looks far darker in a full jar than in the thin layer the colour scale measures
+  const HONEY3D = { ora: '#c47d1c', mul: '#b06a16', thy: '#7e4510', zak: '#8f5212', euc: '#93571a', car: '#4a220a' };
+  const shade = (hex, f) => '#' + [1, 3, 5].map(i => Math.round(parseInt(hex.substr(i, 2), 16) * f).toString(16).padStart(2, '0')).join('');
+  const v3items = PH.map(h => ({ id: h.id, kind: 'honey', name: h.fr, chip: `<i style="background:${h.acc}"></i><span dir="rtl">${h.big}</span>`,
+      color: HONEY3D[h.id] || shade(E.pfundColor(h.pfund), .6), label: `img/tex/${h.id}-label.jpg`, disc: `img/tex/${h.id}-disc.png`, tail: `img/tex/${h.id}-tail.png` }))
+    .concat(house.map(p => ({ id: p.id, kind: 'house', name: p.fr, chip: `<i style="background:${E.LINES[p.line].band}"></i><span dir="rtl">${p.big}</span>`,
+      color: p.fill, label: `img/tex/${p.id}-label.jpg` })));
+  const v3 = { api: null, id: v3items[0].id };
+  const chips = (host, list) => { host.innerHTML = list.map(i => `<button type="button" data-id="${i.id}" aria-pressed="${i.id === v3.id}" title="${i.name}">${i.chip}</button>`).join(''); };
+  chips($('v3honey'), v3items.filter(i => i.kind === 'honey'));
+  chips($('v3house'), v3items.filter(i => i.kind === 'house'));
+  const press = (sel, key, val) => document.querySelectorAll(sel).forEach(b => b.setAttribute('aria-pressed', b.dataset[key] === val ? 'true' : 'false'));
+  function v3sync(){
+    const it = v3items.find(i => i.id === v3.id), view = v3.api ? v3.api.state.view : 'three';
+    document.querySelectorAll('#v3honey button,#v3house button').forEach(b => b.setAttribute('aria-pressed', b.dataset.id === v3.id && view !== 'shelf' ? 'true' : 'false'));
+    press('#v3views button', 'v', view);
+    $('v3lidrow').hidden = it.kind === 'house' && view !== 'shelf';
+  }
+  function v3flat(){
+    const it = v3items.find(i => i.id === v3.id);
+    $('v3').innerHTML = `<div class="flat"><img src="${it.label}" alt="Étiquette à plat"><p class="cap" style="text-transform:none;letter-spacing:.02em">La vue 3D n’a pas pu s’ouvrir sur cet appareil ; voici l’étiquette à plat.</p></div>`;
+  }
+  document.querySelectorAll('#v3honey,#v3house').forEach(h => h.addEventListener('click', (e) => {
+    const b = e.target.closest('button'); if (!b) return;
+    v3.id = b.dataset.id;
+    if (v3.api) v3.api.show(v3.id); else if ($('v3').querySelector('.flat')) v3flat();
+    v3sync();
+  }));
+  $('v3views').addEventListener('click', (e) => { const b = e.target.closest('button'); if (!b || !v3.api) return; v3.api.view(b.dataset.v); v3sync(); });
+  $('v3lid').addEventListener('click', (e) => { const b = e.target.closest('button'); if (!b || !v3.api) return; v3.api.lid(b.dataset.l); press('#v3lid button', 'l', b.dataset.l); });
+  const v3start = () => {
+    import('./jar3d.js').then(m => m.mount($('v3'), v3items)).then(api => { v3.api = api; $('v3wait').remove(); v3sync(); })
+      .catch(err => { console.warn('3D indisponible', err); v3flat(); });
+  };
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver((es) => { if (es.some(x => x.isIntersecting)) { io.disconnect(); v3start(); } }, { rootMargin: '600px 0px' });
+    io.observe($('v3'));
+  } else v3start();
+  v3sync();
 
   /* bag, card, shopfront */
   $('bags').innerHTML = M.bags();

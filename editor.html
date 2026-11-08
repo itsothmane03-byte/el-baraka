@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Éditeur du catalogue</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@300;400;500;600&family=Noto+Naskh+Arabic:wght@500;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* A plain working tool for the shop's product list: edit here, download catalogue.js, replace the file in web/. */
+:root{--cream:#f6f1e4;--paper:#fcf9f1;--ink:#1b281e;--muted:#635f4d;--green:#1d5631;--gold:#d9a640;--rule:#e3d9c4;--bad:#a8382c;
+  --f-body:'Readex Pro',system-ui,sans-serif;--f-ar:'Noto Naskh Arabic',serif;--f-mono:'IBM Plex Mono',ui-monospace,monospace;color-scheme:light}
+*{box-sizing:border-box}
+body{margin:0;background:var(--cream);color:var(--ink);font-family:var(--f-body);font-weight:300;font-size:15px;line-height:1.5}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+[hidden]{display:none!important}
+header{position:sticky;top:0;z-index:5;background:var(--green);color:#f3ecdc;padding:.7rem 16px;display:flex;flex-wrap:wrap;align-items:center;gap:.6rem 1rem}
+header h1{margin:0;font-size:1rem;font-weight:500;margin-inline-end:auto}
+header a{color:var(--gold)}
+.btn{border:0;cursor:pointer;border-radius:999px;padding:.5rem 1rem;font-weight:500;font-size:.88rem;background:var(--paper);color:var(--ink);box-shadow:inset 0 0 0 1px var(--rule)}
+.btn.main{background:var(--gold);color:#1b1a14;box-shadow:none}
+.btn.dark{background:var(--ink);color:var(--cream);box-shadow:none}
+.btn.danger{color:var(--bad);box-shadow:inset 0 0 0 1px currentColor}
+.help{max-width:70rem;margin:1rem auto 0;padding:0 16px;color:var(--muted);font-size:.86rem}
+.help ol{margin:.3rem 0 0;padding-inline-start:1.2rem}
+main{max-width:70rem;margin:0 auto;padding:1rem 16px 4rem;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:1.2rem;align-items:start}
+.panel{background:var(--paper);border-radius:16px;box-shadow:inset 0 0 0 1px var(--rule);padding:1rem}
+.filters{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:.8rem}
+.filters input,.filters select{border:0;border-radius:10px;background:#fff;box-shadow:inset 0 0 0 1px var(--rule);padding:.45rem .6rem;min-width:0}
+.filters input{flex:1 1 10rem}
+.count{font-family:var(--f-mono);font-size:.75rem;color:var(--muted);margin:0 0 .5rem}
+.list{list-style:none;margin:0;padding:0;max-height:70vh;overflow:auto}
+.list button{all:unset;box-sizing:border-box;cursor:pointer;width:100%;display:grid;grid-template-columns:2.6rem 1fr auto;gap:.6rem;align-items:center;padding:.45rem .5rem;border-radius:10px}
+.list button:hover,.list button[aria-current="true"]{background:#fff}
+.list img,.list .ph{width:2.6rem;height:2.6rem;border-radius:8px;object-fit:cover;background:#302f31}
+.list b{font-weight:500;display:block;line-height:1.25}
+.list small{color:var(--muted);font-size:.76rem}
+.pill{font-family:var(--f-mono);font-size:.62rem;text-transform:uppercase;letter-spacing:.06em;padding:.12rem .45rem;border-radius:999px;background:#eee}
+.pill.shop{background:#cfe9c9}.pill.brand{background:#cfe0f2}.pill.example{background:#f2d9a8}
+form{display:grid;grid-template-columns:1fr 1fr;gap:.7rem}
+form .full{grid-column:1/-1}
+label{display:flex;flex-direction:column;gap:.2rem;font-size:.8rem;color:var(--muted)}
+label input,label select,label textarea{border:0;border-radius:10px;background:#fff;box-shadow:inset 0 0 0 1px var(--rule);padding:.5rem .6rem;font-size:.95rem;color:var(--ink)}
+label textarea{min-height:4.2rem;resize:vertical}
+[dir=rtl]{font-family:var(--f-ar);font-size:1.05rem}
+.check{flex-direction:row;align-items:center;gap:.5rem;color:var(--ink)}
+.row{display:flex;flex-wrap:wrap;gap:.5rem;grid-column:1/-1;margin-top:.3rem}
+.err{grid-column:1/-1;color:var(--bad);font-size:.85rem;margin:0}
+.prev{grid-column:1/-1;display:flex;gap:.8rem;align-items:center}
+.prev img{width:5rem;height:5rem;border-radius:12px;object-fit:cover;background:#302f31}
+.prev .small{font-size:.8rem;color:var(--muted)}
+.toast{position:fixed;bottom:1rem;left:50%;transform:translateX(-50%);background:var(--ink);color:var(--cream);padding:.5rem 1rem;border-radius:999px;font-size:.88rem;opacity:0;transition:opacity .3s;pointer-events:none}
+.toast.on{opacity:1}
+@media (max-width:820px){main{grid-template-columns:1fr} .list{max-height:40vh}}
+@media (max-width:480px){form{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header>
+  <h1>Éditeur du catalogue · El Baraka</h1>
+  <a href="store.html?dev=1" target="_blank" rel="noopener">Voir la boutique (dev)</a>
+  <button class="btn" type="button" id="reset">Recharger catalogue.js</button>
+  <button class="btn main" type="button" id="download">Télécharger catalogue.js</button>
+</header>
+<div class="help">
+  <ol>
+    <li>Choisissez un produit à gauche pour le modifier, ou « Nouveau produit ». Les changements sont gardés dans ce navigateur jusqu’au téléchargement.</li>
+    <li>Prix : laissez vide si le prix n’est pas confirmé (la boutique affiche « Prix sur demande »).</li>
+    <li>Photo : mettez l’image dans <code>web/img/shop/</code> en deux tailles, <code>nom.jpg</code> (900 px) et <code>nom-s.jpg</code> (360 px), puis écrivez <code>img/shop/nom</code>.</li>
+    <li>Cliquez « Télécharger catalogue.js » et remplacez le fichier <code>web/catalogue.js</code>. Ou envoyez le fichier à Claude.</li>
+  </ol>
+</div>
+<main>
+  <section class="panel" aria-label="Produits">
+    <div class="filters">
+      <input id="q" type="search" placeholder="Chercher un produit" aria-label="Chercher">
+      <select id="fCat" aria-label="Rayon"></select>
+      <select id="fSt" aria-label="Statut"><option value="">Tous statuts</option><option value="shop">shop (vu en boutique)</option><option value="brand">brand (marque, à confirmer)</option><option value="example">example (à remplacer)</option></select>
+    </div>
+    <p class="count" id="count"></p>
+    <ul class="list" id="list"></ul>
+    <div class="row"><button class="btn dark" type="button" id="new">+ Nouveau produit</button></div>
+  </section>
+
+  <section class="panel" aria-label="Fiche produit">
+    <form id="form" novalidate>
+      <div class="prev full" id="prev"></div>
+      <label>Identifiant (unique, sans espace)<input name="id" required pattern="[a-z0-9\-]+" autocomplete="off"></label>
+      <label>Rayon<select name="cat"></select></label>
+      <label>Statut<select name="status"><option value="shop">shop · vu en boutique</option><option value="brand">brand · marque, stock à confirmer</option><option value="example">example · à remplacer</option></select></label>
+      <label>Marque (facultatif)<input name="brand" autocomplete="off"></label>
+      <label>Nom en français<input name="fr" required></label>
+      <label>الاسم بالعربية<input name="ar" dir="rtl" required></label>
+      <label class="full">Formats et prix : une ligne par format, « format | prix » (prix vide = sur demande)<textarea name="sizes" placeholder="250 g | 65&#10;500 g | 120&#10;1 kg |"></textarea></label>
+      <label>Description (FR)<textarea name="descFr"></textarea></label>
+      <label>الوصف بالعربية<textarea name="descAr" dir="rtl"></textarea></label>
+      <label>Photo (img/shop/nom, sans .jpg)<input name="photo" placeholder="img/shop/nom" autocomplete="off"></label>
+      <label>Dessin si pas de photo<select name="form"><option value="">—</option><option>jar</option><option>pouch</option><option>capsules</option><option>box</option><option>bottle</option><option>dropper</option><option>tub</option><option>tin</option><option>bar</option></select></label>
+      <label class="check full"><input type="checkbox" name="featured"> Dans « La sélection » (page d’accueil)</label>
+      <p class="err" id="err" role="alert"></p>
+      <div class="row">
+        <button class="btn main" type="submit">Enregistrer</button>
+        <button class="btn" type="button" id="dup">Dupliquer</button>
+        <button class="btn danger" type="button" id="del">Supprimer</button>
+      </div>
+    </form>
+  </section>
+</main>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="catalogue.js"></script>
+<script>
+(function(){
+  'use strict';
+  const DRAFT = 'elb-editor-draft';
+  const $ = (id) => document.getElementById(id);
+  const form = $('form');
+  const esc = (s) => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const clone = (o) => JSON.parse(JSON.stringify(o));
+
+  const fromFile = () => clone(window.CATALOGUE || { categories: [], products: [] });
+  let data = fromFile(), currentId = null;
+  try { const d = JSON.parse(localStorage.getItem(DRAFT) || 'null'); if (d && Array.isArray(d.products) && Array.isArray(d.categories)) data = d; } catch (e) { /* no draft: start from the file */ }
+  const persist = () => { try { localStorage.setItem(DRAFT, JSON.stringify(data)); } catch (e) { toast('Brouillon non sauvegardé (stockage du navigateur indisponible).'); } };
+
+  let tt; function toast(m){ $('toast').textContent = m; $('toast').classList.add('on'); clearTimeout(tt); tt = setTimeout(() => $('toast').classList.remove('on'), 2400); }
+
+  const catName = (id) => (data.categories.find(c => c.id === id) || {}).fr || id;
+  const priceText = (s) => s.map(([l, p]) => `${l} | ${p == null ? '' : p}`).join('\n');
+
+  /* ---------- list ---------- */
+  function fillCats(){
+    const opts = data.categories.map(c => `<option value="${esc(c.id)}">${esc(c.fr)}</option>`).join('');
+    $('fCat').innerHTML = '<option value="">Tous les rayons</option>' + opts;
+    form.cat.innerHTML = opts;
+  }
+  function renderList(){
+    const q = $('q').value.trim().toLowerCase(), fc = $('fCat').value, fs = $('fSt').value;
+    const items = data.products.filter(p => (!fc || p.cat === fc) && (!fs || p.status === fs) && (!q || [p.id, p.fr, p.ar, p.brand].join(' ').toLowerCase().includes(q)));
+    $('count').textContent = `${items.length} / ${data.products.length} produits`;
+    $('list').innerHTML = items.map(p => `<li><button type="button" data-id="${esc(p.id)}" aria-current="${p.id === currentId}">
+      ${p.photo ? `<img src="${esc(p.photo)}-s.jpg" alt="" loading="lazy">` : '<span class="ph"></span>'}
+      <span><b>${esc(p.fr)}</b><small>${esc(p.brand ? p.brand + ' · ' : '')}${esc(catName(p.cat))} · ${esc(p.sizes.map(s => s[1] == null ? s[0] : `${s[0]} ${s[1]} DH`).join(', '))}</small></span>
+      <span class="pill ${esc(p.status)}">${esc(p.status)}</span></button></li>`).join('');
+  }
+  $('list').addEventListener('click', (e) => { const b = e.target.closest('[data-id]'); if (b) load(b.dataset.id); });
+  ['q', 'fCat', 'fSt'].forEach(id => $(id).addEventListener('input', renderList));
+
+  /* ---------- form ---------- */
+  function load(id){
+    const p = data.products.find(x => x.id === id); if (!p) return;
+    currentId = id;
+    form.id.value = p.id; form.cat.value = p.cat; form.status.value = p.status || 'example'; form.brand.value = p.brand || '';
+    form.fr.value = p.fr || ''; form.ar.value = p.ar || ''; form.sizes.value = priceText(p.sizes || []);
+    form.descFr.value = p.descFr || ''; form.descAr.value = p.descAr || ''; form.photo.value = p.photo || '';
+    form.form.value = p.pack ? p.pack.form || '' : ''; form.featured.checked = !!p.featured;
+    $('err').textContent = ''; preview(); renderList();
+  }
+  function blank(){
+    currentId = null; form.reset(); form.status.value = 'shop'; form.cat.value = $('fCat').value || (data.categories[0] || {}).id || '';
+    form.sizes.value = '1 pièce |'; form.form.value = 'box'; $('err').textContent = ''; preview(); renderList(); form.fr.focus();
+  }
+  function preview(){
+    const ph = form.photo.value.trim();
+    $('prev').innerHTML = ph ? `<img src="${esc(ph)}-s.jpg" alt="" onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'small',textContent:'Photo introuvable : vérifiez le nom et les deux fichiers.'}))"><span class="small">${esc(ph)}.jpg</span>` : '<span class="small">Pas de photo : la boutique dessine un emballage.</span>';
+  }
+  form.photo.addEventListener('input', preview);
+
+  function parseSizes(text){
+    const rows = text.split('\n').map(l => l.trim()).filter(Boolean);
+    if (!rows.length) throw new Error('Ajoutez au moins un format.');
+    return rows.map(l => {
+      const [label, price = ''] = l.split('|').map(s => s.trim());
+      if (!label) throw new Error(`Format sans nom : « ${l} »`);
+      if (price === '') return [label, null];
+      const n = Number(price.replace(',', '.'));
+      if (!isFinite(n) || n < 0) throw new Error(`Prix invalide : « ${price} »`);
+      return [label, n];
+    });
+  }
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    try {
+      const id = form.id.value.trim();
+      if (!/^[a-z0-9-]+$/.test(id)) throw new Error('Identifiant : lettres minuscules, chiffres et tirets seulement.');
+      if (data.products.some(p => p.id === id && p.id !== currentId)) throw new Error('Cet identifiant existe déjà.');
+      if (!form.fr.value.trim() || !form.ar.value.trim()) throw new Error('Le nom en français et en arabe sont obligatoires.');
+      const sizes = parseSizes(form.sizes.value);
+      const old = data.products.find(p => p.id === currentId) || {};
+      const photo = form.photo.value.trim();
+      const formName = form.form.value;
+      if (!photo && !formName) throw new Error('Choisissez une photo ou un dessin.');
+      // keep the fields this form does not show (taste notes, packshot colours, use…)
+      const next = Object.assign({}, old, {
+        id, cat: form.cat.value, status: form.status.value, fr: form.fr.value.trim(), ar: form.ar.value.trim(), sizes,
+        descFr: form.descFr.value.trim(), descAr: form.descAr.value.trim()
+      });
+      const brand = form.brand.value.trim(); if (brand) next.brand = brand; else delete next.brand;
+      if (photo) next.photo = photo; else delete next.photo;
+      if (formName) next.pack = Object.assign({}, old.pack || { name: next.fr }, { form: formName }); else delete next.pack;
+      if (form.featured.checked) next.featured = true; else delete next.featured;
+      if (next.def && !sizes[next.def]) delete next.def;
+      const i = data.products.findIndex(p => p.id === currentId);
+      data = Object.assign({}, data, { products: i >= 0 ? data.products.map((p, j) => j === i ? next : p) : data.products.concat([next]) });
+      currentId = id; persist(); renderList(); $('err').textContent = ''; toast('Enregistré dans le brouillon.');
+    } catch (err) { $('err').textContent = err.message; }
+  });
+  $('new').onclick = blank;
+  $('dup').onclick = () => { if (!currentId) return; form.id.value = currentId + '-2'; currentId = null; $('err').textContent = 'Copie : changez l’identifiant puis Enregistrer.'; };
+  $('del').onclick = () => {
+    if (!currentId) return;
+    const p = data.products.find(x => x.id === currentId);
+    if (!confirm(`Supprimer « ${p.fr} » du catalogue ?`)) return;
+    data = Object.assign({}, data, { products: data.products.filter(x => x.id !== currentId) });
+    persist(); blank(); toast('Produit supprimé du brouillon.');
+  };
+  $('reset').onclick = () => {
+    if (!confirm('Oublier le brouillon et revenir au fichier catalogue.js ?')) return;
+    try { localStorage.removeItem(DRAFT); } catch (e) { /* nothing stored */ }
+    data = fromFile(); fillCats(); blank(); toast('Catalogue rechargé depuis le fichier.');
+  };
+
+  /* ---------- export ---------- */
+  $('download').onclick = () => {
+    const head = '/*\n * El Baraka shop catalogue: the ONE file to edit to add, change or remove products.\n * Written by editor.html. status: "shop" seen in the shop, "brand" brand the shop uses (stock to confirm),\n * "example" placeholder. sizes: [label, price in DH or null]. Open store.html?dev=1 to check it.\n */\n';
+    const body = `(function (root) {\n  const CATALOGUE = ${JSON.stringify(data, null, 2).replace(/\n/g, '\n  ')};\n  if (typeof module === 'object' && module.exports) module.exports = CATALOGUE;\n  else root.CATALOGUE = CATALOGUE;\n})(typeof self !== 'undefined' ? self : this);\n`;
+    const url = URL.createObjectURL(new Blob([head + body], { type: 'text/javascript' }));
+    const a = Object.assign(document.createElement('a'), { href: url, download: 'catalogue.js' });
+    document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(url), 1000);
+    toast('catalogue.js téléchargé : remplacez web/catalogue.js.');
+  };
+
+  fillCats(); renderList();
+  if (data.products[0]) load(data.products[0].id); else blank();
+})();
+</script>
+</body>
+</html>

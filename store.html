@@ -7,10 +7,10 @@
 <link rel="apple-touch-icon" href="img/mark-green.png">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Herboristerie El Baraka · Boutique</title>
-<meta name="description" content="Herboristerie El Baraka, Mohammedia. Miels, produits de la ruche, plantes, compléments, protéines, huiles, savons et soins. Commande sur WhatsApp, paiement à la livraison.">
+<meta name="description" content="Herboristerie El Baraka, Mohammedia, depuis 1998. Produits de la ruche, produits naturels, compléments alimentaires et cosmétiques. Commande sur WhatsApp, paiement à la livraison.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Reem+Kufi:wght@500;600;700&family=Aref+Ruqaa:wght@400;700&family=IM+Fell+English+SC&family=IM+Fell+English:ital@0;1&family=Readex+Pro:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@500;600;700&family=IM+Fell+English+SC&family=IM+Fell+English:ital@0;1&family=Readex+Pro:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
 /* Layout: a general herboristerie in two lights. Cream daylight for browsing and reading; every product
    sits on the same dark studio backdrop, so photographs and drawn packshots read as one collection. */
@@ -27,8 +27,8 @@
   --night-ink:#f3ecdc; --night-muted:#b8b1a2;
   --f-display:'IM Fell English',Georgia,'Times New Roman',serif;
   --f-sc:'IM Fell English SC','IM Fell English',Georgia,serif;
-  --f-kufi:'Reem Kufi','Amiri',sans-serif;
-  --f-ruqaa:'Aref Ruqaa','Amiri',serif;
+  --f-kufi:'Readex Pro','Noto Naskh Arabic',system-ui,sans-serif;  /* Arabic labels: same family as the body text */
+  --f-ruqaa:'Noto Naskh Arabic',serif;  /* Arabic headings: a plain naskh, easy to read on a phone */
   --f-body:'Readex Pro',system-ui,-apple-system,'Segoe UI',sans-serif;
   --f-mono:'IBM Plex Mono',ui-monospace,Menlo,monospace;
   --wide:78rem; --hh:64px;
@@ -47,7 +47,8 @@ a{color:inherit}
 .num{font-variant-numeric:tabular-nums}
 h1,h2,h3{margin:0;font-weight:400;text-wrap:balance;line-height:1.08}
 :lang(fr) h1,:lang(fr) h2,:lang(fr) h3{font-family:var(--f-display)}
-:lang(ar) h1,:lang(ar) h2,:lang(ar) h3{font-family:var(--f-ruqaa);font-weight:700;line-height:1.35}
+:lang(ar) h1,:lang(ar) h2,:lang(ar) h3{font-family:var(--f-ruqaa);font-weight:700;line-height:1.5}
+:lang(ar) body{font-size:17px;line-height:1.8}
 h2{font-size:clamp(2rem,4.2vw,3.2rem)}
 .lede{font-size:1.08rem;color:var(--muted);max-width:34em;margin:0}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:.55rem;border:0;cursor:pointer;text-decoration:none;border-radius:999px;padding:.85rem 1.4rem;font-weight:500;font-size:.95rem;transition:transform .25s ease,background .25s ease,box-shadow .25s ease}
@@ -67,7 +68,17 @@ section.block{padding-block:clamp(4rem,8vw,7rem)}
 .studio{position:relative;display:block;aspect-ratio:1;border-radius:18px;overflow:hidden;background:radial-gradient(75% 62% at 50% 36%,var(--studio-hi),var(--studio) 72%)}
 .studio::after{content:"";position:absolute;inset:auto 0 0;height:30%;background:linear-gradient(transparent,rgba(0,0,0,.18));pointer-events:none}
 .studio img,.studio svg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .7s cubic-bezier(.2,.7,.2,1)}
-.studio img{-webkit-mask-image:radial-gradient(88% 92% at 50% 50%,#000 62%,transparent 100%);mask-image:radial-gradient(88% 92% at 50% 50%,#000 62%,transparent 100%)}
+/* real shop photographs fill their tile edge to edge; the backdrop only shows behind drawn packshots */
+.studio img.ph{object-fit:cover}
+.studio:has(img.ph)::after{background:linear-gradient(transparent,rgba(0,0,0,.08))}
+
+/* developer view (?dev=1): what each product is */
+.st{display:none}
+.dev .st{display:inline-block;position:absolute;top:.5rem;inset-inline-start:.5rem;z-index:2;font-family:var(--f-mono);font-size:.6rem;letter-spacing:.08em;text-transform:uppercase;padding:.15rem .45rem;border-radius:999px;background:#fff;color:#1b1a14}
+.dev .st-shop{background:#cfe9c9}.dev .st-brand{background:#cfe0f2}.dev .st-example{background:#f2d9a8}
+.devbar{background:#1b1a14;color:#f3ecdc;font-family:var(--f-mono);font-size:.74rem;padding:.55rem 16px;display:flex;flex-wrap:wrap;gap:.4rem 1.2rem;justify-content:center}
+.devbar a{color:var(--gold)}
+.devbar .bad{color:#ff9d8a}
 
 /* ribbon + header */
 .ribbon{background:var(--green);color:#f3ecdc;text-align:center;font-size:.74rem;letter-spacing:.06em;padding:.4rem 16px}
@@ -75,8 +86,12 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .top{position:sticky;top:env(safe-area-inset-top,0px);z-index:40;background:color-mix(in srgb,var(--cream) 90%,transparent);backdrop-filter:saturate(1.2) blur(12px);-webkit-backdrop-filter:saturate(1.2) blur(12px);border-bottom:1px solid transparent;transition:border-color .3s}
 .top.scrolled{border-bottom-color:var(--rule)}
 .top .wrap{display:flex;align-items:center;gap:1.2rem;height:var(--hh)}
-.brand{margin-inline-end:auto;display:block}
-.brand img{height:40px;width:auto}
+.brand{margin-inline-end:auto;display:flex;align-items:center;gap:.75rem;text-decoration:none;color:var(--green)}
+.brand img{height:44px;width:auto}
+/* the founding year as live text: the logo's own 1998 line is too fine to read at header size */
+.since{display:flex;flex-direction:column;gap:.05rem;padding-inline-start:.75rem;border-inline-start:1px solid color-mix(in srgb,var(--green) 35%,transparent);line-height:1.15}
+.since b{font-weight:500;font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap}
+.since b[dir=rtl]{font-family:var(--f-ruqaa);font-weight:600;font-size:.82rem;letter-spacing:0}
 .nav{display:flex;gap:1.4rem;font-size:.9rem}
 .nav a{text-decoration:none;opacity:.78;transition:opacity .2s}
 .nav a:hover{opacity:1}
@@ -104,13 +119,15 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .quick button:hover{background:var(--paper);box-shadow:inset 0 0 0 1px var(--ink)}
 .quick i,.dotc{width:.55rem;height:.55rem;border-radius:50%;background:var(--c);flex:none;display:inline-block}
 .quick button:focus-visible{outline:2px solid var(--gold)}
-.still{position:relative;aspect-ratio:1/.92;border-radius:28px;overflow:hidden;background:radial-gradient(70% 58% at 50% 36%,#49464a,var(--studio) 70%);box-shadow:0 40px 80px -40px rgba(30,22,8,.6)}
-.still::before{content:"";position:absolute;left:6%;right:6%;bottom:8%;height:16%;border-radius:50%;background:radial-gradient(closest-side,rgba(255,240,210,.12),transparent);}
-.still .it{position:absolute;animation:float 7s ease-in-out infinite alternate;will-change:transform}
-.still .it svg,.still .it img{width:100%;height:auto;display:block}
-.still .it img{-webkit-mask-image:radial-gradient(56% 64% at 50% 47%,#000 52%,transparent 86%);mask-image:radial-gradient(56% 64% at 50% 47%,#000 52%,transparent 86%)}
-@keyframes float{to{transform:translateY(-7px)}}
-.still figcaption{position:absolute;left:1.2rem;bottom:1rem;font-family:var(--f-mono);font-size:.64rem;letter-spacing:.14em;text-transform:uppercase;color:#cfc6b4}
+/* hero: a mosaic of the shop's own shelf photographs */
+.still{position:relative;margin:0;display:grid;grid-template-columns:1.25fr 1fr 1fr;grid-template-rows:1fr 1fr;gap:.6rem;aspect-ratio:1/.86}
+.still .it{all:unset;position:relative;cursor:pointer;border-radius:18px;overflow:hidden;background:var(--studio);box-shadow:0 30px 50px -36px rgba(30,22,8,.7)}
+.still .it:first-child{grid-row:1/3}
+.still .it img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .8s cubic-bezier(.2,.7,.2,1)}
+.still .it:hover img{transform:scale(1.04)}
+.still .it:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+.still .it span{position:absolute;inset:auto .5rem .5rem;padding:.25rem .55rem;border-radius:999px;background:rgba(246,241,228,.92);color:var(--ink);font-size:.72rem;line-height:1.3;width:max-content;max-width:calc(100% - 1rem);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.still figcaption{grid-column:1/-1;font-family:var(--f-mono);font-size:.64rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
 
 /* marquee */
 .marquee{background:var(--green);color:#efe7d3;overflow:hidden;padding-block:.95rem;direction:ltr}
@@ -240,7 +257,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .faq p{margin:0 0 1.3rem;color:var(--muted);max-width:42em}
 footer{background:var(--green);color:#e9e1cd;padding-block:3.5rem 3rem}
 footer .wrap{display:grid;grid-template-columns:minmax(0,1.3fr) repeat(3,minmax(0,1fr));gap:2rem}
-footer img{height:54px;width:auto}
+footer img{height:auto;width:min(100%,19rem)}
 footer p{margin:.3rem 0;font-size:.9rem}
 footer .eyebrow{color:#bfcdb8}
 footer button.fl{all:unset;cursor:pointer;display:block;font-size:.9rem;margin:.3rem 0}
@@ -361,7 +378,18 @@ dialog.search[open]{display:flex;flex-direction:column;animation:pop .3s cubic-b
   .sbtn span,.sbtn kbd{display:none}
 }
 @media (max-width:560px){
-  .brand img{height:34px}
+  .top .wrap{gap:.6rem}
+  .brand img{height:32px}
+  .brand{gap:.45rem}
+  .since{padding-inline-start:.45rem}
+  .since b{font-size:.6rem}
+  .since b[dir=rtl]{font-size:.72rem}
+  /* on a phone the year shows once, in the page's language */
+  :root[lang=fr] .since b[dir=rtl],:root[lang=ar] .since b:not([dir]){display:none}
+  .lang button{padding:.28rem .55rem}
+  .sbtn{padding:.42rem .6rem}
+  .still{grid-template-columns:1.25fr 1fr;aspect-ratio:1/.9}
+  .still .it:nth-child(n+4){display:none}
   .cartbtn .t{display:none}
   .rayons{grid-template-columns:repeat(2,minmax(0,1fr));gap:.8rem}
   .rrow .rail .card{width:11.5rem}
@@ -381,7 +409,7 @@ dialog.search[open]{display:flex;flex-direction:column;animation:pop .3s cubic-b
 <div class="ribbon" data-t="ribbon"></div>
 <header class="top" id="top">
   <div class="wrap">
-    <a class="brand" href="#accueil" aria-label="Herboristerie El Baraka"><img src="img/logo-green.png" alt="Herboristerie El Baraka"></a>
+    <a class="brand" href="#accueil" aria-label="Herboristerie El Baraka, depuis 1998"><img src="img/logo-green.png" alt="" width="1400" height="451"><span class="since" aria-hidden="true"><b>Depuis 1998</b><b dir="rtl">منذ 1998</b></span></a>
     <nav class="nav" aria-label="Sections"><a href="#rayons" data-t="navRay"></a><a href="#selection" data-t="navSel"></a><a href="#catalogue" data-t="navCat"></a><a href="#conseil" data-t="navAdv"></a><a href="#boutique" data-t="navShop"></a></nav>
     <button class="sbtn" type="button" data-search><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="8.5" cy="8.5" r="6" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M13 13l5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span data-t="searchShort"></span><kbd>/</kbd></button>
     <div class="lang" role="group" aria-label="Langue / اللغة"><button type="button" data-lang="fr" aria-pressed="true">FR</button><button type="button" data-lang="ar" aria-pressed="false">ع</button></div>
@@ -464,7 +492,7 @@ dialog.search[open]{display:flex;flex-direction:column;animation:pop .3s cubic-b
 
 <footer>
   <div class="wrap">
-    <div><img src="img/logo-cream.png" alt="Herboristerie El Baraka"><p style="margin-top:1rem;max-width:26em" data-t="fAbout"></p></div>
+    <div><img src="img/logo-1998-cream.png" alt="Herboristerie El Baraka, depuis 1998" width="1400" height="516"><p style="margin-top:1rem;max-width:26em" data-t="fAbout"></p></div>
     <div><span class="eyebrow" data-t="fRay"></span><div id="footRay"></div></div>
     <div><span class="eyebrow" data-t="fVisit"></span><p data-t="addr"></p><p><a href="https://www.google.com/maps/search/?api=1&amp;query=Herboristerie+El+Baraka+593+Bd+de+Palestine+Mohammedia" target="_blank" rel="noopener" data-t="route"></a></p></div>
     <div><span class="eyebrow" data-t="fContact"></span><p class="num" dir="ltr">06 71 51 29 54</p><p class="num" dir="ltr">05 23 32 95 72</p><p><a href="https://www.instagram.com/herboristerieelbaraka/" target="_blank" rel="noopener" dir="ltr">@herboristerieelbaraka</a></p></div>
@@ -487,8 +515,8 @@ dialog.search[open]{display:flex;flex-direction:column;animation:pop .3s cubic-b
       <fieldset>
         <legend data-t="mode"></legend>
         <label class="opt"><input type="radio" name="mode" id="m-pick" value="pick" checked><span data-t="mPick"></span><small data-t="free"></small></label>
-        <label class="opt"><input type="radio" name="mode" id="m-moh" value="moh"><span data-t="mMoh"></span><small class="num" id="feeLbl"></small></label>
-        <label class="opt"><input type="radio" name="mode" id="m-far" value="far"><span data-t="mFar"></span><small data-t="tbc"></small></label>
+        <label class="opt"><input type="radio" name="mode" id="m-moh" value="moh"><span data-t="mMoh"></span></label>
+        <label class="opt"><input type="radio" name="mode" id="m-far" value="far"><span data-t="mFar"></span></label>
       </fieldset>
       <div style="display:flex;flex-direction:column;gap:.6rem;margin-top:1rem">
         <label class="f"><span data-t="name"></span><input id="f-name" autocomplete="name"></label>
@@ -518,93 +546,100 @@ dialog.search[open]{display:flex;flex-direction:column;animation:pop .3s cubic-b
 <script src="producer.js"></script>
 <script src="mockups.js"></script>
 <script src="packshots.js"></script>
+<script src="catalogue.js"></script>
 <script src="shop-data.js"></script>
 <script>
 (function(){
   'use strict';
   const E = window.ElBaraka, M = window.Mockups, PK = window.Packshots, D = window.ShopData;
   const WHATSAPP = '212671512954';   // the shop's WhatsApp line, international format
-  const FEE_MOH = 15;                // example delivery fee inside Mohammedia, DH
+  const DEV = /[?&]dev=1\b/.test(location.search); // developer view: product status and catalogue checks
   const $ = (id) => document.getElementById(id);
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   /* ---------------- words ---------------- */
   const T = {
     fr: {
-      ribbon: 'Aperçu de boutique en ligne · produits, prix et livraison donnés à titre d’exemple',
+      ribbon: 'Aperçu de la boutique en ligne · la liste des produits et les prix sont en cours de confirmation',
       navRay: 'Les rayons', navSel: 'La sélection', navCat: 'Tous les produits', navAdv: 'Conseil', navShop: 'La boutique', cart: 'Panier', cur: 'DH',
-      searchShort: 'Rechercher', searchLong: 'Miel, whey, argan, spiruline…', searchPh: 'Rechercher un produit',
-      heroEyebrow: 'Herboristerie El Baraka · Mohammedia',
-      h1: 'Plantes, miels, compléments et soins. Toute la boutique, en ligne.',
-      lede: 'Les rayons du boulevard de Palestine, à commander d’un message. Paiement à la livraison, ou retrait en boutique.',
-      rEyebrow: 'Les rayons', rTitle: 'Tout ce que la boutique propose', rLede: 'Des plantes au poids jusqu’aux protéines, en passant par le miel, les huiles et le savon noir.',
+      searchShort: 'Rechercher', searchLong: 'Miel, sirop, oméga 3, shampoing…', searchPh: 'Rechercher un produit ou une marque',
+      heroEyebrow: 'Mohammedia · depuis 1998',
+      h1: 'Produits de la ruche, compléments et cosmétiques naturels.',
+      lede: 'L’herboristerie du boulevard de Palestine, à commander d’un message WhatsApp. Paiement à la livraison, ou retrait en boutique.',
+      heroCap: 'Photographiés en boutique',
+      rEyebrow: 'Les rayons', rTitle: 'Tout ce que la boutique propose', rLede: 'Le miel et les sirops de la ruche, les compléments Nutralie, Physalis et Dietaroma, les plantes, et les soins capillaires de la maison.',
       selEyebrow: 'La sélection', selTitle: 'Les produits qu’on vient chercher',
       catTitle: 'Tous les produits', all: 'Tous les rayons', seeRay: 'Voir le rayon', back: 'Tous les rayons', sortDef: 'Ordre de la boutique', sortUp: 'Prix croissant', sortDown: 'Prix décroissant',
       products: (n) => `${n} produit${n > 1 ? 's' : ''}`, formats: (n) => `${n} formats`, flavours: (n) => `${n} goûts`, from: 'dès',
+      ask: 'Prix sur demande', askShort: 'prix à confirmer', avail: 'Disponibilité et prix confirmés avec vous sur WhatsApp.', brand: 'Marque',
+      unknownNote: (n) => `+ ${n} article${n > 1 ? 's' : ''} au prix confirmé sur WhatsApp`,
       aEyebrow: 'Conseil', aTitle: 'Une question ? Demandez, comme au comptoir.', aLede: 'Un format, un goût, un usage : écrivez-nous sur WhatsApp, on vous répond et on vous oriente.', aCta: 'Poser une question', aNote: 'Nos conseils ne remplacent pas l’avis d’un médecin.',
       waAsk: 'Bonjour, j’ai une question :', chatOnline: 'répond en général dans l’heure',
-      chat1: 'Salam, vous avez la whey au chocolat en 2 kg ?', chat2: 'Oui, 820 DH. On vous la livre demain à Mohammedia ?', chat3: 'Parfait. Et un pot de miel d’oranger de 500 g.', chat4: 'C’est noté : total 940 DH, paiement à la livraison.',
-      stEyebrow: 'La boutique', stTitle: 'Depuis 1998, boulevard de Palestine', stLede: 'Une herboristerie de quartier à Mohammedia : des plantes, des miels, des compléments et des soins, avec le même conseil depuis le premier jour.',
-      p1: 'Paiement à la livraison', p1s: 'Vous payez quand vous recevez la commande.', p2: 'Retrait en boutique', p2s: 'Commandez, puis passez prendre sans attendre.', p3: 'Produits d’origine', p3s: 'Chaque produit est vendu dans l’emballage de son fabricant ou de son producteur.',
+      chat1: 'Salam, vous avez le Krill Oméga 3 de Physalis ?', chat2: 'Oui, 190 DH la boîte de 30 capsules. On vous la livre ?', chat3: 'Oui, à Mohammedia. Ajoutez un sirop au miel pour la toux.', chat4: 'C’est noté : 215 DH de produits, paiement à la livraison.',
+      stEyebrow: 'La boutique', stTitle: 'Depuis 1998, boulevard de Palestine', stLede: 'Un magasin spécialisé à Mohammedia : produits de la ruche, produits naturels, compléments alimentaires et cosmétiques, avec le même conseil depuis le premier jour.',
+      p1: 'Paiement à la livraison', p1s: 'Vous payez quand vous recevez la commande.', p2: 'Retrait en boutique', p2s: 'Commandez, puis passez prendre sans attendre.', p3: 'Des marques et des produits maison', p3s: 'Les marques dans leur emballage d’origine, et les produits El Baraka préparés à la boutique.',
       route: 'Itinéraire', front: 'La façade de la boutique, avec son enseigne',
-      oEyebrow: 'Commander', oTitle: 'En trois gestes', o1: 'Choisissez', o1s: 'Ajoutez vos produits au panier, avec le format et le goût.', o2: 'Envoyez sur WhatsApp', o2s: 'La commande arrive prête, nous la confirmons avec vous.', o3: 'Recevez', o3s: 'Livraison à Mohammedia ou retrait en boutique, paiement à la réception.',
+      oEyebrow: 'Commander', oTitle: 'En trois gestes', o1: 'Choisissez', o1s: 'Ajoutez vos produits au panier, avec le format et le goût.', o2: 'Envoyez sur WhatsApp', o2s: 'La commande arrive prête. Nous confirmons avec vous les prix et la livraison.', o3: 'Recevez', o3s: 'Livraison à domicile ou retrait en boutique, paiement à la réception.',
       fEyebrow: 'Bon à savoir', fTitle: 'Questions fréquentes',
       faq: [
-        ['Comment se passe la livraison ?', 'À Mohammedia, nous livrons à domicile. Pour les autres villes, le prix est confirmé avec vous sur WhatsApp. Vous pouvez aussi passer prendre la commande en boutique.'],
+        ['Comment se passe la livraison ?', 'Nous livrons à domicile à Mohammedia et à Casablanca, et dans les autres villes du Maroc. Les frais de livraison sont confirmés avec vous sur WhatsApp, avant l’envoi. Vous pouvez aussi passer prendre la commande en boutique.'],
         ['Comment payer ?', 'En espèces, à la livraison ou au retrait en boutique.'],
         ['Les produits sont-ils d’origine ?', 'Oui. Chaque produit est vendu dans son emballage d’origine, avec l’étiquette de son fabricant ou de son producteur.'],
         ['Je ne sais pas quoi choisir. Pouvez-vous me conseiller ?', 'Bien sûr : écrivez-nous sur WhatsApp avec votre question. Pour un problème de santé, demandez toujours l’avis d’un médecin.'],
         ['Les compléments demandent-ils des précautions ?', 'Oui : respectez la dose indiquée sur la boîte, et demandez conseil en cas de grossesse, d’allaitement ou de traitement.'],
         ['Mon miel a durci. Est-il naturel ?', 'Oui, la cristallisation est naturelle. Un bain-marie tiède, sous 40 °C, le rend liquide.']
       ],
-      fAbout: 'Plantes, miels, compléments et soins, à Mohammedia.', fRay: 'Rayons', fVisit: 'Nous trouver', fContact: 'Nous écrire', addr: '593 bd de Palestine, Mohammedia',
-      fine: 'Aperçu de boutique en ligne : les produits, les prix et la livraison sont donnés à titre d’exemple. Les images de produits sont des illustrations.',
+      fAbout: 'Produits de la ruche, produits naturels, compléments alimentaires et cosmétiques, à Mohammedia depuis 1998.', fRay: 'Rayons', fVisit: 'Nous trouver', fContact: 'Nous écrire', addr: '593 bd de Palestine, Mohammedia',
+      fine: 'Aperçu de la boutique en ligne : la liste des produits et les prix sont en cours de confirmation. Photos : la boutique, et des illustrations pour les produits pas encore photographiés.',
       dTitle: 'Le produit', size: 'Format', flavour: 'Goût', taste: 'Le goût', pair: 'À essayer', sweet: 'Douceur', strong: 'Intensité', use: 'Utilisation', related: 'Dans le même rayon', example: 'Produit d’exemple', add: 'Ajouter au panier', addP: (p) => `Ajouter · ${p}`,
       cTitle: 'Votre commande', emptyH: 'Le panier est vide', empty: 'Ajoutez un produit pour commencer.',
-      mode: 'Comment recevoir la commande ?', mPick: 'Retrait en boutique', mMoh: 'Livraison à Mohammedia', mFar: 'Autre ville', free: 'gratuit', tbc: 'prix à confirmer',
-      name: 'Nom', phone: 'Téléphone', address: 'Adresse', noteL: 'Remarque (facultatif)', sub: 'Sous-total', fee: 'Livraison', total: 'Total',
+      mode: 'Comment recevoir la commande ?', mPick: 'Retrait en boutique', mMoh: 'Livraison Mohammedia ou Casablanca', mFar: 'Livraison dans une autre ville', free: 'gratuit', tbc: 'frais confirmés sur WhatsApp',
+      name: 'Nom', phone: 'Téléphone', address: 'Adresse', noteL: 'Remarque (facultatif)', sub: 'Sous-total', fee: 'Livraison', total: 'Total des produits',
       pv: 'Voir le message envoyé', send: 'Envoyer sur WhatsApp', copy: 'Copier le message', copied: 'Message copié.', copyFail: 'Copie impossible : sélectionnez le texte.',
       added: 'Ajouté au panier', seeCart: 'Voir', seeCartLong: 'Voir le panier', none: 'Aucun produit trouvé. Essayez un autre mot, ou demandez-nous sur WhatsApp.', sRay: 'Les rayons', sProd: 'Produits',
       mHead: 'Bonjour, nouvelle commande pour Herboristerie El Baraka :', mPay: 'Paiement : à la livraison', mName: 'Nom', mPhone: 'Téléphone', mAddr: 'Adresse', mNote: 'Remarque',
-      mPickL: 'Retrait : en boutique', mMohL: 'Livraison : Mohammedia', mFarL: 'Livraison : autre ville (prix à confirmer)', need: 'Ajoutez un produit pour envoyer la commande.'
+      mPickL: 'Retrait : en boutique', mMohL: 'Livraison : Mohammedia ou Casablanca (frais à confirmer)', mFarL: 'Livraison : autre ville (frais à confirmer)', need: 'Ajoutez un produit pour envoyer la commande.'
     },
     ar: {
-      ribbon: 'نسخة تجريبية من المتجر · المنتجات والأثمنة والتوصيل للتوضيح فقط',
+      ribbon: 'نسخة تجريبية من المتجر · لائحة المنتجات والأثمنة فطور التأكيد',
       navRay: 'الأقسام', navSel: 'المختارات', navCat: 'كل المنتجات', navAdv: 'النصيحة', navShop: 'الحانوت', cart: 'السلة', cur: 'درهم',
-      searchShort: 'بحث', searchLong: 'عسل، بروتين، أركان، سبيرولينا…', searchPh: 'قلّب على منتوج',
-      heroEyebrow: 'أعشاب البركة · المحمدية',
-      h1: 'أعشاب، عسل، مكملات وعناية. الحانوت كامل، على الإنترنت.',
-      lede: 'أقسام حانوت شارع فلسطين، كتطلبها بميساج. الدفع عند الاستلام، ولا تاخذها من الحانوت.',
-      rEyebrow: 'الأقسام', rTitle: 'كل ما كاين فالحانوت', rLede: 'من الأعشاب بالوزن حتى البروتين، مرورا بالعسل، الزيوت والصابون البلدي.',
+      searchShort: 'بحث', searchLong: 'عسل، شراب، أوميغا 3، شمبوان…', searchPh: 'قلّب على منتوج ولا ماركة',
+      heroEyebrow: 'المحمدية · منذ 1998',
+      h1: 'منتجات النحل، المكملات ومستحضرات التجميل الطبيعية.',
+      lede: 'عشاب شارع فلسطين، كتطلب منو بميساج فواتساب. الدفع عند الاستلام، ولا تاخذها من الحانوت.',
+      heroCap: 'متصورين فالحانوت',
+      rEyebrow: 'الأقسام', rTitle: 'كل ما كاين فالحانوت', rLede: 'العسل وشراب العسل، مكملات نوتراليا وفيزاليس وديتاروما، الأعشاب، ومنتجات الشعر ديال الدار.',
       selEyebrow: 'المختارات', selTitle: 'المنتجات اللي كيجيو عليها الناس',
       catTitle: 'كل المنتجات', all: 'كل الأقسام', seeRay: 'شوف القسم', back: 'كل الأقسام', sortDef: 'ترتيب الحانوت', sortUp: 'الثمن تصاعديا', sortDown: 'الثمن تنازليا',
       products: (n) => `${n} منتوج`, formats: (n) => `${n} أحجام`, flavours: (n) => `${n} أذواق`, from: 'ابتداء من',
+      ask: 'الثمن عند الطلب', askShort: 'الثمن للتأكيد', avail: 'التوفر والثمن كنأكدوهم معاك فواتساب.', brand: 'الماركة',
+      unknownNote: (n) => `+ ${n} منتوج الثمن ديالو كنأكدوه فواتساب`,
       aEyebrow: 'النصيحة', aTitle: 'عندك سؤال؟ سول، بحال فالحانوت.', aLede: 'حجم، ذوق ولا طريقة الاستعمال: كتب لينا فواتساب، نجاوبوك ونوجهوك.', aCta: 'سول فواتساب', aNote: 'النصيحة ديالنا ما كتعوضش رأي الطبيب.',
       waAsk: 'السلام، عندي سؤال:', chatOnline: 'كيجاوب عادة فساعة',
-      chat1: 'السلام، عندكم البروتين بالشوكولا 2 كيلو؟', chat2: 'إيه، 820 درهم. نوصلوه ليك غدا فالمحمدية؟', chat3: 'مزيان. وزيد علبة عسل البرتقال 500 غرام.', chat4: 'تسجل: المجموع 940 درهم، الدفع عند الاستلام.',
-      stEyebrow: 'الحانوت', stTitle: 'منذ 1998، شارع فلسطين', stLede: 'عشاب ديال الحومة فالمحمدية: أعشاب، عسل، مكملات وعناية، ونفس النصيحة من النهار الأول.',
-      p1: 'الدفع عند الاستلام', p1s: 'كتخلص ملي توصلك الطلبية.', p2: 'الاستلام من الحانوت', p2s: 'اطلب ودوز تاخذ بلا ما تتسنى.', p3: 'منتجات أصلية', p3s: 'كل منتوج كيتباع فالتغليف ديال الصانع ولا المنتج ديالو.',
+      chat1: 'السلام، عندكم كريل أوميغا 3 ديال فيزاليس؟', chat2: 'إيه، 190 درهم العلبة ديال 30 كبسولة. نوصلوها ليك؟', chat3: 'إيه، فالمحمدية. وزيد شراب العسل ديال الكحة.', chat4: 'تسجل: 215 درهم ديال المنتجات، الدفع عند الاستلام.',
+      stEyebrow: 'الحانوت', stTitle: 'منذ 1998، شارع فلسطين', stLede: 'محل متخصص فالمحمدية: منتجات النحل، منتجات طبيعية، مكملات غذائية ومستحضرات تجميل، ونفس النصيحة من النهار الأول.',
+      p1: 'الدفع عند الاستلام', p1s: 'كتخلص ملي توصلك الطلبية.', p2: 'الاستلام من الحانوت', p2s: 'اطلب ودوز تاخذ بلا ما تتسنى.', p3: 'ماركات ومنتجات الدار', p3s: 'الماركات فالتغليف الأصلي ديالها، ومنتجات البركة موجدة فالحانوت.',
       route: 'الطريق', front: 'واجهة الحانوت مع اللوحة',
-      oEyebrow: 'الطلب', oTitle: 'فثلاث خطوات', o1: 'اختر', o1s: 'زيد المنتجات للسلة، مع الحجم والذوق.', o2: 'صيفط فواتساب', o2s: 'الطلبية كتوصلنا جاهزة، وكنأكدوها معاك.', o3: 'توصل', o3s: 'التوصيل فالمحمدية ولا الاستلام من الحانوت، والدفع عند الاستلام.',
+      oEyebrow: 'الطلب', oTitle: 'فثلاث خطوات', o1: 'اختر', o1s: 'زيد المنتجات للسلة، مع الحجم والذوق.', o2: 'صيفط فواتساب', o2s: 'الطلبية كتوصلنا جاهزة، وكنأكدو معاك الأثمنة والتوصيل.', o3: 'توصل', o3s: 'التوصيل للدار ولا الاستلام من الحانوت، والدفع عند الاستلام.',
       fEyebrow: 'مزيان تعرف', fTitle: 'أسئلة متكررة',
       faq: [
-        ['كيفاش كيدوز التوصيل؟', 'فالمحمدية كنوصلو للدار. للمدن الأخرى، الثمن كنأكدوه معاك فواتساب. وتقدر تدوز تاخذ الطلبية من الحانوت.'],
+        ['كيفاش كيدوز التوصيل؟', 'كنوصلو للدار فالمحمدية والدار البيضاء، وللمدن الأخرى فالمغرب. ثمن التوصيل كنأكدوه معاك فواتساب قبل ما نصيفطو. وتقدر تدوز تاخذ الطلبية من الحانوت.'],
         ['كيفاش نخلص؟', 'كاش، عند الاستلام ولا فالحانوت.'],
         ['واش المنتجات أصلية؟', 'إيه. كل منتوج كيتباع فالتغليف الأصلي ديالو، بالملصق ديال الصانع ولا المنتج.'],
         ['ما عرفتش شنو نختار. تقدرو تنصحوني؟', 'أكيد: كتب لينا سؤالك فواتساب. وإلا كان مشكل صحي، سول ديما الطبيب.'],
         ['واش المكملات خاصها احتياطات؟', 'إيه: احترم الجرعة المكتوبة على العلبة، واطلب النصيحة فحالة الحمل، الرضاعة ولا العلاج.'],
         ['العسل ديالي تجمّد. واش طبيعي؟', 'إيه، التبلور طبيعي. حمام مائي دافئ، أقل من 40 درجة، كيرجعو سائل.']
       ],
-      fAbout: 'أعشاب، عسل، مكملات وعناية، فالمحمدية.', fRay: 'الأقسام', fVisit: 'العنوان', fContact: 'تواصل معنا', addr: '593 شارع فلسطين، المحمدية',
-      fine: 'نسخة تجريبية من المتجر: المنتجات والأثمنة والتوصيل للتوضيح فقط. صور المنتجات رسوم توضيحية.',
+      fAbout: 'منتجات النحل، منتجات طبيعية، مكملات غذائية ومستحضرات تجميل، فالمحمدية منذ 1998.', fRay: 'الأقسام', fVisit: 'العنوان', fContact: 'تواصل معنا', addr: '593 شارع فلسطين، المحمدية',
+      fine: 'نسخة تجريبية من المتجر: لائحة المنتجات والأثمنة فطور التأكيد. الصور: من الحانوت، ورسوم للمنتجات اللي مازال ما تصوروش.',
       dTitle: 'المنتوج', size: 'الحجم', flavour: 'الذوق', taste: 'الذوق', pair: 'جربه', sweet: 'الحلاوة', strong: 'القوة', use: 'الاستعمال', related: 'من نفس القسم', example: 'منتوج للتوضيح', add: 'زيد للسلة', addP: (p) => `زيد · ${p}`,
       cTitle: 'طلبك', emptyH: 'السلة خاوية', empty: 'زيد شي منتوج باش تبدا.',
-      mode: 'كيفاش بغيتي تتسلم؟', mPick: 'ناخذو من الحانوت', mMoh: 'توصيل فالمحمدية', mFar: 'مدينة أخرى', free: 'مجانا', tbc: 'الثمن نأكدوه معاك',
-      name: 'الاسم', phone: 'الهاتف', address: 'العنوان', noteL: 'ملاحظة (اختياري)', sub: 'المجموع الفرعي', fee: 'التوصيل', total: 'المجموع',
+      mode: 'كيفاش بغيتي تتسلم؟', mPick: 'ناخذو من الحانوت', mMoh: 'توصيل المحمدية ولا الدار البيضاء', mFar: 'توصيل لمدينة أخرى', free: 'مجانا', tbc: 'ثمن التوصيل كنأكدوه فواتساب',
+      name: 'الاسم', phone: 'الهاتف', address: 'العنوان', noteL: 'ملاحظة (اختياري)', sub: 'المجموع الفرعي', fee: 'التوصيل', total: 'مجموع المنتجات',
       pv: 'شوف الميساج', send: 'صيفط الطلب فواتساب', copy: 'نسخ الميساج', copied: 'تنسخ الميساج.', copyFail: 'ما قدرناش ننسخو، حدد النص.',
       added: 'تزاد للسلة', seeCart: 'شوف', seeCartLong: 'شوف السلة', none: 'ما لقينا والو. جرب كلمة أخرى، ولا سولنا فواتساب.', sRay: 'الأقسام', sProd: 'المنتجات',
       mHead: 'السلام عليكم، طلب جديد لأعشاب البركة:', mPay: 'الدفع: عند الاستلام', mName: 'الاسم', mPhone: 'الهاتف', mAddr: 'العنوان', mNote: 'ملاحظة',
-      mPickL: 'الاستلام: من الحانوت', mMohL: 'التوصيل: المحمدية', mFarL: 'التوصيل: مدينة أخرى (الثمن للتأكيد)', need: 'زيد منتوج باش تصيفط الطلب.'
+      mPickL: 'الاستلام: من الحانوت', mMohL: 'التوصيل: المحمدية ولا الدار البيضاء (الثمن للتأكيد)', mFarL: 'التوصيل: مدينة أخرى (الثمن للتأكيد)', need: 'زيد منتوج باش تصيفط الطلب.'
     }
   };
 
@@ -613,35 +648,41 @@ dialog.search[open]{display:flex;flex-direction:column;animation:pop .3s cubic-b
   const CAT = Object.fromEntries(CATS.map(c => [c.id, c]));
   const byId = Object.fromEntries(PRODUCTS.map(p => [p.id, p]));
   const inCat = (cid) => PRODUCTS.filter(p => p.cat === cid);
-  const REP = { miel: 'ora', ruche: 'pol', plantes: 'verv', maison: 'n07', complements: 'spir', sport: 'whey', vitalite: 'maca', remedes: 'sirop', huiles: 'argan', soins: 'beldi' };
+  // the picture on each rayon tile: a photographed product when the rayon has one
+  const REP_PREF = { miel: 'ora', sirops: 'sirop-toux', complements: 'nutralie-omega3', vitalite: 'sexomiel', cosmetiques: 'shampoing', maison: 'n07' };
+  const rep = (cid) => byId[REP_PREF[cid]] && byId[REP_PREF[cid]].cat === cid ? byId[REP_PREF[cid]] : (inCat(cid).find(p => p.photo) || inCat(cid)[0]);
+  const HERO = ['shampoing', 'nutralie-omega3', 'creme-capillaire', 'physalis-krill', 'nutralie-magnesium'];
 
   let lang = 'fr', cart = {}, current = null, curSize = 0, curFlav = 0, curQty = 1, view = 'all', sort = 'def';
   try { const s = JSON.parse(localStorage.getItem('elb-cart4') || '{}'); if (s && typeof s === 'object') cart = s; } catch (e) {}
   try { const l = localStorage.getItem('elb-lang4'); if (l === 'fr' || l === 'ar') lang = l; } catch (e) {}
   const save = () => { try { localStorage.setItem('elb-cart4', JSON.stringify(cart)); localStorage.setItem('elb-lang4', lang); } catch (e) {} };
   const t = (k, ...a) => { const v = T[lang][k]; return typeof v === 'function' ? v(...a) : (v ?? k); };
-  const money = (n) => `${n} ${t('cur')}`;
+  // a price is a number of DH, or null while the shop has not confirmed it
+  const known = (n) => typeof n === 'number';
+  const money = (n) => known(n) ? `${n} ${t('cur')}` : t('askShort');
   const nm = (p) => lang === 'ar' ? p.ar : p.fr;
   const cn = (c) => lang === 'ar' ? c.ar : c.fr;
-  const minPrice = (p) => Math.min(...p.sizes.map(s => s[1]));
-  const priceLabel = (p) => p.sizes.length > 1 ? `<small>${t('from')}</small>${money(minPrice(p))}` : money(p.sizes[0][1]);
+  const minPrice = (p) => { const k = p.sizes.map(s => s[1]).filter(known); return k.length ? Math.min(...k) : Infinity; };
+  const priceLabel = (p) => { const m = minPrice(p); if (m === Infinity) return `<small>${t('ask')}</small>`; return p.sizes.length > 1 ? `<small>${t('from')}</small>${money(m)}` : money(p.sizes[0][1]); };
   const fmtLine = (p) => [p.sizes.length > 1 ? t('formats', p.sizes.length) : p.sizes[0][0], p.flavours ? t('flavours', p.flavours.length) : ''].filter(Boolean).join(' · ');
   const hexes = (n) => `<span class="hexes" aria-label="${n}/5">${[1, 2, 3, 4, 5].map(i => `<i class="${i <= n ? 'on' : ''}"></i>`).join('')}</span>`;
 
   // the product's image: its photo, or a drawn packshot on the same studio backdrop
   function pic(p, small){
-    if (p.photo) return `<img src="${p.photo}${small ? '-s' : ''}.jpg" alt="" loading="lazy" decoding="async">`;
+    if (p.photo) return `<img class="ph" src="${p.photo}${small ? '-s' : ''}.jpg" alt="" loading="lazy" decoding="async">`;
     const o = Object.assign({ name: p.pack.name || p.fr, ar: p.pack.ar !== undefined ? p.pack.ar : p.ar, sub: p.pack.sub !== undefined ? p.pack.sub : p.sizes[0][0], color: CAT[p.cat].color }, p.pack);
     if (p.pack.brand) Object.assign(o, { brand: 'img/logo-cream.png', big: p.big, name: p.fr });
     return PK.draw(o);
   }
-  const studio = (p, small, extra = '') => `<span class="studio" ${extra}>${pic(p, small)}</span>`;
+  const studio = (p, small, extra = '', inner = '') => `<span class="studio" ${extra}>${pic(p, small)}${DEV ? inner : ''}</span>`;
 
   /* ---------------- cart model: key = id|size|flavour ---------------- */
   const key = (id, si, fi) => `${id}|${si}|${fi}`;
   const parse = (k) => { const [id, si, fi] = k.split('|'); return { p: byId[id], si: +si, fi: +fi }; };
   const valid = (k) => { const x = parse(k); return x.p && x.p.sizes[x.si] && (x.fi < 0 || (x.p.flavours && x.p.flavours[x.fi])); };
-  const unit = (k) => { const x = parse(k); return x.p.sizes[x.si][1]; };
+  const unit = (k) => { const x = parse(k); return x.p.sizes[x.si][1]; }; // null when not confirmed
+  const lineTotal = (k) => known(unit(k)) ? unit(k) * cart[k] : null;
   const variantText = (k) => { const x = parse(k); return [x.p.sizes[x.si][0], x.fi >= 0 ? (lang === 'ar' ? x.p.flavours[x.fi].ar : x.p.flavours[x.fi].fr) : ''].filter(Boolean).join(' · '); };
   const simple = (p) => p.sizes.length === 1 && !p.flavours;
   const defKey = (p) => key(p.id, p.def || 0, p.flavours ? 0 : -1);
@@ -659,23 +700,22 @@ dialog.search[open]{display:flex;flex-direction:column;animation:pop .3s cubic-b
   function card(p, i){
     const c = CAT[p.cat];
     return `<article class="card" style="--i:${i || 0};--c:${c.color}">
-      <button class="tile" type="button" data-open="${p.id}" aria-label="${nm(p)}">${studio(p, !!p.photo)}</button>
-      <div class="meta"><span class="cat"><i class="dotc" style="--c:${c.color}"></i>${cn(c)}</span><h3>${nm(p)}</h3><span class="price num">${priceLabel(p)}</span><span class="fmt">${fmtLine(p)}</span><span class="ctl" data-ctl="${p.id}">${control(p)}</span></div></article>`;
+      <button class="tile" type="button" data-open="${p.id}" aria-label="${nm(p)}">${studio(p, !!p.photo, '', `<span class="st st-${p.status}">${p.status}</span>`)}</button>
+      <div class="meta"><span class="cat"><i class="dotc" style="--c:${c.color}"></i>${p.brand || cn(c)}</span><h3>${nm(p)}</h3><span class="price num">${priceLabel(p)}</span><span class="fmt">${fmtLine(p)}</span><span class="ctl" data-ctl="${p.id}">${control(p)}</span></div></article>`;
   }
   function refreshControls(id){ document.querySelectorAll(`[data-ctl="${id}"]`).forEach(el => el.innerHTML = control(byId[id])); }
 
   /* ---------------- hero still life ---------------- */
   function renderStill(){
-    const L = [ // [product, left%, bottom%, width%, z, delay]
-      ['n07', 2, 30, 31, 1, 0], ['ora', 26, 22, 48, 2, 1.2], ['spir', 70, 31, 26, 1, .6],
-      ['whey', 4, 4, 38, 3, 2], ['beldi', 37, 1, 28, 4, .9], ['argan', 63, 4, 32, 3, 1.6]
-    ];
-    $('still').innerHTML = L.map(([id, l, b, w, z, d]) => `<div class="it" style="left:${l}%;bottom:${b}%;width:${w}%;z-index:${z};animation-delay:-${d}s">${pic(byId[id])}</div>`).join('') + `<figcaption>${lang === 'ar' ? 'من أقسام الحانوت' : 'Quelques produits des rayons'}</figcaption>`;
+    const list = HERO.map(id => byId[id]).filter(p => p && p.photo);
+    const fill = PRODUCTS.filter(p => p.photo && !list.includes(p));
+    const shown = list.concat(fill).slice(0, 5);
+    $('still').innerHTML = shown.map((p, i) => `<button class="it" type="button" data-open="${p.id}" aria-label="${nm(p)}"><img src="${p.photo}${i ? '-s' : ''}.jpg" alt="" ${i ? 'loading="lazy"' : 'fetchpriority="high"'} decoding="async"><span>${nm(p)}</span></button>`).join('') + `<figcaption>${t('heroCap')}</figcaption>`;
   }
 
   /* ---------------- rayons ---------------- */
   function renderRayons(){
-    $('rayGrid').innerHTML = CATS.map(c => `<button class="ray rv" type="button" data-cat="${c.id}" style="--c:${c.color}"><span class="studio"><span class="glow"></span>${pic(byId[REP[c.id]], true)}</span>
+    $('rayGrid').innerHTML = CATS.map(c => `<button class="ray rv" type="button" data-cat="${c.id}" style="--c:${c.color}"><span class="studio"><span class="glow"></span>${rep(c.id) ? pic(rep(c.id), true) : ''}</span>
       <span><b>${lang === 'ar' ? c.ar : c.fr}</b><small><span>${t('products', inCat(c.id).length)}</span>${lang === 'ar' ? '' : `<span dir="rtl">${c.ar}</span>`}</small></span></button>`).join('');
     $('quick').innerHTML = CATS.slice(0, 7).map(c => `<button type="button" data-cat="${c.id}" style="--c:${c.color}"><i></i>${cn(c)}</button>`).join('');
     $('footRay').innerHTML = CATS.map(c => `<button class="fl" type="button" data-cat="${c.id}">${cn(c)}</button>`).join('');
@@ -694,8 +734,10 @@ dialog.search[open]{display:flex;flex-direction:column;animation:pop .3s cubic-b
     $('tabs').innerHTML = tabs.map(([id, label, n]) => `<button class="tab" role="tab" type="button" data-tab="${id}" aria-selected="${view === id}" style="--c:${id === 'all' ? 'var(--ink)' : CAT[id].color}">${id === 'all' ? '' : '<i class="dotc"></i>'}${label} <small class="num">${n}</small></button>`).join('');
   }
   function sorted(list){
-    if (sort === 'up') return list.slice().sort((a, b) => minPrice(a) - minPrice(b));
-    if (sort === 'down') return list.slice().sort((a, b) => minPrice(b) - minPrice(a));
+    // products without a confirmed price always come last
+    const cmp = (a, b, dir) => { const x = minPrice(a), y = minPrice(b); if (x === y) return 0; if (x === Infinity) return 1; if (y === Infinity) return -1; return dir * (x - y); };
+    if (sort === 'up') return list.slice().sort((a, b) => cmp(a, b, 1));
+    if (sort === 'down') return list.slice().sort((a, b) => cmp(a, b, -1));
     return list;
   }
   function renderCatalogue(animate){
@@ -758,10 +800,10 @@ dialog.search[open]{display:flex;flex-direction:column;animation:pop .3s cubic-b
     let rows = '';
     if (p.cat === 'miel') rows = `<dl class="dl"><dt>${t('taste')}</dt><dd>${lang === 'ar' ? p.descAr : p.descFr}</dd><dt>${t('sweet')}</dt><dd>${hexes(p.sweet)}</dd><dt>${t('strong')}</dt><dd>${hexes(p.strong)}</dd><dt>${t('pair')}</dt><dd>${lang === 'ar' ? p.pairAr : p.pairFr}</dd></dl>`;
     else if (p.useFr) rows = `<dl class="dl"><dt>${t('use')}</dt><dd>${lang === 'ar' ? p.useAr : p.useFr}</dd></dl>`;
-    const sizes = p.sizes.length > 1 ? `<div class="opts"><span>${t('size')}</span><div class="seg" role="group" aria-label="${t('size')}">${p.sizes.map((s, i) => `<button type="button" data-size="${i}" aria-pressed="${i === curSize}"><bdi>${s[0]}</bdi><small class="num">${money(s[1])}</small></button>`).join('')}</div></div>` : '';
+    const sizes = p.sizes.length > 1 ? `<div class="opts"><span>${t('size')}</span><div class="seg" role="group" aria-label="${t('size')}">${p.sizes.map((s, i) => `<button type="button" data-size="${i}" aria-pressed="${i === curSize}"><bdi>${s[0]}</bdi><small class="num">${money(s[1])}</small></button>`).join('')}</div></div>` : `<dl class="dl"><dt>${t('size')}</dt><dd><bdi>${p.sizes[0][0]}</bdi></dd>${p.brand ? `<dt>${t('brand')}</dt><dd>${p.brand}</dd>` : ''}</dl>`;
     const flav = p.flavours ? `<div class="opts"><span>${t('flavour')}</span><div class="seg" role="group" aria-label="${t('flavour')}">${p.flavours.map((f, i) => `<button type="button" data-flav="${i}" aria-pressed="${i === curFlav}">${lang === 'ar' ? f.ar : f.fr}</button>`).join('')}</div></div>` : '';
     const note = D.NOTES[p.cat] ? `<div class="know">${lang === 'ar' ? D.NOTES[p.cat].ar : D.NOTES[p.cat].fr}</div>` : '';
-    const ex = (p.cat === 'maison' && !p.real) ? `<div class="know">${t('example')}</div>` : '';
+    const ex = p.status === 'example' ? `<div class="know">${t('example')}</div>` : (p.status === 'brand' || !p.sizes.every(s => known(s[1]))) ? `<div class="know">${t('avail')}</div>` : '';
     const rel = inCat(p.cat).filter(q => q.id !== p.id).slice(0, 3);
     $('dBody').innerHTML = `${studio(p)}
       <div><div class="dcat eyebrow"><i class="dotc" style="--c:${c.color}"></i>${cn(c)}</div>
@@ -775,9 +817,9 @@ dialog.search[open]{display:flex;flex-direction:column;animation:pop .3s cubic-b
   function renderBar(){
     if (!current) return;
     const price = current.sizes[curSize][1];
-    $('dPrice').textContent = money(price * curQty);
+    $('dPrice').textContent = known(price) ? money(price * curQty) : t('ask');
     $('dN').textContent = curQty;
-    $('dAdd').textContent = t('addP', money(price * curQty));
+    $('dAdd').textContent = known(price) ? t('addP', money(price * curQty)) : t('add');
   }
   function openDetail(id){
     current = byId[id]; if (!current) return;
@@ -847,27 +889,27 @@ dialog.search[open]{display:flex;flex-direction:column;animation:pop .3s cubic-b
   const mode = () => (document.querySelector('input[name=mode]:checked') || {}).value || 'pick';
   function message(){
     const keys = Object.keys(cart).filter(valid);
-    const L = keys.map(k => { const x = parse(k); return `• ${nm(x.p)} (⁦${variantText(k)}⁩) × ${cart[k]} = ${money(unit(k) * cart[k])}`; });
-    const sub = keys.reduce((s, k) => s + unit(k) * cart[k], 0);
-    const m = mode(), fee = m === 'moh' ? FEE_MOH : 0;
+    const L = keys.map(k => { const x = parse(k); return `• ${nm(x.p)} (⁦${variantText(k)}⁩) × ${cart[k]} = ${money(lineTotal(k))}`; });
+    const sub = keys.reduce((s, k) => s + (lineTotal(k) || 0), 0);
+    const unknown = keys.filter(k => lineTotal(k) === null).length;
+    const m = mode();
     const name = $('f-name').value.trim(), phone = $('f-phone').value.trim(), addr = $('f-addr').value.trim(), note = $('f-note').value.trim();
-    const out = [t('mHead'), ...L, '', `${t('total')}: ${money(sub + fee)}${fee ? ` (${t('fee')} ${money(fee)})` : ''}`, t('mPay'), m === 'pick' ? t('mPickL') : m === 'moh' ? t('mMohL') : t('mFarL')];
+    const out = [t('mHead'), ...L, '', `${t('total')}: ${money(sub)}${unknown ? ` ${t('unknownNote', unknown)}` : ''}`, t('mPay'), m === 'pick' ? t('mPickL') : m === 'moh' ? t('mMohL') : t('mFarL')];
     if (name) out.push(`${t('mName')}: ${name}`);
     if (phone) out.push(`${t('mPhone')}: ${phone}`);
     if (m !== 'pick' && addr) out.push(`${t('mAddr')}: ${addr}`);
     if (note) out.push(`${t('mNote')}: ${note}`);
-    return { text: out.join('\n'), sub, fee, n: keys.length };
+    return { text: out.join('\n'), sub, unknown, n: keys.length };
   }
   function renderCart(){
     const keys = Object.keys(cart).filter(valid);
     $('count').textContent = keys.reduce((s, k) => s + cart[k], 0);
-    $('lines').innerHTML = keys.map(k => { const x = parse(k); return `<li>${studio(x.p, true)}<div><div class="n">${nm(x.p)}</div><div class="s num"><bdi>${variantText(k)}</bdi> · <bdi>${money(unit(k))}</bdi></div></div><div class="r"><span class="num">${money(unit(k) * cart[k])}</span><span class="qty"><button type="button" data-dec="${k}" aria-label="−">−</button><span class="num">${cart[k]}</span><button type="button" data-inc="${k}" aria-label="+">+</button></span></div></li>`; }).join('');
+    $('lines').innerHTML = keys.map(k => { const x = parse(k); return `<li>${studio(x.p, true)}<div><div class="n">${nm(x.p)}</div><div class="s num"><bdi>${variantText(k)}</bdi> · <bdi>${money(unit(k))}</bdi></div></div><div class="r"><span class="num">${money(lineTotal(k))}</span><span class="qty"><button type="button" data-dec="${k}" aria-label="−">−</button><span class="num">${cart[k]}</span><button type="button" data-inc="${k}" aria-label="+">+</button></span></div></li>`; }).join('');
     const has = keys.length > 0;
     $('empty').hidden = has; $('form').hidden = !has; $('totals').hidden = !has; $('pvWrap').hidden = !has;
     $('addrWrap').hidden = mode() === 'pick';
-    $('feeLbl').textContent = money(FEE_MOH);
     const m = message();
-    $('totals').innerHTML = `<div><span>${t('sub')}</span><span class="num">${money(m.sub)}</span></div><div><span>${t('fee')}</span><span class="num">${mode() === 'far' ? t('tbc') : money(m.fee)}</span></div><div class="g"><span>${t('total')}</span><span class="num">${money(m.sub + m.fee)}</span></div>`;
+    $('totals').innerHTML = `<div class="g"><span>${t('total')}</span><span class="num">${money(m.sub)}</span></div>${m.unknown ? `<div class="small">${t('unknownNote', m.unknown)}</div>` : ''}<div class="small">${mode() === 'pick' ? '' : t('tbc')}</div>`;
     $('preview').textContent = m.n ? m.text : t('need');
     $('send').href = m.n ? `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(m.text)}` : '#';
     $('send').style.opacity = m.n ? '' : '.4'; $('send').style.pointerEvents = m.n ? '' : 'none';
@@ -898,7 +940,7 @@ dialog.search[open]{display:flex;flex-direction:column;animation:pop .3s cubic-b
       return;
     }
     const words = q.split(/\s+/);
-    hits = PRODUCTS.map(p => { const hay = norm([p.fr, p.ar, CAT[p.cat].fr, CAT[p.cat].ar, p.descFr || '', (p.flavours || []).map(f => f.fr).join(' ')].join(' ')); const nameHay = norm(p.fr + ' ' + p.ar); const ok = words.every(w => hay.includes(w)); return ok ? [p, words.some(w => nameHay.includes(w)) ? 0 : 1] : null; })
+    hits = PRODUCTS.map(p => { const hay = norm([p.fr, p.ar, p.brand || '', CAT[p.cat].fr, CAT[p.cat].ar, p.descFr || '', (p.flavours || []).map(f => f.fr).join(' ')].join(' ')); const nameHay = norm(p.fr + ' ' + p.ar); const ok = words.every(w => hay.includes(w)); return ok ? [p, words.some(w => nameHay.includes(w)) ? 0 : 1] : null; })
       .filter(Boolean).sort((a, b) => a[1] - b[1]).map(x => x[0]).slice(0, 14);
     hitIdx = 0;
     $('sres').innerHTML = hits.length ? `<div class="group">${t('sProd')}</div>` + hits.map((p, i) => `<button class="hit" type="button" role="option" data-open="${p.id}" aria-selected="${i === 0}">${studio(p, true)}<span><b>${nm(p)}</b><small>${cn(CAT[p.cat])} · ${fmtLine(p)}</small></span><span class="p num">${priceLabel(p)}</span></button>`).join('') : `<p class="snone">${t('none')}</p>`;
@@ -926,6 +968,18 @@ dialog.search[open]{display:flex;flex-direction:column;animation:pop .3s cubic-b
   document.querySelectorAll('.lang button').forEach(b => b.onclick = () => { if (lang === b.dataset.lang) return; lang = b.dataset.lang; save(); render(); });
   addEventListener('scroll', () => $('top').classList.toggle('scrolled', scrollY > 8), { passive: true });
   $('front').innerHTML = M.shopfront();
+
+  // developer view: open the shop with ?dev=1 to see what each product is and whether catalogue.js has mistakes
+  if (DEV) {
+    document.body.classList.add('dev');
+    const n = (s) => PRODUCTS.filter(p => p.status === s).length;
+    const noPrice = PRODUCTS.filter(p => minPrice(p) === Infinity).length;
+    const bar = document.createElement('div'); bar.className = 'devbar';
+    bar.innerHTML = `<span>DEV · ${PRODUCTS.length} produits</span><span>shop ${n('shop')}</span><span>brand ${n('brand')}</span><span>example ${n('example')}</span><span>sans prix ${noPrice}</span>`
+      + (D.problems.length ? `<span class="bad">${D.problems.length} erreur(s) : ${D.problems.map(x => x.replace(/</g, '&lt;')).join(' · ')}</span>` : '<span>catalogue.js OK</span>')
+      + `<a href="editor.html">Ouvrir l’éditeur</a>`;
+    document.body.prepend(bar);
+  }
 
   function render(){
     applyStatic(); renderMarquee(); renderStill(); renderRayons(); renderSel(); renderTabs(); renderCatalogue(false); renderFaq(); renderCart();

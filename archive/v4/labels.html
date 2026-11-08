@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<link rel="icon" type="image/png" href="img/mark-green.png">
+<link rel="apple-touch-icon" href="img/mark-green.png">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>El Baraka · planche d’impression</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Tajawal:wght@700&family=Amiri:wght@400;700&family=Reem+Kufi:wght@500;700&family=Aref+Ruqaa:wght@400;700&family=IM+Fell+English+SC&family=IM+Fell+English:ital@0;1&family=Readex+Pro:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Print sheet: A4 pages at real size (1 em on a label = 4 mm). Dashed lines are cut lines. */
+:root{--bg:#d9ddd3;--ink:#15251b}
+@page{size:A4;margin:10mm}
+@page land{size:A4 landscape;margin:10mm}
+.page.land{page:land;width:297mm;min-height:210mm;gap:4mm}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:'Readex Pro',system-ui,sans-serif}
+.page{width:210mm;min-height:297mm;margin:10mm auto;background:#fff;padding:10mm;display:flex;flex-direction:column;gap:5mm;break-after:page}
+.page:last-child{break-after:auto}
+.page h1{margin:0;font:400 9pt 'IBM Plex Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:#56665a;display:flex;justify-content:space-between}
+.row{display:flex;gap:5mm;align-items:flex-start}
+.col{display:flex;flex-direction:column;gap:5mm}
+.cut{outline:.15mm dashed #9aa597;outline-offset:1.2mm}
+.w100{width:100mm}.w85{width:85mm}.w200{width:190mm}
+@media print{body{background:#fff}.page,.page.land{margin:0;width:auto;min-height:0;padding:0}}
+</style>
+</head>
+<body class="elb-sheet">
+<div id="out"></div>
+<script src="baraka.js"></script>
+<script src="producer.js"></script>
+<script>
+(function(){
+  const E = window.ElBaraka;
+  const st = document.createElement('style'); st.textContent = E.LABEL_CSS; document.head.appendChild(st);
+  const C = E.CATALOG, house = C.filter(p => p.kind === 'house'), honey = C.filter(p => p.kind === 'honey');
+  const cut = (w, html) => `<div class="cut w${w}">${html}</div>`;
+  let h = '';
+  // house products: 200 x 60 mm wrap-around, two per landscape page, real size
+  for (let i = 0; i < house.length; i += 2) {
+    h += `<section class="page land"><h1><span>Produits maison · étiquette 200 × 60 mm · taille réelle${i ? '' : ' · seul le mélange digestif est un vrai produit, les autres sont des exemples'}</span><span>${i / 2 + 1} / ${Math.ceil(house.length / 2)}</span></h1>
+      ${house.slice(i, i + 2).map(p => `<div class="cut" style="width:200mm">${E.houseWrap(p)}</div>`).join('')}</section>`;
+  }
+  h += `<section class="page"><h1><span>Cartes du miel · 85 × 55 mm · recto / verso</span><span>1 / 2</span></h1>
+    ${honey.slice(0, 4).map(x => `<div class="row">${cut(85, E.honeyCard(x))}${cut(85, E.honeyCardBack(x))}</div>`).join('')}</section>`;
+  h += `<section class="page"><h1><span>Cartes du miel · suite</span><span>2 / 2</span></h1>
+    ${honey.slice(4).map(x => `<div class="row">${cut(85, E.honeyCard(x))}${cut(85, E.honeyCardBack(x))}</div>`).join('')}</section>`;
+  const PR = window.Producer, PH = PR.HONEYS;
+  const pst = document.createElement('style'); pst.textContent = PR.CSS; document.head.appendChild(pst);
+  for (let i = 0; i < PH.length; i += 2) {
+    h += `<section class="page land"><h1><span>Miel · étiquette de la coopérative 200 × 60 mm + scellé 40 × 85 mm · taille réelle · champs [ ] à remplir par la coopérative · scellé : papier destructible</span><span>${i / 2 + 1} / ${Math.ceil(PH.length / 2)}</span></h1>
+      ${PH.slice(i, i + 2).map(x => `<div class="row" style="align-items:center"><div class="cut" style="width:200mm">${PR.label(x)}</div><div class="cut" style="width:40mm">${PR.seal(x)}</div></div>`).join('')}
+</section>`;
+  }
+  document.getElementById('out').innerHTML = h;
+})();
+</script>
+</body>
+</html>

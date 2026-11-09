@@ -999,17 +999,22 @@ dialog.search[open]{display:flex;flex-direction:column;animation:pop 220ms var(-
     open.forEach(d => d.close());
     go();
   }
-  $('menu').addEventListener('click', (e) => {
-    const a = e.target.closest('.mlinks a'); if (!a) return;
+  // in-page links scroll to their section without leaving a section hash in the address,
+  // so a reload, a reopened tab or an autocompleted address starts at the top, not at the section last visited
+  document.addEventListener('click', (e) => {
+    const a = e.target.closest('a[href]');
+    if (!a || e.defaultPrevented || e.button || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
     const href = a.getAttribute('href');
-    if (!href.startsWith('#')) { leaveSheets(() => {}); return; }
+    if (!href.startsWith('#')) { if (a.closest('#menu')) leaveSheets(() => {}); return; }
+    const el = href.length > 1 ? document.getElementById(href.slice(1)) : null;
+    if (!el) return;
     e.preventDefault();
     leaveSheets(() => {
-      const el = document.querySelector(href);
-      try { history.replaceState(null, '', href); } catch (err) { /* history unavailable */ }
-      if (el) el.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' });
+      try { history.replaceState(null, '', location.pathname + location.search); } catch (err) { /* history unavailable */ }
+      el.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' });
     });
   });
+  try { history.scrollRestoration = 'manual'; } catch (e) { /* not supported */ }
   function renderBrands(){
     $('brands').innerHTML = BRANDS.map(b => `<button class="brandrow" type="button" data-brand="${esc(b.id)}"><span><h3 dir="ltr">${esc(b.id)}</h3><p>${t('products', b.list.length)}${b.id === 'El Baraka' ? ` · ${t('ownBrand')}` : ''}</p></span>
       <span class="thumbs">${b.list.slice(0, 4).map(p => tile(p, true)).join('')}</span></button>`).join('');

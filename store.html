@@ -132,6 +132,9 @@ h2{font-size:clamp(2rem,3.8vw,3.1rem);line-height:1.05}
 .rrow .sub{font-family:var(--f-ar);font-weight:600;font-size:1.06rem;color:var(--forest-muted);white-space:nowrap}
 .rrow .sub[dir=ltr]{font-family:var(--f-body);font-size:.8rem}
 .rrow .arr{opacity:.65;transition:opacity 220ms ease,transform 300ms var(--ease)}
+.rrow .ic{display:none;box-sizing:border-box;width:2.6rem;height:2.6rem;padding:.3rem;border-radius:50%;background:rgba(239,231,211,.1);transition:background-color 220ms ease}
+.rrow .ic i{display:block;width:100%;height:100%;background:var(--forest-ink);-webkit-mask:var(--pm) center/contain no-repeat;mask:var(--pm) center/contain no-repeat}
+.rrow[aria-current="true"] .ic{background:rgba(239,231,211,.22)}
 .scrib{position:absolute;left:-3%;bottom:-.5em;width:106%;height:.62em;overflow:visible;pointer-events:none}
 [dir=rtl] .scrib{left:auto;right:-3%;transform:scaleX(-1)}
 .scrib path{fill:none;stroke:var(--band);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1 1;stroke-dashoffset:1;opacity:0}
@@ -520,8 +523,17 @@ dialog.search[open]{display:flex;flex-direction:column;animation:pop 220ms var(-
   .brand{flex:1 1 0;min-width:0}
   .brand img{width:100%;max-width:143px;height:auto}
   .cartbtn .t{display:none}
-  .hero .wrap{grid-template-columns:1fr;min-height:0;padding-block:2.2rem 0}
-  .plate{width:min(80%,24rem);margin:clamp(5.5rem,28vw,7.5rem) auto clamp(3.5rem,20vw,5.5rem)}
+  /* phones: the plate comes first, under the kicker; the rayons follow as rows with their plant */
+  .hero .wrap{grid-template-columns:minmax(0,1fr);gap:0;min-height:0;padding-block:1.6rem 0}
+  .hero .wrap > div:first-child{display:contents}
+  .hero .kicker{order:1}
+  .plate{order:2;width:min(66%,19rem);margin:clamp(4.4rem,23vw,6rem) auto clamp(3rem,15vw,4rem)}
+  .hero h2{order:3;margin:0 0 .3rem}
+  .rlist{order:4}
+  .hero-acts{order:5;margin-top:1.6rem}
+  .hero .where{order:6;margin:1.5rem 0 2.2rem}
+  .rrow{grid-template-columns:2.6rem minmax(0,1fr) auto auto;gap:.9rem}
+  .rrow .ic{display:block}
   .plate .cap{inset:auto 0 22% auto}
   .shelves .wrap{grid-template-columns:1fr}
   .collage{aspect-ratio:auto;display:flex;gap:1rem;overflow-x:auto;scroll-snap-type:x mandatory;margin-inline:calc(-1 * var(--gut));padding:1rem var(--gut) 1.2rem;scrollbar-width:none}
@@ -533,7 +545,7 @@ dialog.search[open]{display:flex;flex-direction:column;animation:pop 220ms var(-
 }
 @media (max-width:600px){
   .rrow .sub{display:none}
-  .rrow{padding:.8rem 0}
+  .rrow{padding:.7rem 0;grid-template-columns:2.6rem minmax(0,1fr) auto}
 }
 @media (prefers-reduced-motion:reduce){
   .choix-arrow path{stroke-dashoffset:0!important}
@@ -853,7 +865,7 @@ dialog.search[open]{display:flex;flex-direction:column;animation:pop 220ms var(-
   const fine = matchMedia('(hover: hover) and (pointer: fine)');
   function renderRList(){
     const other = (c) => lang === 'ar' ? c.fr : c.ar;
-    $('rlist').innerHTML = CATS.map(c => `<li><button class="rrow" type="button" data-cat="${esc(c.id)}" aria-current="${view === c.id}"><span class="nm">${esc(cn(c))}${SCRIB}</span><span class="sub" dir="${lang === 'ar' ? 'ltr' : 'rtl'}">${esc(other(c))}</span>${ARROW}</button></li>`).join('');
+    $('rlist').innerHTML = CATS.map(c => `<li><button class="rrow" type="button" data-cat="${esc(c.id)}" aria-current="${view === c.id}"><span class="ic" style="--pm:url('${esc(c.plate || '')}.png')" aria-hidden="true"><i></i></span><span class="nm">${esc(cn(c))}${SCRIB}</span><span class="sub" dir="${lang === 'ar' ? 'ltr' : 'rtl'}">${esc(other(c))}</span>${ARROW}</button></li>`).join('');
     $('footRay').innerHTML = CATS.map(c => `<button class="fl" type="button" data-cat="${esc(c.id)}">${esc(cn(c))}</button>`).join('');
     bindScribbles();
     if (!plateCat) { const c = CAT[DEFAULT_PLATE] || CATS.find(x => x.plate); if (c) { plateCat = c.id; layer(0).forEach(el => placePlant(el, c)); } }
@@ -1157,7 +1169,13 @@ dialog.search[open]{display:flex;flex-direction:column;animation:pop 220ms var(-
   }
   document.addEventListener('click', (e) => {
     if (e.target.closest('[data-rail]')) return;
-    const c = e.target.closest('[data-cat]'); if (c) { leaveSheets(() => { brandF = ''; renderTabs(); selectView(c.dataset.cat, true); }); return; }
+    const c = e.target.closest('[data-cat]');
+    if (c) {
+      const go = () => leaveSheets(() => { brandF = ''; renderTabs(); selectView(c.dataset.cat, true); });
+      // on a touch screen a hero rayon first shows its plant on the plate, then opens its products
+      if (c.classList.contains('rrow') && !fine.matches && !reduce && plateCat !== c.dataset.cat) { setPlate(c.dataset.cat, true); setTimeout(go, 520); } else go();
+      return;
+    }
     const br = e.target.closest('[data-brand]'); if (br) { leaveSheets(() => selectBrand(br.dataset.brand, true)); return; }
     const tb = e.target.closest('[data-tab]'); if (tb) { selectView(tb.dataset.tab, false); return; }
     const o = e.target.closest('[data-open]'); if (o) { if ($('search').open) $('search').close(); openDetail(o.dataset.open); return; }

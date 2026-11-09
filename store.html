@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <link rel="icon" type="image/png" href="img/mark-green.png">
 <link rel="apple-touch-icon" href="img/mark-green.png">
+<link rel="preload" as="image" href="img/botanical/menthe.png" fetchpriority="high">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Herboristerie El Baraka · Boutique</title>
 <meta name="description" content="Herboristerie El Baraka, 593 bd de Palestine, Mohammedia. Produits de la ruche, cosmétiques, produits naturels et compléments alimentaires. Commande sur WhatsApp.">
@@ -126,7 +127,7 @@ h2{font-size:clamp(2rem,3.8vw,3.1rem);line-height:1.05}
 .hero h2{color:#f6efdd;font-size:clamp(2.2rem,3.4vw,2.9rem);margin:1.6rem 0 1.1rem}
 .rlist{list-style:none;margin:0;padding:0}
 .rlist li{box-shadow:0 1px 0 rgba(239,231,211,.16)}
-.rrow{all:unset;box-sizing:border-box;cursor:pointer;display:grid;grid-template-columns:minmax(0,1fr) auto auto;align-items:center;gap:1.1rem;width:100%;padding:1.05rem 0 1.1rem;color:var(--forest-ink);transition:transform 200ms var(--ease)}
+.rrow{all:unset;box-sizing:border-box;cursor:pointer;display:grid;grid-template-columns:minmax(0,1fr) auto auto;align-items:center;gap:1.1rem;width:100%;padding:1.05rem 0 1.1rem;color:var(--forest-ink)}
 .rrow .nm{position:relative;justify-self:start;font-family:var(--f-fr);font-size:clamp(1.4rem,1.75vw,1.7rem);white-space:nowrap;line-height:1.15;transition:color 220ms ease}
 .rrow .nm:lang(ar){font-family:var(--f-ar);font-weight:700;font-size:clamp(1.5rem,1.9vw,1.75rem);line-height:1.3}
 .rrow .sub{font-family:var(--f-ar);font-weight:600;font-size:1.06rem;color:var(--forest-muted);white-space:nowrap}
@@ -137,15 +138,13 @@ h2{font-size:clamp(2rem,3.8vw,3.1rem);line-height:1.05}
 .rrow[aria-current="true"] .ic{background:rgba(239,231,211,.22)}
 .scrib{position:absolute;left:-3%;bottom:-.5em;width:106%;height:.62em;overflow:visible;pointer-events:none}
 [dir=rtl] .scrib{left:auto;right:-3%;transform:scaleX(-1)}
-.scrib path{fill:none;stroke:var(--band);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1 1;stroke-dashoffset:1;opacity:0}
-.rrow.drawn .scrib path{transition:stroke-dashoffset 280ms var(--ease)}
-.rrow.leaving .scrib path{transition:stroke-dashoffset 280ms var(--ease),opacity 0s linear 280ms}
+.scrib path{fill:none;stroke:var(--band);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1 1;stroke-dashoffset:1;opacity:0;transition:stroke-dashoffset 300ms var(--ease),opacity 180ms ease}
 .rrow:focus-visible{outline:none}
 .rrow:focus-visible .nm{outline:2px solid var(--band);outline-offset:5px;border-radius:2px}
 .rrow[aria-current="true"] .nm{color:#fff}
-.rrow[aria-current="true"] .scrib path{stroke-dashoffset:0;opacity:1}
+.rrow[aria-current="true"] .scrib path,.rrow.previewing .scrib path,.rrow:focus-visible .scrib path{stroke-dashoffset:0;opacity:1}
+.rrow.previewing .arr,.rrow:focus-visible .arr{opacity:1}
 @media (hover:hover) and (pointer:fine){
-  .rrow:hover{transform:translateY(-3px)}
   .rrow:hover .nm{color:#fff}
   .rrow:hover .arr{opacity:1;transform:translateX(5px)}
   [dir=rtl] .rrow:hover .arr{transform:translateX(-5px) scaleX(-1)}
@@ -163,7 +162,7 @@ h2{font-size:clamp(2rem,3.8vw,3.1rem);line-height:1.05}
 .hero .lnk{display:inline-flex;align-items:center;gap:.7rem;color:var(--forest-ink);text-decoration:none;font-size:.92rem}
 .hero .lnk:hover{text-decoration:underline;text-underline-offset:.25em}
 
-.plate{position:relative;width:min(100%,34rem);aspect-ratio:1;margin:0 auto;--mx:0;--my:0}
+.plate{position:relative;width:min(100%,34rem);aspect-ratio:1;margin:0 auto}
 .plate .disc,.plate .inner{position:absolute;inset:0;border-radius:50%}
 .plate .disc{background:var(--cream);animation:disc 480ms var(--ease) both}
 @keyframes disc{from{transform:scale(.94)}}
@@ -171,12 +170,9 @@ h2{font-size:clamp(2rem,3.8vw,3.1rem);line-height:1.05}
 .plate .ring{position:absolute;inset:-3.5%;width:107%;height:107%;overflow:visible;pointer-events:none}
 .plate .ring circle{fill:none;stroke:var(--band);stroke-width:.22}
 @keyframes draw{to{stroke-dashoffset:0}}
-.plant{position:absolute;left:var(--pl,25%);top:var(--pt,-25%);width:var(--pw,80%);height:var(--ph,150%);-webkit-mask:var(--pm) center/contain no-repeat;mask:var(--pm) center/contain no-repeat;transform:translate(calc(var(--mx) * 12px),calc(var(--my) * 9px));transition:transform 420ms var(--ease);transform-origin:50% 88%;animation:grow 650ms var(--ease) 120ms both,sway 5.5s ease-in-out 700ms infinite alternate}
-@keyframes sway{from{rotate:-1.2deg}to{rotate:1.2deg}}
+.plant{position:absolute;left:var(--pl,25%);top:var(--pt,-25%);width:var(--pw,80%);height:var(--ph,150%);-webkit-mask:var(--pm) center/contain no-repeat;mask:var(--pm) center/contain no-repeat;transform-origin:50% 88%;opacity:0;visibility:hidden;pointer-events:none}
 .plant.out{background:#e9dfc6}
-.plant[data-b="1"]{opacity:0}
 .plant.in{background:var(--forest)}
-@keyframes grow{from{clip-path:inset(100% 0 0 0)}to{clip-path:inset(0 0 0 0)}}
 
 /* sliding bar (kept from the first site) */
 .marquee{background:var(--green);color:#efe7d3;overflow:hidden;padding-block:.95rem;direction:ltr}
@@ -618,9 +614,8 @@ dialog.search[open]{display:flex;flex-direction:column;animation:pop 220ms var(-
         <p class="where"><span data-t="ribAddr"></span><a class="num" dir="ltr" href="tel:+212671512954">06 71 51 29 54</a></p>
       </div>
       <figure class="plate" id="plate" aria-hidden="true">
-        <span class="plant out" data-b="0"></span><span class="plant out" data-b="1"></span>
         <span class="disc"></span>
-        <span class="inner"><span class="plant in" data-b="0"></span><span class="plant in" data-b="1"></span></span>
+        <span class="inner"></span>
         <svg class="ring" viewBox="0 0 100 100"><circle cx="50" cy="50" r="49.6"/></svg>
       </figure>
     </div>
@@ -758,7 +753,8 @@ dialog.search[open]{display:flex;flex-direction:column;animation:pop 220ms var(-
 
 <script src="catalogue.js"></script>
 <script src="shop-data.js"></script>
-<script>
+<script type="module">
+import { createHeroMotion } from "./hero-motion.mjs";
 (function(){
   'use strict';
   const D = window.ShopData;
@@ -915,75 +911,9 @@ dialog.search[open]{display:flex;flex-direction:column;animation:pop 220ms var(-
     const other = (c) => lang === 'ar' ? c.fr : c.ar;
     $('rlist').innerHTML = CATS.map(c => `<li><button class="rrow" type="button" data-cat="${esc(c.id)}" aria-current="${view === c.id}">${rayonIcon(c)}<span class="nm">${esc(cn(c))}${SCRIB}</span><span class="sub" dir="${lang === 'ar' ? 'ltr' : 'rtl'}">${esc(other(c))}</span>${ARROW}</button></li>`).join('');
     $('footRay').innerHTML = CATS.map(c => `<button class="fl" type="button" data-cat="${esc(c.id)}">${esc(cn(c))}</button>`).join('');
-    bindScribbles();
-    if (!plateCat) { const c = CAT[DEFAULT_PLATE] || CATS.find(x => x.plate); if (c) { plateCat = c.id; layer(0).forEach(el => placePlant(el, c)); } }
+    heroMotion.bindRows();
   }
-  // the underline writes itself under the pointer: the first stroke follows the mouse, the return stroke finishes on its own
-  function bindScribbles(){
-    $('rlist').querySelectorAll('.rrow').forEach(row => {
-      const path = row.querySelector('.scrib path'), name = row.querySelector('.nm');
-      let max = 0;
-      const drawTo = (v) => { path.style.strokeDashoffset = String(1 - v); path.style.opacity = v > 0 ? '1' : '0'; };
-      row.addEventListener('pointerenter', () => { row.classList.remove('leaving'); max = 0; if (fine.matches) wantPlate(row.dataset.cat); });
-      row.addEventListener('pointermove', (e) => {
-        if (!fine.matches || reduce) return;
-        const r = name.getBoundingClientRect();
-        let x = (e.clientX - r.left) / r.width;
-        if (document.documentElement.dir === 'rtl') x = 1 - x;
-        x = Math.max(0, Math.min(1, x));
-        if (x <= max) return;
-        max = x;
-        if (max > .92) { row.classList.add('drawn'); drawTo(1); return; }
-        row.classList.remove('drawn'); drawTo(max * .52);
-      });
-      const undraw = () => { if (row.getAttribute('aria-current') === 'true') { path.style.strokeDashoffset = ''; path.style.opacity = ''; return; } row.classList.add('leaving'); row.classList.remove('drawn'); max = 0; drawTo(0); };
-      row.addEventListener('pointerleave', () => { clearTimeout(intentT); undraw(); });
-      row.addEventListener('focus', () => { row.classList.add('drawn'); drawTo(1); wantPlate(row.dataset.cat); });
-      row.addEventListener('blur', undraw);
-    });
-  }
-  // the plate shows the plant of the rayon under the pointer (one engraving per rayon, set in catalogue.js)
-  const DEFAULT_PLATE = 'plantes';
-  let plateCat = null;
-  function placePlant(el, c){
-    const r = c.plateRatio || .6, h = Math.min(150, 122 / r) * (c.plateScale || 1), w = h * r;
-    el.style.setProperty('--pm', `url("${c.plate}.png")`);
-    el.style.setProperty('--ph', h + '%'); el.style.setProperty('--pw', w + '%');
-    el.style.setProperty('--pl', (53 - w / 2) + '%'); el.style.setProperty('--pt', ((r > 1 ? 50 - h / 2 + 4 : 50 - h / 2 - 2) + (c.plateY || 0)) + '%');
-  }
-  // two layers: the new plant grows in on the hidden layer while the shown one fades, so the disc is never empty
-  let front = 0, swapAnims = [];
-  const layer = (b) => [...$('plate').querySelectorAll(`.plant[data-b="${b}"]`)];
-  function setPlate(cid, animate){
-    const c = CAT[cid] && CAT[cid].plate ? CAT[cid] : CATS.find(x => x.plate);
-    if (!c || plateCat === c.id) return;
-    plateCat = c.id;
-    swapAnims.forEach(a => a.finish()); swapAnims = [];
-    const back = 1 - front, incoming = layer(back), outgoing = layer(front);
-    const own = (el) => el.getAnimations().filter(a => !(window.CSSAnimation && a instanceof CSSAnimation));
-    incoming.forEach(el => { own(el).forEach(a => a.cancel()); placePlant(el, c); });
-    if (!animate || reduce) {
-      incoming.forEach(el => { el.style.opacity = 1; }); outgoing.forEach(el => { el.style.opacity = 0; });
-    } else {
-      const ease = 'cubic-bezier(.22,1,.36,1)';
-      // the new plant rises from its base and comes into focus; the old one lifts away and blurs
-      incoming.forEach(el => {
-        el.style.opacity = 1;
-        swapAnims.push(el.animate([{ transform: 'translateY(6%) scale(.9) rotate(-3deg)' }, { transform: 'none' }], { duration: 640, easing: ease, composite: 'add' }));
-        swapAnims.push(el.animate([{ opacity: 0, filter: 'blur(8px)', clipPath: 'inset(45% 0 0 0)' }, { opacity: 1, filter: 'blur(0)', clipPath: 'inset(0 0 0 0)' }], { duration: 560, easing: ease }));
-      });
-      outgoing.forEach(el => {
-        el.style.opacity = 0;
-        swapAnims.push(el.animate([{ transform: 'none' }, { transform: 'translateY(-4%) scale(1.05)' }], { duration: 380, easing: 'ease-out', composite: 'add' }));
-        swapAnims.push(el.animate([{ opacity: 1, filter: 'blur(0)' }, { opacity: 0, filter: 'blur(6px)' }], { duration: 380, easing: 'ease-out' }));
-      });
-      swapAnims.push($('plate').querySelector('.disc').animate([{ scale: 1 }, { scale: 1.018 }, { scale: 1 }], { duration: 520, easing: 'ease-in-out' }));
-    }
-    front = back;
-  }
-  // hover intent: the plate changes only when the pointer rests on a rayon, not while it crosses the list
-  let intentT = 0;
-  function wantPlate(cid){ clearTimeout(intentT); intentT = setTimeout(() => setPlate(cid, true), 150); }
+  const heroMotion = createHeroMotion({ hero: $('hero'), plate: $('plate'), list: $('rlist'), categories: CATS });
   // scroll spy: the top bar draws the line under the section on screen
   const SPY = [['accueil', 'hero'], ['marques', 'marques'], ['catalogue', 'catalogue'], ['boutique', 'boutique']];
   document.querySelectorAll('.nav a').forEach(a => { a.insertAdjacentHTML('beforeend', SCRIB); });
@@ -1008,12 +938,6 @@ dialog.search[open]{display:flex;flex-direction:column;animation:pop 220ms var(-
     lastY = y;
   }, { passive: true });
   addEventListener('resize', spy);
-
-  // the plate leans a little toward the pointer
-  if (fine.matches && !reduce) {
-    $('hero').addEventListener('pointermove', (e) => { const r = $('hero').getBoundingClientRect(); $('plate').style.setProperty('--mx', ((e.clientX - r.left) / r.width - .5).toFixed(3)); $('plate').style.setProperty('--my', ((e.clientY - r.top) / r.height - .5).toFixed(3)); });
-    $('hero').addEventListener('pointerleave', () => { $('plate').style.setProperty('--mx', 0); $('plate').style.setProperty('--my', 0); });
-  }
 
   const SETS = [
     ['nutralie-omega3', 'physalis-krill', 'graisse-chameau'],
@@ -1215,13 +1139,17 @@ dialog.search[open]{display:flex;flex-direction:column;animation:pop 220ms var(-
     const dx = b.left + b.width / 2 - (a.left + a.width / 2), dy = b.top + b.height / 2 - (a.top + a.height / 2);
     f.animate([{ transform: 'translate(0,0) scale(1)' }, { transform: `translate(${dx * .5}px,${dy * .5 - 70}px) scale(.7)`, offset: .55 }, { transform: `translate(${dx}px,${dy}px) scale(.2)`, opacity: .4 }], { duration: 420, easing: 'cubic-bezier(.4,.1,.3,1)' }).onfinish = () => f.remove();
   }
+  let rayonNavigation = 0;
   document.addEventListener('click', (e) => {
+    clearTimeout(rayonNavigation);
     if (e.target.closest('[data-rail]')) return;
     const c = e.target.closest('[data-cat]');
     if (c) {
       const go = () => leaveSheets(() => { brandF = ''; renderTabs(); selectView(c.dataset.cat, true); });
+      const newPreview = heroMotion.current !== c.dataset.cat;
+      if (c.classList.contains('rrow')) heroMotion.select(c.dataset.cat);
       // on a touch screen a hero rayon first shows its plant on the plate, then opens its products
-      if (c.classList.contains('rrow') && !fine.matches && !reduce && plateCat !== c.dataset.cat) { setPlate(c.dataset.cat, true); setTimeout(go, 260); } else go();
+      if (c.classList.contains('rrow') && !fine.matches && !heroMotion.reduced && newPreview) { rayonNavigation = setTimeout(go, 260); } else go();
       return;
     }
     const br = e.target.closest('[data-brand]'); if (br) { leaveSheets(() => selectBrand(br.dataset.brand, true)); return; }

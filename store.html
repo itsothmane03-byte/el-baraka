@@ -68,7 +68,10 @@ h2{font-size:clamp(2rem,3.8vw,3.1rem);line-height:1.05}
 /* product image: a warm tile; packshots on white melt into it */
 .tile{position:relative;display:block;aspect-ratio:1;border-radius:14px;overflow:hidden;background:var(--tile);isolation:isolate}
 .tile img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;mix-blend-mode:multiply;transition:transform 420ms var(--ease)}
-.tile.name{display:grid;place-items:center;padding:12%;text-align:center;background:var(--honey);color:#fbf1df}
+.tile.name{display:grid;place-items:center;padding:12%;text-align:center;background:#ece3cc;color:var(--forest)}
+.tile.name::before{content:"";position:absolute;inset:7%;border:1px solid rgba(27,63,45,.28);border-radius:8px;pointer-events:none}
+.tile.name.own{color:#fbf1df}
+.tile.name.own::before{border-color:rgba(251,241,223,.35)}
 .tile.name.own{background:var(--green)}
 .tile.name b{font-family:var(--f-fr);font-weight:400;font-size:clamp(1.05rem,2.2vw,1.45rem);line-height:1.12;text-wrap:balance}
 .tile.name b[dir=rtl]{font-family:var(--f-ar);font-weight:700;font-size:clamp(1.25rem,2.5vw,1.7rem);line-height:1.3}
@@ -84,7 +87,7 @@ h2{font-size:clamp(2rem,3.8vw,3.1rem);line-height:1.05}
 .brand{display:block;line-height:0;margin-inline-end:auto}
 .brand img{height:52px;width:auto}
 .nav{display:flex;gap:clamp(1.2rem,2.6vw,2.6rem);font-size:.98rem}
-.nav a{text-decoration:none;position:relative;padding-block:.3rem}
+.nav a{text-decoration:none;position:relative;padding-block:.3rem;white-space:nowrap}
 .nav a::after{content:"";position:absolute;inset:auto 0 0;height:1.5px;background:currentColor;transform:scaleX(0);transform-origin:left;transition:transform 260ms var(--ease)}
 [dir=rtl] .nav a::after{transform-origin:right}
 .nav a:hover::after{transform:scaleX(1)}
@@ -106,6 +109,8 @@ h2{font-size:clamp(2rem,3.8vw,3.1rem);line-height:1.05}
 .cartbtn .c{display:inline-block}
 .cartbtn.bump .c{animation:bump 450ms var(--ease)}
 @keyframes bump{35%{transform:scale(1.5)}}
+.menubtn{display:none;align-items:center;gap:.5rem;border:0;background:transparent;cursor:pointer;font-size:.95rem;padding:.4rem .2rem}
+.menubtn svg{width:22px;height:22px}
 .iconbtn{display:none;border:0;background:transparent;cursor:pointer;padding:.4rem;line-height:0}
 .iconbtn svg{width:22px;height:22px}
 .arr{width:22px;height:22px;flex:none;transition:transform 260ms var(--ease)}
@@ -122,7 +127,7 @@ h2{font-size:clamp(2rem,3.8vw,3.1rem);line-height:1.05}
 .rrow{all:unset;box-sizing:border-box;cursor:pointer;display:grid;grid-template-columns:minmax(0,1fr) auto auto;align-items:center;gap:1.1rem;width:100%;padding:1.05rem 0 1.1rem;color:var(--forest-ink);transition:transform 200ms var(--ease)}
 .rrow .nm{position:relative;justify-self:start;font-family:var(--f-fr);font-size:clamp(1.4rem,1.75vw,1.7rem);white-space:nowrap;line-height:1.15;transition:color 220ms ease}
 .rrow .nm:lang(ar){font-family:var(--f-ar);font-weight:700;font-size:clamp(1.5rem,1.9vw,1.75rem);line-height:1.3}
-.rrow .sub{font-family:var(--f-kufi);font-size:.86rem;color:var(--forest-muted);white-space:nowrap}
+.rrow .sub{font-family:var(--f-ar);font-weight:600;font-size:1.06rem;color:var(--forest-muted);white-space:nowrap}
 .rrow .sub[dir=ltr]{font-family:var(--f-body);font-size:.8rem}
 .rrow .arr{opacity:.65;transition:opacity 220ms ease,transform 300ms var(--ease)}
 .scrib{position:absolute;left:-3%;bottom:-.5em;width:106%;height:.62em;overflow:visible;pointer-events:none}
@@ -191,7 +196,7 @@ h2{font-size:clamp(2rem,3.8vw,3.1rem);line-height:1.05}
 .pcard{position:absolute;display:flex;flex-direction:column;background:#fff;color:var(--ink);text-decoration:none;cursor:pointer;border:0;padding:clamp(.8rem,1.4vw,1.3rem);font:inherit;text-align:start;transform:rotate(var(--r,0deg));transition:transform 360ms var(--ease),box-shadow 360ms var(--ease)}
 .pcard .lab{font-family:var(--f-sc);font-size:.92rem;letter-spacing:.04em;color:var(--muted)}
 .pcard .lab:lang(ar){letter-spacing:0;font-size:.8rem}
-.pcard .im{flex:1;min-height:0;position:relative;margin:.5rem 0}
+.pcard .im{flex:1;min-height:0;position:relative;margin:.2rem -.3rem .3rem}
 .pcard .im > img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
 .pcard .im .tile{position:absolute;inset:0;aspect-ratio:auto;border-radius:0}
 .pcard .ft{display:flex;justify-content:space-between;align-items:center;gap:1rem;font-weight:500;font-size:clamp(.88rem,1.05vw,1rem);line-height:1.25}
@@ -230,7 +235,7 @@ h2{font-size:clamp(2rem,3.8vw,3.1rem);line-height:1.05}
 .brandrow p{margin:.2rem 0 0;color:var(--muted);font-size:.9rem}
 .brandrow .thumbs{display:flex;gap:.4rem}
 .brandrow .thumbs .tile{width:clamp(3.4rem,6vw,5rem);border-radius:10px;background:#fff}
-.brandrow .thumbs .tile.name{background:var(--honey)}
+.brandrow .thumbs .tile.name{background:#ece3cc}
 .brandrow .thumbs .tile.name.own{background:var(--green)}
 .brandrow .thumbs .tile.name b{font-size:.6rem}
 .brandrow .thumbs .tile.name img{display:none}
@@ -260,12 +265,12 @@ h2{font-size:clamp(2rem,3.8vw,3.1rem);line-height:1.05}
 @media (hover:hover) and (pointer:fine){ .card .open:hover .tile img{transform:scale(1.04)} }
 .meta{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:.15rem .7rem;align-items:start}
 .meta .brand-l{grid-column:1/-1;font-size:.78rem;color:var(--muted)}
-.meta h3{grid-column:1;font-family:var(--f-body)!important;font-weight:500!important;font-size:.95rem;line-height:1.3;letter-spacing:0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.meta h3{grid-column:1/-1;font-family:var(--f-body)!important;font-weight:500!important;font-size:.95rem;line-height:1.3;letter-spacing:0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 :lang(ar) .meta h3{font-size:1rem}
-.meta .fmt{grid-column:1;font-size:.82rem;color:var(--muted)}
-.meta .price{grid-column:1;font-size:.92rem;font-weight:500;margin-top:.25rem}
+.meta .fmt{grid-column:1/-1;font-size:.82rem;color:var(--muted)}
+.meta .price{grid-column:1;grid-row:4;align-self:center;font-size:.92rem;font-weight:500;margin-top:.25rem}
 .meta .price small{font-weight:300;color:var(--muted);font-size:.82rem}
-.meta .ctl{grid-column:2;grid-row:2/5;align-self:end}
+.meta .ctl{grid-column:2;grid-row:4;align-self:center;margin-top:.25rem}
 .add{width:2.5rem;height:2.5rem;border-radius:50%;border:0;box-shadow:inset 0 0 0 1.5px currentColor;background:transparent;cursor:pointer;display:grid;place-items:center;transition:background-color 180ms ease,color 180ms ease,transform 160ms var(--ease)}
 .add svg{width:16px;height:16px}
 .add:hover{background:var(--ink);color:var(--cream)}
@@ -377,6 +382,8 @@ dialog::backdrop{background:rgba(20,30,22,.42)}
 .lines{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.4rem}
 .lines li{display:grid;grid-template-columns:3.8rem 1fr auto;gap:.9rem;align-items:center;padding:.6rem;border-radius:14px;background:var(--paper)}
 .lines .tile{border-radius:10px;width:3.8rem;background:#fff}
+.lines .tile.name,.hit .tile.name{background:#ece3cc}
+.lines .tile.name.own,.hit .tile.name.own{background:var(--green)}
 .lines .tile.name b{font-size:.55rem}
 .lines .tile.name img{display:none}
 .lines .n{font-weight:500;line-height:1.3}
@@ -419,6 +426,35 @@ dialog.search[open]{display:flex;flex-direction:column;animation:pop 220ms var(-
 .scats{display:flex;flex-wrap:wrap;gap:.45rem;padding:.3rem .6rem .8rem}
 .snone{padding:2rem 1rem;text-align:center;color:var(--muted)}
 
+/* phone tab bar and the rayons sheet */
+.tabbar{display:none}
+.mlist{list-style:none;margin:0;padding:0}
+.mlist button{all:unset;box-sizing:border-box;cursor:pointer;width:100%;display:grid;grid-template-columns:3.2rem minmax(0,1fr) auto;align-items:center;gap:.9rem;padding:.7rem 0;box-shadow:0 1px 0 var(--rule)}
+.mlist .ic{width:3.2rem;height:3.2rem;border-radius:50%;background:var(--forest);overflow:hidden}
+.mlist .ic i{display:block;width:100%;height:100%;background:var(--cream);-webkit-mask:var(--pm) center/70% no-repeat;mask:var(--pm) center/70% no-repeat}
+.mlist b{display:block;font-family:var(--f-fr);font-weight:400;font-size:1.3rem;line-height:1.2}
+.mlist b:lang(ar){font-family:var(--f-ar);font-weight:700;font-size:1.45rem}
+.mlist small{display:block;color:var(--muted);font-size:.84rem}
+.mlist button:active{background:var(--paper)}
+.mlist button:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.mlinks{display:flex;flex-direction:column;gap:.2rem;margin-top:1rem}
+.mlinks a{padding:.7rem 0;text-decoration:none;font-weight:500}
+@media (max-width:760px){
+  body{padding-bottom:calc(64px + env(safe-area-inset-bottom,0px))}
+  .tabbar{display:grid;grid-template-columns:repeat(4,1fr);position:fixed;inset:auto 0 0 0;z-index:45;background:var(--forest);color:var(--forest-ink);padding:6px 6px calc(6px + env(safe-area-inset-bottom,0px));box-shadow:0 -1px 0 rgba(0,0,0,.08)}
+  .tabbar > *{all:unset;box-sizing:border-box;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;height:52px;border-radius:12px;font-size:.72rem;position:relative;-webkit-tap-highlight-color:transparent;transition:background-color 160ms ease,transform 120ms var(--ease)}
+  .tabbar > *:active{background:rgba(239,231,211,.12);transform:scale(.96)}
+  .tabbar > *:focus-visible{outline:2px solid var(--band);outline-offset:-2px}
+  .tabbar svg{width:22px;height:22px}
+  .tabbar #tbCount{position:absolute;top:4px;inset-inline-start:calc(50% + 6px);min-width:1.15rem;height:1.15rem;padding-inline:.25rem;border-radius:1rem;background:var(--band);color:#2b250f;font-size:.66rem;display:grid;place-items:center;font-weight:600}
+  .tabbar #tbCount[data-n="0"]{display:none}
+  .top .cartbtn,.top .iconbtn,.top .vsep,.top .menubtn{display:none!important}
+  .toast{inset:auto auto calc(78px + env(safe-area-inset-bottom,0px)) 50%}
+  dialog.menu{inset:auto 0 0 0;width:100%;height:auto;max-height:86vh;border-radius:20px 20px 0 0;box-shadow:0 -20px 60px rgba(20,24,16,.25)}
+  dialog.menu[open],[dir=rtl] dialog.menu[open]{animation:sheetup 340ms var(--ease-drawer)}
+}
+@keyframes sheetup{from{transform:translateY(100%)}}
+
 /* toast + fly */
 .toast{position:fixed;inset:auto auto calc(1.4rem + env(safe-area-inset-bottom,0px)) 50%;margin:0;border:0;transform:translate(-50%,160%);z-index:60;background:var(--ink);color:var(--cream);border-radius:999px;padding:.45rem .45rem .45rem .5rem;display:flex;align-items:center;gap:.8rem;font-size:.92rem;box-shadow:0 20px 40px -16px rgba(0,0,0,.45);transition:transform 420ms var(--ease)}
 .toast.on{transform:translate(-50%,0)}
@@ -455,9 +491,16 @@ dialog.search[open]{display:flex;flex-direction:column;animation:pop 220ms var(-
   .brandrow .thumbs .tile{width:3.4rem}
   footer .wrap{grid-template-columns:1fr}
   .arrows{display:none}
-  .filters .count{width:100%;margin:0}
+  .filters{flex-wrap:nowrap}
+  .filters select{flex:1;min-width:0;font-size:.82rem;padding-inline-start:.75rem}
+  .filters .count{display:none}
+  .tabs{padding-bottom:.45rem}
+  .tools{padding-block:.5rem}
+  .meta .price{grid-column:1/-1}
+  .meta .ctl{grid-column:1/-1;grid-row:5;justify-self:end;margin-top:.1rem}
+  .brandrow .thumbs .tile.name b{display:none}
 }
-@media (max-width:1100px){ .nav{display:none} }
+@media (max-width:1180px){ .nav{display:none} .menubtn{display:inline-flex} }
 @media (max-width:900px){
   :root{--hh:64px}
   .hsearch,.vsep{display:none}
@@ -492,6 +535,7 @@ dialog.search[open]{display:flex;flex-direction:column;animation:pop 220ms var(-
   <div class="wrap">
     <a class="brand" href="#accueil"><img src="img/logo-green.png" alt="Herboristerie El Baraka" width="1400" height="451"></a>
     <nav class="nav" aria-label="Sections"><a href="#accueil" data-t="navRay"></a><a href="#marques" data-t="navBrands"></a><a href="#catalogue" data-t="navCat"></a><a href="#boutique" data-t="navShop"></a></nav>
+    <button class="menubtn" type="button" data-menu><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg><span data-t="tbRay"></span></button>
     <form class="hsearch" id="hform" role="search"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="8.5" cy="8.5" r="6" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M13 13l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg><input id="hq" type="search" autocomplete="off" spellcheck="false"></form>
     <button class="iconbtn" type="button" data-search data-t-aria="searchShort"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="8.5" cy="8.5" r="6" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M13 13l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
     <div class="lang" role="group" aria-label="Langue / اللغة"><button type="button" data-lang="fr" aria-pressed="true">FR</button><span aria-hidden="true">/</span><button type="button" data-lang="ar" aria-pressed="false">ع</button></div>
@@ -545,7 +589,7 @@ dialog.search[open]{display:flex;flex-direction:column;animation:pop 220ms var(-
     </div>
   </section>
 
-  <section id="catalogue" aria-labelledby="cTitle" class="sec" style="padding-bottom:clamp(3rem,6vw,5rem)">
+  <section id="catalogue" aria-labelledby="cTitle" class="sec" style="padding-top:clamp(2.5rem,5vw,4rem);padding-bottom:clamp(3rem,6vw,5rem)">
     <div class="wrap"><div class="sec-head" style="margin-bottom:1.2rem"><h2 id="cTitle" data-t="catTitle"></h2></div></div>
     <div class="tools"><div class="wrap">
       <div class="tabs" role="tablist" id="tabs" aria-labelledby="cTitle"></div>
@@ -640,6 +684,21 @@ dialog.search[open]{display:flex;flex-direction:column;animation:pop 220ms var(-
   <div class="sres" id="sres" role="listbox"></div>
 </dialog>
 
+<nav class="tabbar" aria-label="Navigation">
+  <button type="button" data-menu><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg><span data-t="tbRay"></span></button>
+  <button type="button" data-search><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="8.5" cy="8.5" r="6" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M13 13l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg><span data-t="searchShort"></span></button>
+  <a id="tbWa" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg><span>WhatsApp</span></a>
+  <button type="button" id="tbCart"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8.5h14l-1.3 12H6.3z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><path d="M8.6 10V6.6a3.4 3.4 0 0 1 6.8 0V10" fill="none" stroke="currentColor" stroke-width="1.4"/></svg><span data-t="cart"></span><b class="num" id="tbCount">0</b></button>
+</nav>
+
+<dialog class="sheet menu" id="menu" aria-labelledby="mTitle">
+  <header><h2 id="mTitle" data-t="tbRay"></h2><button class="x" type="button" data-close data-t-aria="close"><svg viewBox="0 0 18 18" aria-hidden="true"><path d="M4 4l10 10M14 4 4 14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button></header>
+  <div class="sc">
+    <ul class="mlist" id="mlist"></ul>
+    <div class="mlinks"><a href="#marques" data-t="allBrands"></a><a href="#catalogue" data-t="navCat"></a><a href="#boutique" data-t="navShop"></a><a class="num" dir="ltr" href="tel:+212671512954">06 71 51 29 54</a></div>
+  </div>
+</dialog>
+
 <div class="toast" id="toast" role="status" aria-live="polite" popover="manual"><span class="tile" id="toastImg"></span><span id="toastText"></span><button type="button" id="toastBtn" data-t="seeCart"></button></div>
 
 <script src="catalogue.js"></script>
@@ -661,6 +720,7 @@ dialog.search[open]{display:flex;flex-direction:column;animation:pop 220ms var(-
       ribAddr: '593 bd de Palestine, Mohammedia',
       navRay: 'Rayons', navBrands: 'Marques', navCat: 'Produits', navShop: 'La boutique', cart: 'Panier', cur: 'DH',
       searchShort: 'Rechercher', searchGo: 'Rechercher', searchPh: () => 'Rechercher un produit ou une marque', searchDlg: 'Rechercher un produit ou une marque',
+      tbRay: 'Rayons',
       h1: 'Herboristerie El Baraka · Mohammedia', city: 'Mohammedia', goldOther: 'أعشاب البركة — المحمدية', explore: 'Explorer la boutique', mint: 'Menthe poivrée',
       shelfTitle: 'Sur nos étagères', shelfLede: 'Les produits présentés sur le compte Instagram de la boutique.', noteT: 'À retrouver en boutique', igNote: 'Vus sur notre Instagram',
       lede: 'Magasin spécialisé en produits de la ruche, cosmétiques, produits naturels et compléments alimentaires.',
@@ -692,6 +752,7 @@ dialog.search[open]{display:flex;flex-direction:column;animation:pop 220ms var(-
       ribAddr: '593 شارع فلسطين، المحمدية',
       navRay: 'الأقسام', navBrands: 'الماركات', navCat: 'المنتجات', navShop: 'الحانوت', cart: 'السلة', cur: 'درهم',
       searchShort: 'بحث', searchGo: 'قلّب', searchPh: () => 'قلّب على منتوج ولا ماركة', searchDlg: 'قلّب على منتوج ولا ماركة',
+      tbRay: 'الأقسام',
       h1: 'أعشاب البركة · المحمدية', city: 'المحمدية', goldOther: 'Herboristerie El Baraka — Mohammedia', explore: 'تصفح الحانوت', mint: 'النعناع الفلفلي',
       shelfTitle: 'من رفوف الحانوت', shelfLede: 'المنتجات اللي تعرضو فحساب إنستغرام ديال الحانوت.', noteT: 'تلقاوهم فالحانوت', igNote: 'شفتيهم فإنستغرام ديالنا',
       lede: 'محل متخصص فمنتجات النحل، مستحضرات التجميل، المنتجات الطبيعية والمكملات الغذائية.',
@@ -752,7 +813,7 @@ dialog.search[open]{display:flex;flex-direction:column;animation:pop 220ms var(-
     const st = DEV ? `<span class="st st-${esc(p.status)}">${esc(p.status)}</span>` : '';
     if (p.photo) return `<span class="tile${small ? ' small' : ''}" ${extra}><img src="${esc(p.photo)}${small ? '-s' : ''}.jpg" alt="" loading="lazy" decoding="async">${st}</span>`;
     const label = nm(p);
-    return `<span class="tile name${p.brand === 'El Baraka' ? ' own' : ''}${small ? ' small' : ''}" ${extra}><b dir="${dirOf(label)}">${esc(label)}</b><img src="img/mark-cream.png" alt="">${st}</span>`;
+    return `<span class="tile name${p.brand === 'El Baraka' ? ' own' : ''}${small ? ' small' : ''}" ${extra}><b dir="${dirOf(label)}">${esc(label)}</b><img src="img/mark-${p.brand === 'El Baraka' ? 'cream' : 'green'}.png" alt="">${st}</span>`;
   }
 
   /* ---------------- cart model: key = id|size ---------------- */
@@ -819,7 +880,7 @@ dialog.search[open]{display:flex;flex-direction:column;animation:pop 220ms var(-
   const DEFAULT_PLATE = 'plantes';
   let plateCat = null, plateToken = 0;
   function placePlant(el, c){
-    const r = c.plateRatio || .6, h = Math.min(150, 122 / r), w = h * r;
+    const r = c.plateRatio || .6, h = Math.min(150, 122 / r) * (c.plateScale || 1), w = h * r;
     el.style.setProperty('--pm', `url("${c.plate}.png")`);
     el.style.setProperty('--ph', h + '%'); el.style.setProperty('--pw', w + '%');
     el.style.setProperty('--pl', (53 - w / 2) + '%'); el.style.setProperty('--pt', (r > 1 ? 50 - h / 2 + 4 : 50 - h / 2 - 2) + '%');
@@ -849,7 +910,7 @@ dialog.search[open]{display:flex;flex-direction:column;animation:pop 220ms var(-
   let setIdx = 0;
   const pad2 = (n) => String(n).padStart(2, '0');
   function pcard(p, i){
-    return `<button class="pcard c${i + 1}" type="button" data-open="${esc(p.id)}" style="--d:${i}"><span class="lab">${pad2(i + 1)} / ${esc(cn(CAT[p.cat]))}</span><span class="im">${p.photo ? `<img src="${esc(p.photo)}-s.jpg" alt="" decoding="async">` : `<span class="tile name${p.brand === 'El Baraka' ? ' own' : ''}"><b dir="${dirOf(nm(p))}">${esc(nm(p))}</b><img src="img/mark-cream.png" alt=""></span>`}</span><span class="ft"><span dir="auto">${esc(nm(p))}</span>${ARROW}</span></button>`;
+    return `<button class="pcard c${i + 1}" type="button" data-open="${esc(p.id)}" style="--d:${i}"><span class="lab">${pad2(i + 1)} / ${esc(cn(CAT[p.cat]))}</span><span class="im">${p.photo ? `<img src="${esc(p.photo)}.jpg" alt="" decoding="async">` : `<span class="tile name${p.brand === 'El Baraka' ? ' own' : ''}"><b dir="${dirOf(nm(p))}">${esc(nm(p))}</b><img src="img/mark-${p.brand === 'El Baraka' ? 'cream' : 'green'}.png" alt=""></span>`}</span><span class="ft"><span dir="auto">${esc(nm(p))}</span>${ARROW}</span></button>`;
   }
   function showSet(i, animate){
     if (!SETS.length) { $('cards').innerHTML = ''; return; }
@@ -869,6 +930,13 @@ dialog.search[open]{display:flex;flex-direction:column;animation:pop 220ms var(-
   $('setNext').onclick = () => { showSet(setIdx + 1, true); startCycle(); };
   $('setPrev').onclick = () => { showSet(setIdx - 1, true); startCycle(); };
 
+  function renderMenu(){
+    $('mlist').innerHTML = CATS.map(c => `<li><button type="button" data-cat="${esc(c.id)}"><span class="ic" style="--pm:url('${esc(c.plate || '')}.png')"><i></i></span><span><b>${esc(cn(c))}</b><small>${t('products', inCat(c.id).length)}</small></span>${ARROW}</button></li>`).join('');
+  }
+  function openMenu(){ ['detail', 'search', 'cart'].forEach(id => { if ($(id).open) $(id).close(); }); renderMenu(); $('menu').showModal(); }
+  document.querySelectorAll('[data-menu]').forEach(b => b.onclick = openMenu);
+  $('menu').addEventListener('click', (e) => { if (e.target.closest('.mlinks a')) $('menu').close(); });
+  $('tbCart').onclick = () => openCart();
   function renderBrands(){
     $('brands').innerHTML = BRANDS.map(b => `<button class="brandrow" type="button" data-brand="${esc(b.id)}"><span><h3 dir="ltr">${esc(b.id)}</h3><p>${t('products', b.list.length)}${b.id === 'El Baraka' ? ` · ${t('ownBrand')}` : ''}</p></span>
       <span class="thumbs">${b.list.slice(0, 4).map(p => tile(p, true)).join('')}</span></button>`).join('');
@@ -933,7 +1001,7 @@ dialog.search[open]{display:flex;flex-direction:column;animation:pop 220ms var(-
     const c = CAT[p.cat];
     const sizes = p.sizes.length > 1
       ? `<div class="opts"><span>${t('size')}</span><div class="seg" role="group" aria-label="${t('size')}">${p.sizes.map((s, i) => `<button type="button" data-size="${i}" aria-pressed="${i === curSize}"><bdi>${esc(s[0])}</bdi><small class="num">${money(s[1])}</small></button>`).join('')}</div></div>`
-      : `<dl class="dl"><dt>${t('size')}</dt><dd><bdi>${esc(p.sizes[0][0])}</bdi></dd>${p.brand ? `<dt>${t('brand')}</dt><dd>${esc(bn(p.brand))}</dd>` : ''}</dl>`;
+      : `<dl class="dl">${p.sizes[0][0] ? `<dt>${t('size')}</dt><dd><bdi>${esc(p.sizes[0][0])}</bdi></dd>` : ''}${p.brand ? `<dt>${t('brand')}</dt><dd>${esc(bn(p.brand))}</dd>` : ''}</dl>`;
     const rel = inCat(p.cat).filter(q => q.id !== p.id).sort((a, b) => (b.brand === p.brand) - (a.brand === p.brand)).slice(0, 3);
     const nameAr = lang === 'fr' && p.ar ? `<div class="d-ar" dir="rtl">${esc(p.ar)}</div>` : '';
     const label = nm(p);
@@ -1003,7 +1071,7 @@ dialog.search[open]{display:flex;flex-direction:column;animation:pop 220ms var(-
   }
   document.addEventListener('click', (e) => {
     if (e.target.closest('[data-rail]')) return;
-    const c = e.target.closest('[data-cat]'); if (c) { ['search', 'detail'].forEach(id => { if ($(id).open) $(id).close(); }); brandF = ''; renderTabs(); selectView(c.dataset.cat, true); return; }
+    const c = e.target.closest('[data-cat]'); if (c) { ['search', 'detail', 'menu'].forEach(id => { if ($(id).open) $(id).close(); }); brandF = ''; renderTabs(); selectView(c.dataset.cat, true); return; }
     const br = e.target.closest('[data-brand]'); if (br) { if ($('search').open) $('search').close(); selectBrand(br.dataset.brand, true); return; }
     const tb = e.target.closest('[data-tab]'); if (tb) { selectView(tb.dataset.tab, false); return; }
     const o = e.target.closest('[data-open]'); if (o) { if ($('search').open) $('search').close(); openDetail(o.dataset.open); return; }
@@ -1018,7 +1086,7 @@ dialog.search[open]{display:flex;flex-direction:column;animation:pop 220ms var(-
 
   function message(){
     const keys = Object.keys(cart).filter(valid);
-    const L = keys.map(k => { const x = parse(k); return `• ${nm(x.p)}${x.p.brand && x.p.brand !== 'El Baraka' ? ` – ${x.p.brand}` : ''} (⁦${x.p.sizes[x.si][0]}⁩) × ${cart[k]} = ${money(lineTotal(k))}`; });
+    const L = keys.map(k => { const x = parse(k); const lab = x.p.sizes[x.si][0]; return `• ${nm(x.p)}${x.p.brand && x.p.brand !== 'El Baraka' ? ` – ${x.p.brand}` : ''}${lab ? ` (⁦${lab}⁩)` : ''} × ${cart[k]} = ${money(lineTotal(k))}`; });
     const sub = keys.reduce((s, k) => s + (lineTotal(k) || 0), 0);
     const unknown = keys.filter(k => lineTotal(k) === null).length;
     const name = $('f-name').value.trim(), phone = $('f-phone').value.trim(), addr = $('f-addr').value.trim(), note = $('f-note').value.trim();
@@ -1033,8 +1101,9 @@ dialog.search[open]{display:flex;flex-direction:column;animation:pop 220ms var(-
   }
   function renderCart(){
     const keys = Object.keys(cart).filter(valid);
-    $('count').textContent = keys.reduce((s, k) => s + cart[k], 0);
-    $('lines').innerHTML = keys.map(k => { const x = parse(k); return `<li>${tile(x.p, true)}<div><div class="n" dir="auto">${esc(nm(x.p))}</div><div class="s num"><bdi>${esc(x.p.sizes[x.si][0])}</bdi> · <bdi>${money(unit(k))}</bdi></div></div><div class="r"><span class="num">${money(lineTotal(k))}</span><span class="qty"><button type="button" data-dec="${esc(k)}" aria-label="−">−</button><span class="num">${cart[k]}</span><button type="button" data-inc="${esc(k)}" aria-label="+">+</button></span></div></li>`; }).join('');
+    const n = keys.reduce((s, k) => s + cart[k], 0);
+    $('count').textContent = n; $('tbCount').textContent = n; $('tbCount').dataset.n = n;
+    $('lines').innerHTML = keys.map(k => { const x = parse(k); return `<li>${tile(x.p, true)}<div><div class="n" dir="auto">${esc(nm(x.p))}</div><div class="s num">${x.p.sizes[x.si][0] ? `<bdi>${esc(x.p.sizes[x.si][0])}</bdi> · ` : ''}<bdi>${money(unit(k))}</bdi></div></div><div class="r"><span class="num">${money(lineTotal(k))}</span><span class="qty"><button type="button" data-dec="${esc(k)}" aria-label="−">−</button><span class="num">${cart[k]}</span><button type="button" data-inc="${esc(k)}" aria-label="+">+</button></span></div></li>`; }).join('');
     const has = keys.length > 0;
     $('empty').hidden = has; $('form').hidden = !has; $('totals').hidden = !has; $('pvWrap').hidden = !has;
     const m = message();
@@ -1046,7 +1115,7 @@ dialog.search[open]{display:flex;flex-direction:column;animation:pop 220ms var(-
   }
   $('form').addEventListener('input', renderCart);
   $('form').addEventListener('submit', (e) => e.preventDefault());
-  function openCart(){ ['detail', 'search'].forEach(id => { if ($(id).open) $(id).close(); }); renderCart(); $('cart').showModal(); }
+  function openCart(){ ['detail', 'search', 'menu'].forEach(id => { if ($(id).open) $(id).close(); }); renderCart(); $('cart').showModal(); }
   $('openCart').onclick = openCart;
   document.querySelectorAll('dialog').forEach(d => {
     d.addEventListener('click', (e) => { if (e.target === d) d.close(); });
@@ -1074,7 +1143,7 @@ dialog.search[open]{display:flex;flex-direction:column;animation:pop 220ms var(-
     hitIdx = 0;
     $('sres').innerHTML = hits.length ? `<div class="sgroup">${t('sProd')} · <span class="num">${hits.length}</span></div>` + hits.slice(0, 30).map((p, i) => `<button class="hit" type="button" role="option" data-open="${esc(p.id)}" aria-selected="${i === 0}">${tile(p, true)}<span><b dir="auto">${esc(nm(p))}</b><small>${esc([p.brand, fmtLine(p)].filter(Boolean).join(' · '))}</small></span><span class="p num">${priceHtml(p)}</span></button>`).join('') : `<p class="snone">${t('none')}</p>`;
   }
-  function openSearch(text){ ['detail', 'cart'].forEach(id => { if ($(id).open) $(id).close(); }); $('q').placeholder = t('searchDlg'); $('q').value = text || ''; $('search').showModal(); $('q').focus(); runSearch(); }
+  function openSearch(text){ ['detail', 'cart', 'menu'].forEach(id => { if ($(id).open) $(id).close(); }); $('q').placeholder = t('searchDlg'); $('q').value = text || ''; $('search').showModal(); $('q').focus(); runSearch(); }
   document.querySelectorAll('[data-search]').forEach(b => b.onclick = () => openSearch(''));
   $('hform').addEventListener('submit', (e) => { e.preventDefault(); openSearch($('hq').value); });
   $('hq').addEventListener('input', () => { if ($('hq').value.trim().length >= 2) { const v = $('hq').value; $('hq').value = ''; openSearch(v); } });
@@ -1104,7 +1173,7 @@ dialog.search[open]{display:flex;flex-direction:column;animation:pop 220ms var(-
     $('hq').placeholder = t('searchPh', PRODUCTS.length);
     $('hq').setAttribute('aria-label', t('searchShort'));
     const wa = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(t('waAsk'))}`;
-    $('askWa').href = wa; $('visitWa').href = wa;
+    $('askWa').href = wa; $('visitWa').href = wa; $('tbWa').href = wa;
   }
   document.querySelectorAll('.lang button').forEach(b => b.onclick = () => { if (lang === b.dataset.lang) return; lang = b.dataset.lang; save(); render(); });
   addEventListener('scroll', () => $('top').classList.toggle('scrolled', scrollY > 8), { passive: true });

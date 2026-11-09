@@ -15,35 +15,40 @@
         "fr": "Miel & ruche",
         "ar": "العسل ومنتجات النحل",
         "plate": "img/botanical/oranger",
-        "plateRatio": 1.414
+        "plateRatio": 0.941,
+        "plateScale": 1.0
       },
       {
         "id": "complements",
         "fr": "Compléments & vitamines",
         "ar": "المكملات والفيتامينات",
         "plate": "img/botanical/curcuma",
-        "plateRatio": 0.79
+        "plateRatio": 0.529,
+        "plateScale": 0.9
       },
       {
         "id": "plantes",
         "fr": "Plantes & épicerie bio",
         "ar": "الأعشاب والأغذية الطبيعية",
         "plate": "img/botanical/menthe",
-        "plateRatio": 0.529
+        "plateRatio": 0.552,
+        "plateScale": 1.0
       },
       {
         "id": "huiles",
         "fr": "Huiles essentielles",
         "ar": "الزيوت العطرية",
         "plate": "img/botanical/lavande",
-        "plateRatio": 0.348
+        "plateRatio": 0.533,
+        "plateScale": 1.0
       },
       {
         "id": "cosmetiques",
         "fr": "Cosmétiques naturels",
         "ar": "مستحضرات التجميل",
         "plate": "img/botanical/rose",
-        "plateRatio": 0.591
+        "plateRatio": 0.783,
+        "plateScale": 0.92
       }
     ],
     "products": [
@@ -65,7 +70,7 @@
       {
         "id": "sirop-prostate",
         "cat": "ruche",
-        "fr": "Miel « Prostate »",
+        "fr": "Miel « Prostate »",
         "ar": "عسل البروستاتا",
         "sizes": [
           [
@@ -80,7 +85,7 @@
       {
         "id": "sirop-enuresie",
         "cat": "ruche",
-        "fr": "Miel « Énurésie » pour enfants",
+        "fr": "Miel « Énurésie » pour enfants",
         "ar": "عسل التبول اللاإرادي",
         "sizes": [
           [
@@ -544,7 +549,7 @@
         "fr": "Complexe Magnesium Marin+ B6 et B5",
         "sizes": [
           [
-            "Format standard",
+            "",
             null
           ]
         ],
@@ -754,7 +759,7 @@
         "fr": "La Ruche Propolis 500mg à croquer 20 comprimés Goût Citron",
         "sizes": [
           [
-            "Format standard",
+            "",
             null
           ]
         ],
@@ -814,7 +819,7 @@
         "fr": "Mix B12 Fer D3 Calcium et Vitamine C",
         "sizes": [
           [
-            "Format standard",
+            "",
             null
           ]
         ],
@@ -979,7 +984,7 @@
         "fr": "Spray Gorge Bio à la Propolis et aux Huiles Essentielles",
         "sizes": [
           [
-            "Format standard",
+            "",
             null
           ]
         ],
@@ -1039,7 +1044,7 @@
         "fr": "Vitamine D3 Végétales 2000 UI",
         "sizes": [
           [
-            "Format standard",
+            "",
             null
           ]
         ],
@@ -1429,7 +1434,7 @@
         "fr": "Huile essentielle de Ravintsara Bio",
         "sizes": [
           [
-            "Format standard",
+            "",
             null
           ]
         ],
@@ -1474,7 +1479,7 @@
         "fr": "Huile Essentielle de Menthe Poivrée Bio",
         "sizes": [
           [
-            "Format standard",
+            "",
             null
           ]
         ],
@@ -1519,7 +1524,7 @@
         "fr": "Huile Essentielle de Lavande officinale Bio",
         "sizes": [
           [
-            "Format standard",
+            "",
             null
           ]
         ],
@@ -1564,7 +1569,7 @@
         "fr": "Huile Essentielle de Tea Tree Bio",
         "sizes": [
           [
-            "Format standard",
+            "",
             null
           ]
         ],
@@ -1579,7 +1584,7 @@
         "fr": "Huile Essentielle de Lavandin Super",
         "sizes": [
           [
-            "Format standard",
+            "",
             null
           ]
         ],
@@ -1699,7 +1704,7 @@
         "fr": "Huile Essentielle d'Eucalyptus Radiata Bio",
         "sizes": [
           [
-            "Format standard",
+            "",
             null
           ]
         ],
@@ -1789,7 +1794,7 @@
         "fr": "Huile Essentielle de Clou de Girofle Bio",
         "sizes": [
           [
-            "Format standard",
+            "",
             null
           ]
         ],
@@ -1804,7 +1809,7 @@
         "fr": "Huile Essentielle d'Orange Douce Bio",
         "sizes": [
           [
-            "Format standard",
+            "",
             null
           ]
         ],
@@ -1834,7 +1839,7 @@
         "fr": "Huile Essentielle de Citron Bio",
         "sizes": [
           [
-            "Format standard",
+            "",
             null
           ]
         ],
@@ -1864,7 +1869,7 @@
         "fr": "Ashwagandha 400 mg",
         "sizes": [
           [
-            "Format standard",
+            "",
             null
           ]
         ],
@@ -1879,7 +1884,7 @@
         "fr": "Comprimés Neutres Bio",
         "sizes": [
           [
-            "Format standard",
+            "",
             null
           ]
         ],
@@ -1909,7 +1914,7 @@
         "fr": "Huile Essentielle de Romarin Cinéol Bio",
         "sizes": [
           [
-            "Format standard",
+            "",
             null
           ]
         ],
@@ -1969,7 +1974,7 @@
         "fr": "Myrtille baie biologique 250 mg",
         "sizes": [
           [
-            "Format standard",
+            "",
             null
           ]
         ],
@@ -2059,7 +2064,7 @@
         "fr": "Huile Essentielle de Thym Thymol Bio",
         "sizes": [
           [
-            "Format standard",
+            "",
             null
           ]
         ],
@@ -2104,7 +2109,7 @@
         "fr": "Saule Blanc écorce biologique 200 mg",
         "sizes": [
           [
-            "Format standard",
+            "",
             null
           ]
         ],
@@ -2119,7 +2124,7 @@
         "fr": "Huile Essentielle d'Eucalyptus Globulus Bio",
         "sizes": [
           [
-            "Format standard",
+            "",
             null
           ]
         ],
@@ -2134,7 +2139,7 @@
         "fr": "Huile Essentielle de Geranium Rosat Bio",
         "sizes": [
           [
-            "Format standard",
+            "",
             null
           ]
         ],
@@ -2149,7 +2154,7 @@
         "fr": "Hibiscus Bio Fleur",
         "sizes": [
           [
-            "Format standard",
+            "",
             null
           ]
         ],
@@ -2179,7 +2184,7 @@
         "fr": "Huile essentielle de Petit grain Bigaradier Bio",
         "sizes": [
           [
-            "Format standard",
+            "",
             null
           ]
         ],
@@ -2194,7 +2199,7 @@
         "fr": "Huile Essentielle de Cèdre Atlas Bio",
         "sizes": [
           [
-            "Format standard",
+            "",
             null
           ]
         ],
@@ -2209,7 +2214,7 @@
         "fr": "Harpagophytum racine biologique 330 mg",
         "sizes": [
           [
-            "Format standard",
+            "",
             null
           ]
         ],
@@ -2239,7 +2244,7 @@
         "fr": "Huile Essentielle d'Eucalyptus Citriodora Bio",
         "sizes": [
           [
-            "Format standard",
+            "",
             null
           ]
         ],
@@ -2254,7 +2259,7 @@
         "fr": "Huile Essentielle de Niaouli Bio",
         "sizes": [
           [
-            "Format standard",
+            "",
             null
           ]
         ],
@@ -2344,7 +2349,7 @@
         "fr": "Huile Essentielle de Cannelle de Ceylan Bio",
         "sizes": [
           [
-            "Format standard",
+            "",
             null
           ]
         ],
@@ -2359,7 +2364,7 @@
         "fr": "Huile Essentielle de Citronnelle Bio",
         "sizes": [
           [
-            "Format standard",
+            "",
             null
           ]
         ],
@@ -2389,7 +2394,7 @@
         "fr": "Ortie Piquante bio feuille",
         "sizes": [
           [
-            "Format standard",
+            "",
             null
           ]
         ],
@@ -2404,7 +2409,7 @@
         "fr": "Fenouil bio",
         "sizes": [
           [
-            "Format standard",
+            "",
             null
           ]
         ],
@@ -2419,7 +2424,7 @@
         "fr": "Psyllium Blond Bio",
         "sizes": [
           [
-            "Format standard",
+            "",
             null
           ]
         ],
@@ -2434,7 +2439,7 @@
         "fr": "Acide Citrique E330",
         "sizes": [
           [
-            "Format standard",
+            "",
             null
           ]
         ],
@@ -2449,7 +2454,7 @@
         "fr": "Millepertuis biologique 250 mg",
         "sizes": [
           [
-            "Format standard",
+            "",
             null
           ]
         ],
@@ -2464,7 +2469,7 @@
         "fr": "Huile essentielle de Basilic Tropical Bio",
         "sizes": [
           [
-            "Format standard",
+            "",
             null
           ]
         ],
@@ -2479,7 +2484,7 @@
         "fr": "Huile Essentielle de Cyprès Vert Bio",
         "sizes": [
           [
-            "Format standard",
+            "",
             null
           ]
         ],
@@ -2494,7 +2499,7 @@
         "fr": "Passiflore bio",
         "sizes": [
           [
-            "Format standard",
+            "",
             null
           ]
         ],
@@ -2509,7 +2514,7 @@
         "fr": "Bouleau Feuille Bio 25g",
         "sizes": [
           [
-            "Format standard",
+            "",
             null
           ]
         ],
@@ -2539,7 +2544,7 @@
         "fr": "Thym Feuilles Bio 50 g",
         "sizes": [
           [
-            "Format standard",
+            "",
             null
           ]
         ],
@@ -2554,7 +2559,7 @@
         "fr": "Curcuma + Poivre Noir biologique 300 mg",
         "sizes": [
           [
-            "Format standard",
+            "",
             null
           ]
         ],
@@ -2614,7 +2619,7 @@
         "fr": "Xylitol en poudre",
         "sizes": [
           [
-            "Format standard",
+            "",
             null
           ]
         ],
@@ -2629,7 +2634,7 @@
         "fr": "Huile Essentielle de Pamplemousse Bio",
         "sizes": [
           [
-            "Format standard",
+            "",
             null
           ]
         ],
@@ -2644,7 +2649,7 @@
         "fr": "Basilic bio Feuille",
         "sizes": [
           [
-            "Format standard",
+            "",
             null
           ]
         ],
@@ -2659,7 +2664,7 @@
         "fr": "Eucalyptus Globulus Bio Feuille",
         "sizes": [
           [
-            "Format standard",
+            "",
             null
           ]
         ],
@@ -2674,7 +2679,7 @@
         "fr": "Romarin Bio",
         "sizes": [
           [
-            "Format standard",
+            "",
             null
           ]
         ],
@@ -2689,7 +2694,7 @@
         "fr": "Menthe Poivrée Bio",
         "sizes": [
           [
-            "Format standard",
+            "",
             null
           ]
         ],
@@ -2734,7 +2739,7 @@
         "fr": "Huile de Nigelle biologique",
         "sizes": [
           [
-            "Format standard",
+            "",
             null
           ]
         ],
@@ -2794,7 +2799,7 @@
         "fr": "Aubépine biologique 270 mg",
         "sizes": [
           [
-            "Format standard",
+            "",
             null
           ]
         ],
@@ -2809,7 +2814,7 @@
         "fr": "Thé vert biologique 250 mg",
         "sizes": [
           [
-            "Format standard",
+            "",
             null
           ]
         ],
@@ -2824,7 +2829,7 @@
         "fr": "Olivier feuille biologique 200 mg",
         "sizes": [
           [
-            "Format standard",
+            "",
             null
           ]
         ],
@@ -2839,7 +2844,7 @@
         "fr": "Valériane racine biologique 250 mg",
         "sizes": [
           [
-            "Format standard",
+            "",
             null
           ]
         ],
@@ -2869,7 +2874,7 @@
         "fr": "Artichaut Bio Feuille",
         "sizes": [
           [
-            "Format standard",
+            "",
             null
           ]
         ],
@@ -2914,7 +2919,7 @@
         "fr": "Graines de Chia Bio",
         "sizes": [
           [
-            "Format standard",
+            "",
             null
           ]
         ],
@@ -2929,7 +2934,7 @@
         "fr": "Graines de Courge Bio",
         "sizes": [
           [
-            "Format standard",
+            "",
             null
           ]
         ],
@@ -2944,7 +2949,7 @@
         "fr": "Huile Noix de Coco Bio",
         "sizes": [
           [
-            "Format standard",
+            "",
             null
           ]
         ],
@@ -2974,7 +2979,7 @@
         "fr": "Huile de Neem Biologique",
         "sizes": [
           [
-            "Format standard",
+            "",
             null
           ]
         ],
@@ -3004,7 +3009,7 @@
         "fr": "Chardon Marie biologique 300 mg",
         "sizes": [
           [
-            "Format standard",
+            "",
             null
           ]
         ],
@@ -3019,7 +3024,7 @@
         "fr": "Passiflore biologique 230 mg",
         "sizes": [
           [
-            "Format standard",
+            "",
             null
           ]
         ],
@@ -3034,7 +3039,7 @@
         "fr": "Reine des Prés biologique 215 mg",
         "sizes": [
           [
-            "Format standard",
+            "",
             null
           ]
         ],
@@ -3064,7 +3069,7 @@
         "fr": "Citronat 800 mg",
         "sizes": [
           [
-            "Format standard",
+            "",
             null
           ]
         ],
@@ -3079,7 +3084,7 @@
         "fr": "Marron d'Inde biologique 250 mg",
         "sizes": [
           [
-            "Format standard",
+            "",
             null
           ]
         ],
@@ -3094,7 +3099,7 @@
         "fr": "Gingembre racine biologique 250 mg",
         "sizes": [
           [
-            "Format standard",
+            "",
             null
           ]
         ],
@@ -3109,7 +3114,7 @@
         "fr": "Huile Essentielle de Marjolaine Sylvestre Bio",
         "sizes": [
           [
-            "Format standard",
+            "",
             null
           ]
         ],
@@ -3154,7 +3159,7 @@
         "fr": "Réglisse bio Racine",
         "sizes": [
           [
-            "Format standard",
+            "",
             null
           ]
         ],
@@ -3169,7 +3174,7 @@
         "fr": "Guimauve Bio Racine",
         "sizes": [
           [
-            "Format standard",
+            "",
             null
           ]
         ],
@@ -3184,7 +3189,7 @@
         "fr": "Tilleul Bracté Bio",
         "sizes": [
           [
-            "Format standard",
+            "",
             null
           ]
         ],
@@ -3199,7 +3204,7 @@
         "fr": "Verveine Odorante Bio",
         "sizes": [
           [
-            "Format standard",
+            "",
             null
           ]
         ],
@@ -3214,7 +3219,7 @@
         "fr": "Framboisier",
         "sizes": [
           [
-            "Format standard",
+            "",
             null
           ]
         ],
@@ -3229,7 +3234,7 @@
         "fr": "Vigne Rouge Bio Feuille",
         "sizes": [
           [
-            "Format standard",
+            "",
             null
           ]
         ],
@@ -3244,7 +3249,7 @@
         "fr": "Cassis Bio Feuille",
         "sizes": [
           [
-            "Format standard",
+            "",
             null
           ]
         ],
@@ -3274,7 +3279,7 @@
         "fr": "Mélisse feuille biologique 250 mg",
         "sizes": [
           [
-            "Format standard",
+            "",
             null
           ]
         ],
@@ -3304,7 +3309,7 @@
         "fr": "Baies de Goji Bio",
         "sizes": [
           [
-            "Format standard",
+            "",
             null
           ]
         ],
@@ -3319,7 +3324,7 @@
         "fr": "Pack Vitamines et Minéraux",
         "sizes": [
           [
-            "Format standard",
+            "",
             null
           ]
         ],
@@ -3334,7 +3339,7 @@
         "fr": "Huile de jojoba Biologique",
         "sizes": [
           [
-            "Format standard",
+            "",
             null
           ]
         ],
@@ -3349,7 +3354,7 @@
         "fr": "Beurre de Karité biologique",
         "sizes": [
           [
-            "Format standard",
+            "",
             null
           ]
         ],
@@ -3379,7 +3384,7 @@
         "fr": "Sauge feuille biologique 230 mg",
         "sizes": [
           [
-            "Format standard",
+            "",
             null
           ]
         ],
@@ -3394,7 +3399,7 @@
         "fr": "Pensée Sauvage biologique 220 mg",
         "sizes": [
           [
-            "Format standard",
+            "",
             null
           ]
         ],
@@ -3439,7 +3444,7 @@
         "fr": "Echinacea racine biologique 210 mg",
         "sizes": [
           [
-            "Format standard",
+            "",
             null
           ]
         ],
@@ -3469,7 +3474,7 @@
         "fr": "Hamamélis feuille biologique 220 mg",
         "sizes": [
           [
-            "Format standard",
+            "",
             null
           ]
         ],
@@ -3484,7 +3489,7 @@
         "fr": "Cassis feuille biologique 250 mg",
         "sizes": [
           [
-            "Format standard",
+            "",
             null
           ]
         ],
@@ -3499,7 +3504,7 @@
         "fr": "Aubier de Tilleul biologique 200 mg",
         "sizes": [
           [
-            "Format standard",
+            "",
             null
           ]
         ],
@@ -3514,7 +3519,7 @@
         "fr": "Ginseng rouge racine biologique 300 mg",
         "sizes": [
           [
-            "Format standard",
+            "",
             null
           ]
         ],
@@ -3529,7 +3534,7 @@
         "fr": "Pissenlit racine biologique 270 mg",
         "sizes": [
           [
-            "Format standard",
+            "",
             null
           ]
         ],
@@ -3544,7 +3549,7 @@
         "fr": "Vigne rouge feuille biologique 250 mg",
         "sizes": [
           [
-            "Format standard",
+            "",
             null
           ]
         ],
@@ -3559,7 +3564,7 @@
         "fr": "Bardane racine biologique 250 mg",
         "sizes": [
           [
-            "Format standard",
+            "",
             null
           ]
         ],
@@ -3589,7 +3594,7 @@
         "fr": "Prêle biologique 190 mg",
         "sizes": [
           [
-            "Format standard",
+            "",
             null
           ]
         ],
@@ -3604,7 +3609,7 @@
         "fr": "Huile Essentielle de Pin Sylvestre Bio",
         "sizes": [
           [
-            "Format standard",
+            "",
             null
           ]
         ],
@@ -3619,7 +3624,7 @@
         "fr": "Guarana biologique 300 mg",
         "sizes": [
           [
-            "Format standard",
+            "",
             null
           ]
         ],
@@ -3634,7 +3639,7 @@
         "fr": "Anis Vert Bio",
         "sizes": [
           [
-            "Format standard",
+            "",
             null
           ]
         ],
@@ -3664,7 +3669,7 @@
         "fr": "Lavande Fleur Bio",
         "sizes": [
           [
-            "Format standard",
+            "",
             null
           ]
         ],
@@ -3694,7 +3699,7 @@
         "fr": "Fenugrec bio Semence",
         "sizes": [
           [
-            "Format standard",
+            "",
             null
           ]
         ],
@@ -3709,7 +3714,7 @@
         "fr": "Sauge Bio",
         "sizes": [
           [
-            "Format standard",
+            "",
             null
           ]
         ],
@@ -3754,7 +3759,7 @@
         "fr": "Tilleul Aubier Rouge Bio",
         "sizes": [
           [
-            "Format standard",
+            "",
             null
           ]
         ],
@@ -3769,7 +3774,7 @@
         "fr": "Sureau bio Fleur",
         "sizes": [
           [
-            "Format standard",
+            "",
             null
           ]
         ],
@@ -3784,7 +3789,7 @@
         "fr": "Harpagophytum Bio Racine 40 g",
         "sizes": [
           [
-            "Format standard",
+            "",
             null
           ]
         ],
@@ -3799,7 +3804,7 @@
         "fr": "Ortie partie aérienne biologique 210 mg",
         "sizes": [
           [
-            "Format standard",
+            "",
             null
           ]
         ],
@@ -3844,7 +3849,7 @@
         "fr": "Escholtzia biologique 240 mg",
         "sizes": [
           [
-            "Format standard",
+            "",
             null
           ]
         ],
@@ -3859,7 +3864,7 @@
         "fr": "Radis noir racine biologique 270 mg",
         "sizes": [
           [
-            "Format standard",
+            "",
             null
           ]
         ],
@@ -3934,7 +3939,7 @@
         "fr": "Graines de Nigelle Bio",
         "sizes": [
           [
-            "Format standard",
+            "",
             null
           ]
         ],
@@ -3949,7 +3954,7 @@
         "fr": "Noix de Cajou Bio",
         "sizes": [
           [
-            "Format standard",
+            "",
             null
           ]
         ],
@@ -3964,7 +3969,7 @@
         "fr": "Sucre de Noix de Coco Bio",
         "sizes": [
           [
-            "Format standard",
+            "",
             null
           ]
         ],
@@ -3979,7 +3984,7 @@
         "fr": "Huile de Ricin Bio",
         "sizes": [
           [
-            "Format standard",
+            "",
             null
           ]
         ],
@@ -4009,7 +4014,7 @@
         "fr": "Beurre de Cacao biologique",
         "sizes": [
           [
-            "Format standard",
+            "",
             null
           ]
         ],

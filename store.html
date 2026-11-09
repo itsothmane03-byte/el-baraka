@@ -1015,6 +1015,12 @@ dialog.search[open]{display:flex;flex-direction:column;animation:pop 220ms var(-
     });
   });
   try { history.scrollRestoration = 'manual'; } catch (e) { /* not supported */ }
+  // an old saved or autocompleted address ending in a section (#boutique…) opens the shop at the top, not at that section
+  if (/^#(accueil|marques|catalogue|boutique|faqSec)$/.test(location.hash)) {
+    try { history.replaceState(null, '', location.pathname + location.search); } catch (e) { /* history unavailable */ }
+    const toTop = () => scrollTo(0, 0);
+    toTop(); addEventListener('load', toTop, { once: true });
+  }
   function renderBrands(){
     $('brands').innerHTML = BRANDS.map(b => `<button class="brandrow" type="button" data-brand="${esc(b.id)}"><span><h3 dir="ltr">${esc(b.id)}</h3><p>${t('products', b.list.length)}${b.id === 'El Baraka' ? ` · ${t('ownBrand')}` : ''}</p></span>
       <span class="thumbs">${b.list.slice(0, 4).map(p => tile(p, true)).join('')}</span></button>`).join('');

@@ -523,17 +523,50 @@ dialog.search[open]{display:flex;flex-direction:column;animation:pop 220ms var(-
   .brand{flex:1 1 0;min-width:0}
   .brand img{width:100%;max-width:143px;height:auto}
   .cartbtn .t{display:none}
-  /* phones: the plate comes first, under the kicker; the rayons follow as rows with their plant */
-  .hero .wrap{grid-template-columns:minmax(0,1fr);gap:0;min-height:0;padding-block:1.6rem 0}
-  .hero .wrap > div:first-child{display:contents}
-  .hero .kicker{order:1}
-  .plate{order:2;width:min(66%,19rem);margin:clamp(4.4rem,23vw,6rem) auto clamp(3rem,15vw,4rem)}
-  .hero h2{order:3;margin:0 0 .3rem}
-  .rlist{order:4}
-  .hero-acts{order:5;margin-top:1.6rem}
-  .hero .where{order:6;margin:1.5rem 0 2.2rem}
-  .rrow{grid-template-columns:2.6rem minmax(0,1fr) auto auto;gap:.9rem}
-  .rrow .ic{display:block}
+  /* phones: a paper band where the green disc bleeds off the corner with its plant, then a sheet that rises over it
+     with the rayons, one button and the address: the whole choice fits on the first screen */
+  .hero{--band:min(60vw,20rem);--disc:min(84vw,27rem);background:var(--cream);color:var(--ink)}
+  .hero::before{content:"";position:absolute;inset:0 0 auto;height:var(--band);background:#ece4cf url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .32 0 0 0 0 .27 0 0 0 0 .16 0 0 0 .14 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+  .hero::after{content:"";position:absolute;inset:calc(var(--band) - 1.5rem) 0 0;z-index:1;background:var(--cream);border-radius:1.5rem 1.5rem 0 0;box-shadow:0 -10px 26px -18px rgba(27,40,30,.45)}
+  .hero .wrap{grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:0 1rem;min-height:0;padding-block:var(--band) 0}
+  .hero .wrap > div:first-child,.hero-acts{display:contents}
+  .hero .kicker{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+  .hero h2,.hero .lnk,.rlist,.btn-sq,.hero .where{position:relative;z-index:2}
+  .plate{position:absolute;z-index:0;width:var(--disc);margin:0;top:calc(var(--band) * .36 - var(--disc) / 2);inset-inline-end:calc(var(--disc) * -.2)}
+  .plate .disc{background:var(--forest)}
+  .plate .ring{inset:-9%;width:118%;height:118%}
+  .plate .ring circle{stroke:var(--gold);stroke-width:.18}
+  .plate .plant{scale:.72;translate:-29% 11%}
+  [dir=rtl] .plate .plant{translate:21% 11%}
+  .plant.out{background:var(--forest)}
+  .plant.in{background:#e9dfc6}
+  .hero h2{order:1;margin:1.1rem 0 .3rem;font-size:1.9rem;color:var(--ink)}
+  .hero h2,.hero .lnk{align-self:baseline}
+  .hero h2:lang(ar){font-size:2.1rem}
+  .hero .lnk{order:2;gap:.4rem;color:var(--green);font-size:.88rem;font-weight:500}
+  .hero .lnk .arr{width:18px;height:18px}
+  .rlist{order:3;grid-column:1/-1}
+  .rlist li{box-shadow:0 1px 0 var(--rule)}
+  .rlist li:last-child{box-shadow:none}
+  .rrow{grid-template-columns:2.8rem minmax(0,1fr) auto auto;gap:.95rem;padding:.48rem 0;color:var(--ink)}
+  .rrow .nm{font-size:1.38rem}
+  .rrow .sub{color:var(--muted)}
+  .rrow .arr{opacity:.5}
+  .rrow .ic{display:block;width:2.8rem;height:2.8rem;padding:.32rem;background:color-mix(in srgb,var(--green) 11%,var(--cream));transition:background-color 220ms ease,transform 160ms var(--ease)}
+  .rrow .ic i{background:var(--forest)}
+  .rrow:active .ic{transform:scale(.92)}
+  .rrow[aria-current="true"] .ic{background:var(--forest)}
+  .rrow[aria-current="true"] .ic i{background:var(--forest-ink)}
+  .rrow[aria-current="true"] .nm,.rrow:hover .nm{color:var(--green)}
+  .rrow .scrib path{stroke:var(--gold)}
+  .rrow:focus-visible .nm{outline-color:var(--green)}
+  .btn-sq{order:4;grid-column:1/-1;display:flex;justify-content:space-between;margin-top:1.1rem;padding-block:1rem;padding-inline:1.3rem 1.1rem;border-radius:.8rem;background:var(--forest);color:var(--forest-ink);font-size:1rem}
+  .btn-sq:hover{background:var(--green)}
+  .hero .where{order:5;grid-column:1/-1;align-items:center;justify-content:space-between;gap:.5rem 1rem;margin:1rem 0 1.7rem;font-size:.84rem;color:var(--muted)}
+  .hero .where > *{display:inline-flex;align-items:center;gap:.45rem}
+  .hero .where > *::before{content:"";width:1.05rem;height:1.05rem;flex:none;background:var(--green);-webkit-mask:var(--ico) center/contain no-repeat;mask:var(--ico) center/contain no-repeat}
+  .hero .where span{--ico:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.6'%3E%3Cpath d='M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z'/%3E%3Ccircle cx='12' cy='10' r='2.4'/%3E%3C/svg%3E")}
+  .hero .where a{--ico:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.6' stroke-linejoin='round'%3E%3Cpath d='M6.6 3.5h2.6l1.4 4.1-2 1.4a11.5 11.5 0 0 0 6.4 6.4l1.4-2 4.1 1.4v2.6a1.9 1.9 0 0 1-2 1.9A16.6 16.6 0 0 1 4.7 5.5a1.9 1.9 0 0 1 1.9-2z'/%3E%3C/svg%3E");color:var(--ink)}
   .plate .cap{inset:auto 0 22% auto}
   .shelves .wrap{grid-template-columns:1fr}
   .collage{aspect-ratio:auto;display:flex;gap:1rem;overflow-x:auto;scroll-snap-type:x mandatory;margin-inline:calc(-1 * var(--gut));padding:1rem var(--gut) 1.2rem;scrollbar-width:none}
@@ -545,7 +578,7 @@ dialog.search[open]{display:flex;flex-direction:column;animation:pop 220ms var(-
 }
 @media (max-width:600px){
   .rrow .sub{display:none}
-  .rrow{padding:.7rem 0;grid-template-columns:2.6rem minmax(0,1fr) auto}
+  .rrow{grid-template-columns:2.8rem minmax(0,1fr) auto}
 }
 @media (prefers-reduced-motion:reduce){
   .choix-arrow path{stroke-dashoffset:0!important}

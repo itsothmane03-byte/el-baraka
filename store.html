@@ -526,7 +526,7 @@ dialog.search[open]{display:flex;flex-direction:column;animation:pop 220ms var(-
   .cartbtn .t{display:none}
   /* phones: a paper band where the green disc bleeds off the corner with its plant, then a sheet that rises over it
      with the rayons, one button and the address: the whole choice fits on the first screen */
-  .hero{--band:min(60vw,20rem);--disc:min(84vw,27rem);background:var(--cream);color:var(--ink)}
+  .hero{--band:min(52vw,18rem);--disc:min(84vw,27rem);background:var(--cream);color:var(--ink)}
   .hero::before{content:"";position:absolute;inset:0 0 auto;height:var(--band);background:#ece4cf url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .32 0 0 0 0 .27 0 0 0 0 .16 0 0 0 .14 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
   .hero::after{content:"";position:absolute;inset:calc(var(--band) - 1.5rem) 0 0;z-index:1;background:var(--cream);border-radius:1.5rem 1.5rem 0 0;box-shadow:0 -10px 26px -18px rgba(27,40,30,.45)}
   .hero .wrap{grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:0 1rem;min-height:0;padding-block:var(--band) 0}
@@ -579,6 +579,9 @@ dialog.search[open]{display:flex;flex-direction:column;animation:pop 220ms var(-
 }
 @media (max-width:600px){
   .rrow .sub{display:none}
+  /* one language button on phones: it names the language you switch to, and the logo gets the room */
+  .lang span,.lang button[aria-pressed="true"]{display:none}
+  .lang button{min-height:2.5rem;padding:.3rem .4rem;color:var(--ink);font-weight:500}
   .rrow{grid-template-columns:2.6rem minmax(0,1fr) auto}
 }
 @media (prefers-reduced-motion:reduce){
@@ -1218,7 +1221,7 @@ dialog.search[open]{display:flex;flex-direction:column;animation:pop 220ms var(-
     if (c) {
       const go = () => leaveSheets(() => { brandF = ''; renderTabs(); selectView(c.dataset.cat, true); });
       // on a touch screen a hero rayon first shows its plant on the plate, then opens its products
-      if (c.classList.contains('rrow') && !fine.matches && !reduce && plateCat !== c.dataset.cat) { setPlate(c.dataset.cat, true); setTimeout(go, 520); } else go();
+      if (c.classList.contains('rrow') && !fine.matches && !reduce && plateCat !== c.dataset.cat) { setPlate(c.dataset.cat, true); setTimeout(go, 260); } else go();
       return;
     }
     const br = e.target.closest('[data-brand]'); if (br) { leaveSheets(() => selectBrand(br.dataset.brand, true)); return; }
@@ -1338,7 +1341,12 @@ dialog.search[open]{display:flex;flex-direction:column;animation:pop 220ms var(-
     const wa = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(t('waAsk'))}`;
     $('askWa').href = wa; $('visitWa').href = wa;
   }
-  document.querySelectorAll('.lang button').forEach(b => b.onclick = () => { if (lang === b.dataset.lang) return; lang = b.dataset.lang; save(); render(); });
+  document.querySelectorAll('.lang button').forEach(b => b.onclick = () => {
+    if (lang === b.dataset.lang) return; lang = b.dataset.lang; save(); render();
+    // on phones the chosen language's button hides itself: keep the focus on the one that is left
+    const other = document.querySelector('.lang button[aria-pressed="false"]');
+    if (b.offsetParent === null && other) other.focus();
+  });
   addEventListener('scroll', () => $('top').classList.toggle('scrolled', scrollY > 8), { passive: true });
 
   // developer view: open the shop with ?dev=1 to see each product's status and any mistakes in catalogue.js

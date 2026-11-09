@@ -493,8 +493,7 @@ dialog.search[open]{display:flex;flex-direction:column;animation:pop 220ms var(-
 }
 @media (max-width:600px){
   :root{--hh:64px}
-  .brand img{height:44px}
-  .top .wrap{gap:.8rem}
+  .top .wrap{gap:.5rem}
   .ribbon .wrap{font-size:.74rem;gap:.2rem 1rem}
   .shelf .row{grid-template-columns:repeat(3,minmax(0,1fr))}
   .shelf .row .it:nth-child(n+4){display:none}
@@ -517,7 +516,9 @@ dialog.search[open]{display:flex;flex-direction:column;animation:pop 220ms var(-
   :root{--hh:64px}
   .hsearch,.vsep{display:none}
   .iconbtn{display:inline-flex}
-  .brand img{height:46px}
+  /* the logo takes the room the icons leave and keeps its proportions (a fixed height squashed it on narrow phones) */
+  .brand{flex:1 1 0;min-width:0}
+  .brand img{width:100%;max-width:143px;height:auto}
   .cartbtn .t{display:none}
   .hero .wrap{grid-template-columns:1fr;min-height:0;padding-block:2.2rem 0}
   .plate{width:min(80%,24rem);margin:clamp(5.5rem,28vw,7.5rem) auto clamp(3.5rem,20vw,5.5rem)}

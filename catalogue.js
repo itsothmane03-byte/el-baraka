@@ -1,144 +1,4136 @@
 /*
- * El Baraka shop catalogue: the ONE file to edit to add, change or remove products.
- * (The editor page, editor.html, writes a new copy of this file for you.)
- *
- * status
- *   "shop"     seen in the shop or on @herboristerieelbaraka (real product)
- *   "brand"    from a brand the shop uses, taken from a public Moroccan retailer list; stock not confirmed
- *   "example"  placeholder to show the rayon; replace or delete
- * sizes       [label, price in DH or null when unknown]   null shows "Prix sur demande"
- * photo       path without ".jpg" (a "-s.jpg" small copy sits next to it); no photo = a drawn packshot (pack)
- * Open the shop with ?dev=1 to see each product's status on the page.
+ * El Baraka shop catalogue: the ONE file to edit (or use editor.html, which writes a new copy).
+ * status   "shop"  posted on @herboristerieelbaraka · "brand"  from a brand range the shop uses (Dietaroma,
+ *          GPH Diffusion); remove the ones the shop does not stock.
+ * sizes    [label, price in DH or null]; null shows "Prix sur demande" until the price is filled in.
+ * photo    path without ".jpg" (a "-s.jpg" small copy sits next to it). No photo: the card shows the name.
+ * faq      questions for the owner to answer; a question shows on the site once its answer is written.
+ * Open store.html?dev=1 to see each product's status and any mistakes in this file.
  */
 (function (root) {
   const CATALOGUE = {
-    categories: [
-      { id: 'miel', fr: 'Miels', ar: 'العسل', color: '#c47a16', lineFr: 'Miels du Maroc, en plusieurs formats.', lineAr: 'عسل مغربي، بعدة أحجام.' },
-      { id: 'sirops', fr: 'Sirops au miel', ar: 'شراب العسل', color: '#b5642a', lineFr: 'Sirops traditionnels au miel et aux plantes.', lineAr: 'شراب تقليدي بالعسل والأعشاب.' },
-      { id: 'ruche', fr: 'Produits de la ruche', ar: 'منتجات النحل', color: '#d9a32e', lineFr: 'Gelée royale, pollen, propolis et cire.', lineAr: 'غذاء الملكات، حبوب اللقاح، العكبر والشمع.' },
-      { id: 'complements', fr: 'Compléments alimentaires', ar: 'المكملات الغذائية', color: '#3b6e9a', lineFr: 'Nutralie, Physalis, Dietaroma, GPH Diffusion…', lineAr: 'نوتراليا، فيزاليس، ديتاروما، جي بي إش…' },
-      { id: 'vitalite', fr: 'Vitalité', ar: 'الحيوية', color: '#7b3f72', lineFr: 'Énergie et vitalité, pour lui et pour elle.', lineAr: 'الطاقة والحيوية، للرجل والمرأة.' },
-      { id: 'cosmetiques', fr: 'Cosmétiques naturels', ar: 'مستحضرات طبيعية', color: '#b9707e', lineFr: 'Soins des cheveux, du corps et du hammam.', lineAr: 'العناية بالشعر والجسم والحمام.' },
-      { id: 'maison', fr: 'Mélanges de la maison', ar: 'خلطات الدار', color: '#1d5631', lineFr: 'Préparés à la boutique, avec leur mode d’emploi.', lineAr: 'موجدة فالحانوت، مع طريقة الاستعمال.' },
-      { id: 'plantes', fr: 'Plantes & tisanes', ar: 'الأعشاب', color: '#5d8a3c', lineFr: 'Plantes séchées et graines, au poids.', lineAr: 'أعشاب مجففة وحبوب، بالوزن.' },
-      { id: 'huiles', fr: 'Huiles', ar: 'الزيوت', color: '#8f7a2a', lineFr: 'Huiles végétales et huiles essentielles.', lineAr: 'زيوت نباتية وزيوت عطرية.' },
-      { id: 'sport', fr: 'Protéines & sport', ar: 'البروتين والرياضة', color: '#a8382c', lineFr: 'Protéines et créatine, plusieurs goûts.', lineAr: 'بروتين وكرياتين، بعدة أذواق.' }
+    "categories": [
+      {
+        "id": "ruche",
+        "fr": "Miel & ruche",
+        "ar": "العسل ومنتجات النحل"
+      },
+      {
+        "id": "complements",
+        "fr": "Compléments alimentaires",
+        "ar": "المكملات الغذائية"
+      },
+      {
+        "id": "vitamines",
+        "fr": "Vitamines & minéraux",
+        "ar": "الفيتامينات والمعادن"
+      },
+      {
+        "id": "vitalite",
+        "fr": "Vitalité",
+        "ar": "الحيوية"
+      },
+      {
+        "id": "superaliments",
+        "fr": "Superaliments & épicerie bio",
+        "ar": "أغذية طبيعية"
+      },
+      {
+        "id": "tisanes",
+        "fr": "Plantes & tisanes",
+        "ar": "الأعشاب"
+      },
+      {
+        "id": "huiles-essentielles",
+        "fr": "Huiles essentielles",
+        "ar": "الزيوت العطرية"
+      },
+      {
+        "id": "cosmetiques",
+        "fr": "Cosmétiques & huiles végétales",
+        "ar": "مستحضرات التجميل"
+      }
     ],
-
-    products: [
-      /* ---------- Miels: on the shop's shelf; prices are examples ---------- */
-      { id: 'ora', cat: 'miel', status: 'shop', fr: 'Miel d’oranger', ar: 'عسل البرتقال', sizes: [['250 g', 65], ['500 g', 120], ['1 kg', 230]], def: 1, priceNote: 'example', featured: true,
-        descFr: 'Floral et doux, cristallise fin', descAr: 'زهري وناعم، يتبلور بنعومة', pairFr: 'Pour les enfants, avec baghrir et msemen', pairAr: 'للأطفال، مع البغرير والملوي', sweet: 5, strong: 2,
-        pack: { form: 'jar', fill: '#a35a0e', color: '#bf5f17', name: 'Oranger', sub: 'miel du Maroc' } },
-      { id: 'rom', cat: 'miel', status: 'shop', fr: 'Miel de romarin', ar: 'عسل أزير', sizes: [['250 g', 60], ['500 g', 110], ['1 kg', 210]], def: 1, priceNote: 'example',
-        descFr: 'Très doux, cristallise vite et fin', descAr: 'حلو جدا، يتبلور بسرعة وبنعومة', pairFr: 'Sur du pain grillé au petit-déjeuner', pairAr: 'مع الخبز المحمص في الفطور', sweet: 5, strong: 1,
-        pack: { form: 'jar', fill: '#b0700f', color: '#2c6965', name: 'Romarin', sub: 'miel du Maroc' } },
-      { id: 'lav', cat: 'miel', status: 'shop', fr: 'Miel de lavande', ar: 'عسل الخزامة', sizes: [['250 g', 85], ['500 g', 150], ['1 kg', 290]], def: 1, priceNote: 'example',
-        descFr: 'Floral et délicat, une note de lavande', descAr: 'زهري ورقيق بنفحة الخزامة', pairFr: 'Dans une infusion ou un yaourt', pairAr: 'في الأعشاب المنقوعة أو مع الياغورت', sweet: 4, strong: 2,
-        pack: { form: 'jar', fill: '#7a3e0c', color: '#634987', name: 'Lavande', sub: 'miel du Maroc' } },
-      { id: 'crb', cat: 'miel', status: 'shop', fr: 'Miel de caroubier', ar: 'عسل الخروب', sizes: [['250 g', 75], ['500 g', 140], ['1 kg', 270]], def: 1, priceNote: 'example',
-        descFr: 'Notes de caramel et de cacao, peu sucré', descAr: 'بنكهة الكراميل والكاكاو، قليل الحلاوة', pairFr: 'Avec un fromage frais ou du pain grillé', pairAr: 'مع الجبن الطري أو الخبز المحمص', sweet: 3, strong: 3,
-        pack: { form: 'jar', fill: '#8f4f0e', color: '#4a2c1c', name: 'Caroubier', sub: 'miel du Maroc' } },
-      { id: 'juj', cat: 'miel', status: 'shop', fr: 'Miel de jujubier', ar: 'عسل السدر', sizes: [['250 g', 140], ['500 g', 250], ['1 kg', 480]], def: 1, priceNote: 'example', featured: true,
-        descFr: 'Riche, notes de caramel et de fruits secs', descAr: 'غني، بنكهة الكراميل والفواكه الجافة', pairFr: 'Pur, à la cuillère, ou avec des amandes', pairAr: 'خالص بالملعقة، أو مع اللوز', sweet: 3, strong: 4,
-        pack: { form: 'jar', fill: '#6a2e08', color: '#9c2f1d', name: 'Jujubier', sub: 'miel du Maroc' } },
-      { id: 'asp', cat: 'miel', status: 'shop', fr: 'Miel d’asperge', ar: 'عسل الزكوم', sizes: [['250 g', 100], ['500 g', 180], ['1 kg', 340]], def: 1, priceNote: 'example',
-        descFr: 'Sombre, une légère amertume en fin de bouche', descAr: 'داكن، بمرارة خفيفة في آخره', pairFr: 'Une cuillère le matin', pairAr: 'ملعقة صباحا', sweet: 2, strong: 4,
-        pack: { form: 'jar', fill: '#4a2008', color: '#33507e', name: 'Asperge', sub: 'miel du Maroc' } },
-      { id: 'ori', cat: 'miel', status: 'shop', fr: 'Miel d’origan', ar: 'عسل الزعتر', sizes: [['250 g', 90], ['500 g', 160], ['1 kg', 300]], def: 1, priceNote: 'example',
-        descFr: 'Puissant et herbacé, un peu poivré', descAr: 'قوي وعشبي، بلمسة حارة', pairFr: 'Une cuillère le matin, ou dans l’atay', pairAr: 'ملعقة صباحا، أو في أتاي', sweet: 2, strong: 5,
-        pack: { form: 'jar', fill: '#3a1806', color: '#557629', name: 'Origan', sub: 'miel du Maroc' } },
-
-      /* ---------- Sirops au miel: photographed in the shop, prices from the shop's own posts ---------- */
-      { id: 'sirop-toux', cat: 'sirops', status: 'shop', fr: 'Sirop au miel et aux plantes', ar: 'شراب العسل والأعشاب', sizes: [['125 ml', 25]], photo: 'img/shop/sirop-toux', featured: true,
-        descFr: 'Sirop au miel et aux plantes, pour l’hiver.', descAr: 'شراب بالعسل والأعشاب، لفصل الشتاء.', source: 'https://www.instagram.com/p/DYhPwvnKPv8/' },
-      { id: 'sirop-prostate', cat: 'sirops', status: 'shop', fr: 'Sirop au miel « Prostate »', ar: 'شراب العسل «البروستاتا»', sizes: [['125 ml', 50]], photo: 'img/shop/sirop-prostate',
-        descFr: 'Sirop au miel et aux plantes, flacon de 125 ml.', descAr: 'شراب بالعسل والأعشاب، قنينة 125 مل.', source: 'https://www.instagram.com/p/DYhP31mKf2R/' },
-      { id: 'sirop-enuresie', cat: 'sirops', status: 'shop', fr: 'Miel « L’énurésie » pour enfants', ar: 'عسل «التبول اللاإرادي» للأطفال', sizes: [['125 ml', 50]], photo: 'img/shop/sirop-enuresie',
-        descFr: 'Préparation au miel pour les enfants, flacon de 125 ml.', descAr: 'تركيبة بالعسل للأطفال، قنينة 125 مل.', source: 'https://www.instagram.com/p/DYhPnWWKVtv/' },
-
-      /* ---------- Produits de la ruche: examples ---------- */
-      { id: 'gel', cat: 'ruche', status: 'example', fr: 'Gelée royale fraîche', ar: 'غذاء ملكات النحل', sizes: [['10 g', 120], ['20 g', 220]], descFr: 'À garder au réfrigérateur.', descAr: 'كيتحفظ فالتلاجة.',
-        pack: { form: 'jar', fill: '#efe6c8', cap: '#d9d2c2', scale: .72, name: 'Gelée royale', sub: 'fraîche' } },
-      { id: 'pol', cat: 'ruche', status: 'example', fr: 'Pollen de fleurs', ar: 'حبوب اللقاح', sizes: [['250 g', 90], ['500 g', 170]], descFr: 'Pelotes de pollen séchées.', descAr: 'حبوب لقاح مجففة.',
-        pack: { form: 'jar', fill: '#d99a26', granules: true, name: 'Pollen', sub: 'de fleurs' } },
-      { id: 'pro', cat: 'ruche', status: 'example', fr: 'Extrait de propolis', ar: 'مستخلص العكبر', sizes: [['30 ml', 70]], descFr: 'En flacon compte-gouttes.', descAr: 'فقنينة بالقطارة.',
-        pack: { form: 'dropper', body: '#5a2c0c', name: 'Propolis', sub: 'extrait' } },
-      { id: 'cire', cat: 'ruche', status: 'example', fr: 'Cire d’abeille pure', ar: 'شمع النحل', sizes: [['100 g', 40]], descFr: 'Pour les baumes et les soins.', descAr: 'للمراهم والعناية.',
-        pack: { form: 'bar', body: '#e2b84a', name: 'Cire d’abeille', ar: 'شمع النحل' } },
-
-      /* ---------- Compléments: Nutralie and Physalis seen in the shop ---------- */
-      { id: 'nutralie-omega3', cat: 'complements', brand: 'Nutralie', status: 'shop', fr: 'Nutralie Omega 3 Complex', ar: 'أوميغا 3 نوتراليا', sizes: [['60 capsules', null]], photo: 'img/shop/nutralie-omega3', featured: true,
-        descFr: 'Oméga 3 avec vitamines E et D3, 60 capsules molles.', descAr: 'أوميغا 3 مع فيتامينات، 60 كبسولة طرية.', source: 'https://www.instagram.com/p/DDJ0JzJNjWm/' },
-      { id: 'nutralie-magnesium', cat: 'complements', brand: 'Nutralie', status: 'shop', fr: 'Nutralie Magnesium Complex', ar: 'مغنيزيوم نوتراليا', sizes: [['120 capsules', null]], photo: 'img/shop/nutralie-magnesium',
-        descFr: 'Magnésium bisglycinate et citrate, vitamines B5, B6 et C.', descAr: 'مغنيزيوم مع فيتامينات، 120 كبسولة.', source: 'https://www.instagram.com/p/DDJ0IKlNJ97/' },
-      { id: 'nutralie-detox', cat: 'complements', brand: 'Nutralie', status: 'shop', fr: 'Nutralie Detox Complex', ar: 'ديتوكس نوتراليا', sizes: [['90 capsules', null]], photo: 'img/shop/nutralie-detox',
-        descFr: 'Artichaut, radis noir et 8 plantes, 100 % végétal.', descAr: 'الخرشوف والفجل الأسود و8 نباتات.', source: 'https://www.instagram.com/p/DDJ0JO3NxcS/' },
-      { id: 'nutralie-cranberry', cat: 'complements', brand: 'Nutralie', status: 'shop', fr: 'Nutralie Cranberry Complex', ar: 'كرانبيري نوتراليا', sizes: [['60 capsules', null]], photo: 'img/shop/nutralie-cranberry',
-        descFr: 'Cranberry, D-mannose et vitamine C.', descAr: 'التوت البري مع الفيتامينات، 60 كبسولة.', source: 'https://www.instagram.com/p/DDJ0GGLtUHg/' },
-      { id: 'physalis-krill', cat: 'complements', brand: 'Physalis', status: 'shop', fr: 'Physalis Krill Oméga 3', ar: 'زيت الكريل فيزاليس', sizes: [['30 capsules', 190]], photo: 'img/shop/physalis-krill', featured: true,
-        descFr: 'Huile de krill Superba, 30 capsules.', descAr: 'زيت الكريل، 30 كبسولة.', source: 'https://www.instagram.com/p/DDJz0E-tcJK/' },
-
-      /* ---------- Dietaroma: a brand the shop uses; list from universparadiscount.ma (12 of 72) ---------- */
-      { id: 'dt-coq10', cat: 'complements', brand: 'Dietaroma', status: 'brand', fr: 'Dietaroma Co Q10 Ubiquinol', ar: 'ديتاروما كيو 10', sizes: [['20 gélules', null]], descFr: 'Antioxydant et énergie.', descAr: 'مضاد للأكسدة وطاقة.', source: 'https://universparadiscount.ma/marque/58-dietaroma', pack: { form: 'capsules', name: 'Co Q10', sub: 'Dietaroma' } },
-      { id: 'dt-magnesium', cat: 'complements', brand: 'Dietaroma', status: 'brand', fr: 'Dietaroma 6 Magnésium Forte', ar: 'ديتاروما 6 مغنيزيوم', sizes: [['30 jours', null]], descFr: 'Cure de 30 jours.', descAr: 'علاج 30 يوما.', source: 'https://universparadiscount.ma/marque/58-dietaroma', pack: { form: 'capsules', name: 'Magnésium', sub: 'Dietaroma' } },
-      { id: 'dt-articulior', cat: 'complements', brand: 'Dietaroma', status: 'brand', fr: 'Dietaroma Articulior Gluco Chondro Forte', ar: 'ديتاروما المفاصل', sizes: [['60 comprimés', null]], descFr: 'Glucosamine et chondroïtine.', descAr: 'غلوكوزامين وكوندرويتين.', source: 'https://universparadiscount.ma/marque/58-dietaroma', pack: { form: 'capsules', name: 'Articulior', sub: 'Dietaroma' } },
-      { id: 'dt-transit', cat: 'complements', brand: 'Dietaroma', status: 'brand', fr: 'Dietaroma Action Transit Express', ar: 'ديتاروما العبور', sizes: [['10 sachets', null]], descFr: 'Transit et digestion.', descAr: 'العبور والهضم.', source: 'https://universparadiscount.ma/marque/58-dietaroma', pack: { form: 'box', name: 'Transit', sub: 'Dietaroma' } },
-      { id: 'dt-astragale', cat: 'complements', brand: 'Dietaroma', status: 'brand', fr: 'Dietaroma Astragale Défenses naturelles', ar: 'ديتاروما المناعة', sizes: [['20 ampoules', null]], descFr: 'Défenses naturelles.', descAr: 'المناعة الطبيعية.', source: 'https://universparadiscount.ma/marque/58-dietaroma', pack: { form: 'box', name: 'Astragale', sub: 'Dietaroma' } },
-      { id: 'dt-capilea', cat: 'complements', brand: 'Dietaroma', status: 'brand', fr: 'Dietaroma Capilea Forti cheveux et ongles', ar: 'ديتاروما الشعر والأظافر', sizes: [['60 capsules', null]], descFr: 'Cheveux et ongles.', descAr: 'الشعر والأظافر.', source: 'https://universparadiscount.ma/marque/58-dietaroma', pack: { form: 'capsules', name: 'Capilea', sub: 'Dietaroma' } },
-      { id: 'dt-coeur', cat: 'complements', brand: 'Dietaroma', status: 'brand', fr: 'Dietaroma Capital Cœur', ar: 'ديتاروما القلب', sizes: [['60 gélules', null]], descFr: 'Circulation et cœur.', descAr: 'الدورة الدموية والقلب.', source: 'https://universparadiscount.ma/marque/58-dietaroma', pack: { form: 'capsules', name: 'Capital Cœur', sub: 'Dietaroma' } },
-      { id: 'dt-cystenea', cat: 'complements', brand: 'Dietaroma', status: 'brand', fr: 'Dietaroma Cystenea Duo', ar: 'ديتاروما المسالك', sizes: [['20 gélules', null]], descFr: 'Confort urinaire.', descAr: 'راحة المسالك البولية.', source: 'https://universparadiscount.ma/marque/58-dietaroma', pack: { form: 'capsules', name: 'Cystenea', sub: 'Dietaroma' } },
-      { id: 'dt-philaromal', cat: 'complements', brand: 'Dietaroma', status: 'brand', fr: 'Dietaroma Philaromal Probiotiques', ar: 'ديتاروما البروبيوتيك', sizes: [['30 gélules', null]], descFr: 'Probiotiques.', descAr: 'بروبيوتيك.', source: 'https://universparadiscount.ma/marque/58-dietaroma', pack: { form: 'capsules', name: 'Philaromal', sub: 'Dietaroma' } },
-
-      /* ---------- GPH Diffusion: a brand the shop uses; list from Moroccan retailers ---------- */
-      { id: 'gph-ashwagandha', cat: 'complements', brand: 'GPH Diffusion', status: 'brand', fr: 'GPH Diffusion Ashwagandha', ar: 'أشواغاندا جي بي إش', sizes: [['90 gélules', null]], descFr: 'Plante ayurvédique en gélules.', descAr: 'نبتة الأشواغاندا فكبسولات.', source: 'https://parachezvous.ma/marque/gph-diffusion-maroc-prix/', pack: { form: 'capsules', body: '#f3efe6', name: 'Ashwagandha', sub: 'GPH Diffusion' } },
-      { id: 'gph-magnesium', cat: 'complements', brand: 'GPH Diffusion', status: 'brand', fr: 'GPH Diffusion Magnésium bisglycinate', ar: 'مغنيزيوم جي بي إش', sizes: [['90 gélules', null]], descFr: 'Magnésium bisglycinate.', descAr: 'مغنيزيوم.', source: 'https://parachezvous.ma/marque/gph-diffusion-maroc-prix/', pack: { form: 'capsules', body: '#f3efe6', name: 'Magnésium', sub: 'GPH Diffusion' } },
-      { id: 'gph-curcuma', cat: 'complements', brand: 'GPH Diffusion', status: 'brand', fr: 'GPH Diffusion Curcuma et poivre noir', ar: 'الكركم والفلفل الأسود', sizes: [['100 gélules', null]], descFr: 'Curcuma et poivre noir, 300 mg.', descAr: 'الكركم والفلفل الأسود.', source: 'https://parachezvous.ma/marque/gph-diffusion-maroc-prix/', pack: { form: 'capsules', body: '#f3efe6', name: 'Curcuma', sub: 'GPH Diffusion' } },
-      { id: 'gph-moringa', cat: 'complements', brand: 'GPH Diffusion', status: 'brand', fr: 'GPH Diffusion Moringa', ar: 'المورينغا جي بي إش', sizes: [['100 gélules', null]], descFr: 'Moringa, 400 mg.', descAr: 'المورينغا.', source: 'https://parachezvous.ma/marque/gph-diffusion-maroc-prix/', pack: { form: 'capsules', body: '#f3efe6', name: 'Moringa', sub: 'GPH Diffusion' } },
-      { id: 'gph-gelee', cat: 'complements', brand: 'GPH Diffusion', status: 'brand', fr: 'GPH Diffusion Gelée royale', ar: 'غذاء الملكات جي بي إش', sizes: [['200 gélules', null]], descFr: 'Gelée royale en gélules, 200 mg.', descAr: 'غذاء الملكات فكبسولات.', source: 'https://parachezvous.ma/marque/gph-diffusion-maroc-prix/', pack: { form: 'capsules', body: '#f3efe6', name: 'Gelée royale', sub: 'GPH Diffusion' } },
-      { id: 'gph-foie-morue', cat: 'complements', brand: 'GPH Diffusion', status: 'brand', fr: 'GPH Diffusion Huile de foie de morue', ar: 'زيت كبد الحوت', sizes: [['100 capsules', null]], descFr: 'Huile de foie de morue en capsules.', descAr: 'زيت كبد الحوت فكبسولات.', source: 'https://parachezvous.ma/marque/gph-diffusion-maroc-prix/', pack: { form: 'capsules', body: '#7a4a12', name: 'Foie de morue', sub: 'GPH Diffusion' } },
-      { id: 'gph-valeriane', cat: 'complements', brand: 'GPH Diffusion', status: 'brand', fr: 'GPH Diffusion Valériane', ar: 'الناردين جي بي إش', sizes: [['200 gélules', null]], descFr: 'Valériane, 250 mg.', descAr: 'الناردين.', source: 'https://parachezvous.ma/marque/gph-diffusion-maroc-prix/', pack: { form: 'capsules', body: '#f3efe6', name: 'Valériane', sub: 'GPH Diffusion' } },
-      { id: 'gph-chondro', cat: 'complements', brand: 'GPH Diffusion', status: 'brand', fr: 'GPH Diffusion Chondroïtine Glucosamine', ar: 'كوندرويتين غلوكوزامين', sizes: [['60 gélules', null], ['180 gélules', null]], descFr: 'Chondroïtine, glucosamine et vitamine C.', descAr: 'كوندرويتين وغلوكوزامين.', source: 'https://www.marjanemall.ma/', pack: { form: 'capsules', body: '#f3efe6', name: 'Chondroïtine', sub: 'GPH Diffusion' } },
-
-      /* ---------- Vitalité ---------- */
-      { id: 'sexomiel', cat: 'vitalite', status: 'shop', fr: 'Sexo Miel', ar: 'العسل السحري سكسوميل', sizes: [['125 ml', 50]], photo: 'img/shop/sexomiel',
-        descFr: 'Miel aux plantes, pour hommes. Flacon de 125 ml.', descAr: 'عسل بالأعشاب، للرجال. قنينة 125 مل.', source: 'https://www.instagram.com/p/DYhQPnUqmfr/' },
-      { id: 'maca', cat: 'vitalite', status: 'example', fr: 'Maca en poudre', ar: 'الماكا', sizes: [['100 g', 90], ['250 g', 200]], descFr: 'Racine de maca en poudre.', descAr: 'جذور الماكا مطحونة.', pack: { form: 'pouch', name: 'Maca', sub: 'poudre' } },
-      { id: 'gins', cat: 'vitalite', status: 'example', fr: 'Ginseng rouge', ar: 'الجينسنغ الأحمر', sizes: [['60 gélules', 160]], descFr: 'Ginseng rouge en gélules.', descAr: 'جينسنغ أحمر فكبسولات.', pack: { form: 'capsules', body: '#5b1f1c', cap: '#e8e2d6', name: 'Ginseng', sub: 'rouge' } },
-      { id: 'ging', cat: 'vitalite', status: 'example', fr: 'Gingembre moulu', ar: 'الزنجبيل', sizes: [['100 g', 25]], descFr: 'Racine de gingembre moulue.', descAr: 'زنجبيل مطحون.', pack: { form: 'pouch', name: 'Gingembre', sub: 'moulu' } },
-
-      /* ---------- Cosmétiques naturels: El Baraka's own products, photographed in the shop ---------- */
-      { id: 'shampoing', cat: 'cosmetiques', brand: 'El Baraka', status: 'shop', fr: 'Shampoing 100 % naturel El Baraka', ar: 'شمبوان طبيعي أعشاب البركة', sizes: [['Flacon', null]], photo: 'img/shop/shampoing', featured: true,
-        descFr: 'Aux protéines de blé, pour tous types de cheveux. Sans sulfate, sans paraben, usage quotidien.', descAr: 'بالبروتينات، لجميع أنواع الشعر. بدون سلفات وبدون بارابين.', source: 'https://www.instagram.com/p/C9DeltdNhsZ/' },
-      { id: 'creme-capillaire', cat: 'cosmetiques', brand: 'El Baraka', status: 'shop', fr: 'Crème capillaire naturelle', ar: 'كريم الشعر الطبيعي', sizes: [['Pot', null]], photo: 'img/shop/creme-capillaire',
-        descFr: 'Démêlante, nourrissante et lissante, à la vitamine B5 et aux protéines de blé.', descAr: 'كريم للشعر بالفيتامينات وبروتينات القمح.', source: 'https://www.instagram.com/p/DCCTW8YtShg/' },
-      { id: 'graisse-chameau', cat: 'cosmetiques', brand: 'Sanambio', status: 'shop', fr: 'Graisse de bosse de chameau Sanambio', ar: 'دهن سنام الجمل', sizes: [['100 ml', 30]], photo: 'img/shop/graisse-chameau',
-        descFr: 'Graisse de bosse de chameau, flacon de 100 ml, en massage.', descAr: 'دهن سنام الجمل، 100 مل، للتدليك.', source: 'https://www.instagram.com/p/DYhO_3VK6kK/' },
-      { id: 'beldi', cat: 'cosmetiques', status: 'example', fr: 'Savon noir beldi', ar: 'الصابون البلدي', sizes: [['250 g', 30], ['500 g', 50]], descFr: 'À l’huile d’olive, pour le hammam.', descAr: 'بزيت الزيتون، للحمام.', pack: { form: 'jar', fill: '#3a2312', cap: '#1c1c1c', name: 'Savon noir', sub: 'beldi' } },
-      { id: 'rose', cat: 'cosmetiques', status: 'example', fr: 'Eau de rose', ar: 'ماء الورد', sizes: [['250 ml', 35]], descFr: 'Eau florale de rose.', descAr: 'ماء الورد.', pack: { form: 'bottle', liquid: '#f0c4c8', name: 'Eau de rose' } },
-      { id: 'henne', cat: 'cosmetiques', status: 'example', fr: 'Henné naturel', ar: 'الحناء', sizes: [['100 g', 20]], descFr: 'Poudre de henné naturel.', descAr: 'حناء طبيعية مطحونة.', pack: { form: 'pouch', name: 'Henné', sub: 'naturel' } },
-
-      /* ---------- Mélanges de la maison: El Baraka's pouch; only the digestive mix is real ---------- */
-      { id: 'n07', cat: 'maison', brand: 'El Baraka', status: 'shop', real: true, fr: 'Mélange de plantes', ar: 'مركب الأعشاب', big: 'للهضم', sizes: [['100 g', 45]], priceNote: 'example',
-        descFr: 'Confort digestif', descAr: 'للهضم وراحة البطن', useFr: '2 cuillères à soupe avec un peu d’eau, après chaque repas principal.', useAr: 'ملعقتان كبيرتان مع قليل من الماء بعد كل وجبة رئيسية.', pack: { form: 'pouch', brand: true, body: '#c39a68' } },
-      { id: 'n03', cat: 'maison', brand: 'El Baraka', status: 'example', fr: 'Infusion du soir', ar: 'مركب المساء', big: 'المساء', sizes: [['80 g', 40]], descFr: 'Moment calme', descAr: 'لحظة هدوء', pack: { form: 'pouch', brand: true, body: '#c39a68' } },
-      { id: 'n12', cat: 'maison', brand: 'El Baraka', status: 'example', fr: 'Ras el hanout', ar: 'رأس الحانوت', big: 'رأس الحانوت', sizes: [['100 g', 35]], descFr: 'Mélange maison', descAr: 'خلطة الدار', pack: { form: 'pouch', brand: true, body: '#c39a68' } },
-
-      /* ---------- Plantes & tisanes: examples ---------- */
-      { id: 'verv', cat: 'plantes', status: 'example', fr: 'Verveine', ar: 'اللويزة', sizes: [['50 g', 25], ['100 g', 45]], descFr: 'Feuilles séchées, en infusion.', descAr: 'أوراق مجففة، للمنقوع.', pack: { form: 'pouch', name: 'Verveine', sub: 'feuilles' } },
-      { id: 'thym', cat: 'plantes', status: 'example', fr: 'Thym sauvage', ar: 'الزعتر البلدي', sizes: [['100 g', 30]], descFr: 'Pour la cuisine et les infusions.', descAr: 'للطبخ والمنقوع.', pack: { form: 'pouch', name: 'Thym sauvage' } },
-      { id: 'chiba', cat: 'plantes', status: 'example', fr: 'Absinthe (chiba)', ar: 'الشيبة', sizes: [['50 g', 20]], descFr: 'Pour le thé d’hiver.', descAr: 'لأتاي الشتا.', pack: { form: 'pouch', name: 'Chiba', sub: 'absinthe' } },
-      { id: 'nigel', cat: 'plantes', status: 'example', fr: 'Nigelle en graines', ar: 'حبة البركة', sizes: [['250 g', 35], ['500 g', 65]], descFr: 'Graines entières.', descAr: 'حبوب كاملة.', pack: { form: 'pouch', name: 'Nigelle', sub: 'graines' } },
-
-      /* ---------- Huiles: examples ---------- */
-      { id: 'argan', cat: 'huiles', status: 'example', fr: 'Huile d’argan', ar: 'زيت الأركان', sizes: [['30 ml', 60], ['100 ml', 160]], descFr: 'Vierge, pressée à froid.', descAr: 'بكر، معصور على البارد.', pack: { form: 'bottle', liquid: '#c9952a', name: 'Argan', sub: 'huile vierge' } },
-      { id: 'ricin', cat: 'huiles', status: 'example', fr: 'Huile de ricin', ar: 'زيت الخروع', sizes: [['100 ml', 40]], descFr: 'Huile de ricin pure.', descAr: 'زيت الخروع الخالص.', pack: { form: 'bottle', liquid: '#d8c27a', name: 'Ricin', sub: 'huile' } },
-      { id: 'helav', cat: 'huiles', status: 'example', fr: 'Huile essentielle de lavande', ar: 'الزيت العطري للخزامى', sizes: [['10 ml', 70]], descFr: 'Huile essentielle de lavande.', descAr: 'الزيت العطري للخزامى.', pack: { form: 'dropper', body: '#3e2b4f', name: 'Lavande', sub: 'huile essentielle' } },
-
-      /* ---------- Protéines & sport: examples ---------- */
-      { id: 'whey', cat: 'sport', status: 'example', fr: 'Whey protéine', ar: 'بروتين مصل اللبن', sizes: [['1 kg', 450], ['2 kg', 820]], flavours: [{ fr: 'Chocolat', ar: 'شوكولا' }, { fr: 'Vanille', ar: 'فانيلا' }, { fr: 'Fraise', ar: 'فراولة' }],
-        descFr: 'Protéine de lactosérum en poudre.', descAr: 'بروتين مصل اللبن، مسحوق.', pack: { form: 'tub', name: 'Whey', sub: 'protéine' } },
-      { id: 'crea', cat: 'sport', status: 'example', fr: 'Créatine monohydrate', ar: 'كرياتين', sizes: [['300 g', 260]], descFr: 'En poudre, sans arôme.', descAr: 'مسحوق بلا نكهة.', pack: { form: 'tub', body: '#e9e5dc', cap: '#1c1c1c', scale: .82, name: 'Créatine', sub: 'monohydrate' } }
+    "products": [
+      {
+        "id": "sirop-toux",
+        "cat": "ruche",
+        "fr": "Sirop contre la toux",
+        "ar": "شراب الكحة",
+        "sizes": [
+          [
+            "Flacon",
+            25
+          ]
+        ],
+        "source": "https://www.instagram.com/p/DYhPwvnKPv8/",
+        "status": "shop",
+        "instagram": true
+      },
+      {
+        "id": "sirop-prostate",
+        "cat": "ruche",
+        "fr": "Miel « Prostate »",
+        "ar": "عسل البروستاتا",
+        "sizes": [
+          [
+            "125 ml",
+            50
+          ]
+        ],
+        "source": "https://www.instagram.com/p/DYhP31mKf2R/",
+        "status": "shop",
+        "instagram": true
+      },
+      {
+        "id": "sirop-enuresie",
+        "cat": "ruche",
+        "fr": "Miel « Énurésie » pour enfants",
+        "ar": "عسل التبول اللاإرادي",
+        "sizes": [
+          [
+            "125 ml",
+            50
+          ]
+        ],
+        "source": "https://www.instagram.com/p/DYhPnWWKVtv/",
+        "status": "shop",
+        "instagram": true
+      },
+      {
+        "id": "sexomiel",
+        "cat": "vitalite",
+        "fr": "Sexo Miel",
+        "ar": "العسل السحري سكسوميل",
+        "sizes": [
+          [
+            "125 ml",
+            50
+          ]
+        ],
+        "source": "https://www.instagram.com/p/DYhQPnUqmfr/",
+        "status": "shop",
+        "instagram": true
+      },
+      {
+        "id": "shampoing",
+        "cat": "cosmetiques",
+        "brand": "El Baraka",
+        "fr": "Shampoing 100 % naturel",
+        "ar": "شمبوان طبيعي",
+        "sizes": [
+          [
+            "Flacon",
+            null
+          ]
+        ],
+        "source": "https://www.instagram.com/p/C9DeltdNhsZ/",
+        "status": "shop",
+        "instagram": true
+      },
+      {
+        "id": "creme-capillaire",
+        "cat": "cosmetiques",
+        "brand": "El Baraka",
+        "fr": "Crème capillaire naturelle",
+        "ar": "كريم الشعر الطبيعي",
+        "sizes": [
+          [
+            "Pot",
+            null
+          ]
+        ],
+        "source": "https://www.instagram.com/p/DCCTW8YtShg/",
+        "status": "shop",
+        "instagram": true
+      },
+      {
+        "id": "graisse-chameau",
+        "cat": "cosmetiques",
+        "brand": "Sanambio",
+        "fr": "Graisse de bosse de chameau",
+        "ar": "دهن سنام الجمل",
+        "sizes": [
+          [
+            "100 ml",
+            30
+          ]
+        ],
+        "photo": "img/products/graisse-chameau",
+        "source": "https://www.instagram.com/p/DYhO_3VK6kK/",
+        "status": "shop",
+        "instagram": true
+      },
+      {
+        "id": "physalis-krill",
+        "cat": "complements",
+        "brand": "Physalis",
+        "fr": "Krill Oméga 3",
+        "sizes": [
+          [
+            "30 capsules",
+            190
+          ]
+        ],
+        "photo": "img/products/physalis-krill",
+        "source": "https://www.instagram.com/p/DDJz0E-tcJK/",
+        "status": "shop",
+        "instagram": true
+      },
+      {
+        "id": "nutralie-omega3",
+        "cat": "complements",
+        "brand": "Nutralie",
+        "fr": "Omega 3 Complex",
+        "sizes": [
+          [
+            "60 capsules",
+            null
+          ]
+        ],
+        "photo": "img/products/nutralie-omega3",
+        "source": "https://www.instagram.com/p/DDJ0JzJNjWm/",
+        "status": "shop",
+        "instagram": true
+      },
+      {
+        "id": "nutralie-magnesium",
+        "cat": "vitamines",
+        "brand": "Nutralie",
+        "fr": "Magnesium Complex",
+        "sizes": [
+          [
+            "120 capsules",
+            null
+          ]
+        ],
+        "photo": "img/products/nutralie-magnesium",
+        "source": "https://www.instagram.com/p/DDJ0IKlNJ97/",
+        "status": "shop",
+        "instagram": true
+      },
+      {
+        "id": "nutralie-detox",
+        "cat": "complements",
+        "brand": "Nutralie",
+        "fr": "Detox Complex",
+        "sizes": [
+          [
+            "90 capsules",
+            null
+          ]
+        ],
+        "photo": "img/products/nutralie-detox",
+        "source": "https://www.instagram.com/p/DDJ0JO3NxcS/",
+        "status": "shop",
+        "instagram": true
+      },
+      {
+        "id": "nutralie-cranberry",
+        "cat": "complements",
+        "brand": "Nutralie",
+        "fr": "Cranberry Complex",
+        "sizes": [
+          [
+            "60 capsules",
+            null
+          ]
+        ],
+        "photo": "img/products/nutralie-cranberry",
+        "source": "https://www.instagram.com/p/DDJ0GGLtUHg/",
+        "status": "shop",
+        "instagram": true
+      },
+      {
+        "id": "dt-philaromal-probiotiques-ventre-plat-30-gelules",
+        "cat": "complements",
+        "brand": "Dietaroma",
+        "status": "brand",
+        "fr": "Philaromal Probiotiques Ventre Plat",
+        "sizes": [
+          [
+            "30 gélules",
+            null
+          ]
+        ],
+        "photo": "img/products/dt-philaromal-probiotiques-ventre-plat-30-gelules",
+        "source": "https://universparadiscount.ma/shampoings/29233-dietaroma-philaromal-probiotiques-ventre-plat-30-gelules.html"
+      },
+      {
+        "id": "dt-co-q10-ubiquinol-antioxydant-et-energie-20-gelules",
+        "cat": "complements",
+        "brand": "Dietaroma",
+        "status": "brand",
+        "fr": "Co Q10 Ubiquinol Antioxydant et Énergie",
+        "sizes": [
+          [
+            "20 gélules",
+            null
+          ]
+        ],
+        "photo": "img/products/dt-co-q10-ubiquinol-antioxydant-et-energie-20-gelules",
+        "source": "https://universparadiscount.ma/complements-alimentaires/30147-dietaroma-co-q10-ubiquinol-antioxydanr-et-energie-20-gelules.html"
+      },
+      {
+        "id": "dt-cystenea-duo-confort-urinaire-20-gelules",
+        "cat": "complements",
+        "brand": "Dietaroma",
+        "status": "brand",
+        "fr": "Cystenea Duo Confort Urinaire",
+        "sizes": [
+          [
+            "20 gélules",
+            null
+          ]
+        ],
+        "photo": "img/products/dt-cystenea-duo-confort-urinaire-20-gelules",
+        "source": "https://universparadiscount.ma/complements-alimentaires/30148-dietaroma-cystenea-duo-confort-urinaire-20-gelules.html"
+      },
+      {
+        "id": "dt-articulior-gluco-chondro-forte-60-comprimes",
+        "cat": "complements",
+        "brand": "Dietaroma",
+        "status": "brand",
+        "fr": "Articulior Gluco Chondro Forte",
+        "sizes": [
+          [
+            "60 comprimés",
+            null
+          ]
+        ],
+        "photo": "img/products/dt-articulior-gluco-chondro-forte-60-comprimes",
+        "source": "https://universparadiscount.ma/bien-etre-et-equilibre-emotionnel/20137-dietaroma-articulior-gluco-chondro-forte-60-comprimes.html"
+      },
+      {
+        "id": "dt-6-magnesium-forte-30-jours",
+        "cat": "vitamines",
+        "brand": "Dietaroma",
+        "status": "brand",
+        "fr": "6 Magnesium Forte",
+        "sizes": [
+          [
+            "30 jours",
+            null
+          ]
+        ],
+        "photo": "img/products/dt-6-magnesium-forte-30-jours",
+        "source": "https://universparadiscount.ma/complements-alimentaires/8522-dietaroma-dietaroma-6-magnesium-forte-30-jours-complements-alimentaires.html"
+      },
+      {
+        "id": "dt-action-transit-express-10-sachets",
+        "cat": "complements",
+        "brand": "Dietaroma",
+        "status": "brand",
+        "fr": "Action Transit Express",
+        "sizes": [
+          [
+            "10 sachets",
+            null
+          ]
+        ],
+        "photo": "img/products/dt-action-transit-express-10-sachets",
+        "source": "https://universparadiscount.ma/transit-digestion-et-elimination/21790-dietaroma-action-transit-express-10-sachets.html"
+      },
+      {
+        "id": "dt-articulations-60-comprimes",
+        "cat": "complements",
+        "brand": "Dietaroma",
+        "status": "brand",
+        "fr": "Articulations",
+        "sizes": [
+          [
+            "60 comprimés",
+            null
+          ]
+        ],
+        "photo": "img/products/dt-articulations-60-comprimes",
+        "source": "https://universparadiscount.ma/complements-alimentaires/27817-dietaroma-dietaroma-articulations-60-comprimes-complements-alimentaires.html"
+      },
+      {
+        "id": "dt-astragale-defenses-naturelles-20-ampoules",
+        "cat": "complements",
+        "brand": "Dietaroma",
+        "status": "brand",
+        "fr": "Astragale Défenses Naturelles",
+        "sizes": [
+          [
+            "20 ampoules",
+            null
+          ]
+        ],
+        "photo": "img/products/dt-astragale-defenses-naturelles-20-ampoules",
+        "source": "https://universparadiscount.ma/defenses-immunitaires/27808-dietaroma-astragale-defnses-naturelles-20-ampoules.html"
+      },
+      {
+        "id": "dt-cap-ligne-brule-graisse-bio-20-ampoules-10-offerts",
+        "cat": "complements",
+        "brand": "Dietaroma",
+        "status": "brand",
+        "fr": "Cap Ligne Brûle Graisse Bio",
+        "sizes": [
+          [
+            "20 ampoules + 10 offerts",
+            null
+          ]
+        ],
+        "photo": "img/products/dt-cap-ligne-brule-graisse-bio-20-ampoules-10-offerts",
+        "source": "https://universparadiscount.ma/detox-coup-faim-ventre-plat/4216-dietaroma-cap-ligne-brule-graisse-bio-20-ampoules-10-offerts.html"
+      },
+      {
+        "id": "dt-capilea-forti-cheveux-et-ongles-60-capsules",
+        "cat": "complements",
+        "brand": "Dietaroma",
+        "status": "brand",
+        "fr": "Capilea Forti Cheveux et Ongles",
+        "sizes": [
+          [
+            "60 capsules",
+            null
+          ]
+        ],
+        "photo": "img/products/dt-capilea-forti-cheveux-et-ongles-60-capsules",
+        "source": "https://universparadiscount.ma/complements-cheveux-et-ongles/3235-dietaroma-dietaroma-capilea-forti-cheveux-et-ongles-60-capsules-complements-cheveux-et-ongles.html"
+      },
+      {
+        "id": "dt-capital-coeur-60-gelules",
+        "cat": "complements",
+        "brand": "Dietaroma",
+        "status": "brand",
+        "fr": "Capital Cœur",
+        "sizes": [
+          [
+            "60 gélules",
+            null
+          ]
+        ],
+        "photo": "img/products/dt-capital-coeur-60-gelules",
+        "source": "https://universparadiscount.ma/circulation-sanguine-et-coeur/16509-dietaroma-capital-coeur-60-gelules.html"
+      },
+      {
+        "id": "dt-capital-homme-prostate-60-gelules",
+        "cat": "complements",
+        "brand": "Dietaroma",
+        "status": "brand",
+        "fr": "Capital Homme Prostate",
+        "sizes": [
+          [
+            "60 gélules",
+            null
+          ]
+        ],
+        "photo": "img/products/dt-capital-homme-prostate-60-gelules",
+        "source": "https://universparadiscount.ma/trouble-urinaire-et-prostate/9334-dietaroma-capital-homme-prostate-60-gelules.html"
+      },
+      {
+        "id": "dt-capligne-brule-graisse-et-controle-du-poids-bio-30-comprimes",
+        "cat": "complements",
+        "brand": "Dietaroma",
+        "status": "brand",
+        "fr": "Capligne Brûle Graisse et Contrôle du Poids Bio",
+        "sizes": [
+          [
+            "30 comprimés",
+            null
+          ]
+        ],
+        "photo": "img/products/dt-capligne-brule-graisse-et-controle-du-poids-bio-30-comprimes",
+        "source": "https://universparadiscount.ma/vitamines-et-formes/13181-dietaroma-dietaroma-capligne-brule-graisse-et-controle-du-poids-bio-30-comprimes-vitamine-et-forme.html"
+      },
+      {
+        "id": "dt-capligne-konjac-chrome-40-gelules",
+        "cat": "complements",
+        "brand": "Dietaroma",
+        "status": "brand",
+        "fr": "Capligne Konjac Chrome",
+        "sizes": [
+          [
+            "40 gélules",
+            null
+          ]
+        ],
+        "photo": "img/products/dt-capligne-konjac-chrome-40-gelules",
+        "source": "https://universparadiscount.ma/detox-coup-faim-ventre-plat/5344-dietaroma-dietaroma-capligne-konjac-chrome-40-gelules-detox-coup-faim-ventre-plat.html"
+      },
+      {
+        "id": "dt-charbon-vegetal-bio-120-gelules",
+        "cat": "complements",
+        "brand": "Dietaroma",
+        "status": "brand",
+        "fr": "Charbon Végétal Bio",
+        "sizes": [
+          [
+            "120 gélules",
+            null
+          ]
+        ],
+        "photo": "img/products/dt-charbon-vegetal-bio-120-gelules",
+        "source": "https://universparadiscount.ma/accueil/10310-dietaroma-dietaroma-charbon-vegetal-bio-120-gelules-home.html"
+      },
+      {
+        "id": "dt-chardon-marie-25-mg-de-silymarine-60-comprimes",
+        "cat": "complements",
+        "brand": "Dietaroma",
+        "status": "brand",
+        "fr": "Chardon Marie 25 mg de Silymarine",
+        "sizes": [
+          [
+            "60 comprimés",
+            null
+          ]
+        ],
+        "photo": "img/products/dt-chardon-marie-25-mg-de-silymarine-60-comprimes",
+        "source": "https://universparadiscount.ma/vitamines-et-formes/18499-dietaroma-dietaroma-chardon-marie-25-mg-de-silymarine-60-comprimes-vitamine-et-forme.html"
+      },
+      {
+        "id": "dt-c-i-p-ginkgo-biloba-20-ampoules",
+        "cat": "complements",
+        "brand": "Dietaroma",
+        "status": "brand",
+        "fr": "C.I.P. Ginkgo Biloba",
+        "sizes": [
+          [
+            "20 ampoules",
+            null
+          ]
+        ],
+        "photo": "img/products/dt-c-i-p-ginkgo-biloba-20-ampoules",
+        "source": "https://universparadiscount.ma/memoire-et-concentration/1320-dietaroma-cip-ginkgo-biloba-20-ampoules.html"
+      },
+      {
+        "id": "dt-c-i-p-sommeil-bio-20-ampoules",
+        "cat": "complements",
+        "brand": "Dietaroma",
+        "status": "brand",
+        "fr": "C.I.P. Sommeil Bio",
+        "sizes": [
+          [
+            "20 ampoules",
+            null
+          ]
+        ],
+        "photo": "img/products/dt-c-i-p-sommeil-bio-20-ampoules",
+        "source": "https://universparadiscount.ma/sommeil-et-detente/4217-dietaroma-dietaroma-cip-sommeil-bio-20-ampoules-sommeil-detente.html"
+      },
+      {
+        "id": "dt-circulation-bio-20-ampoules",
+        "cat": "complements",
+        "brand": "Dietaroma",
+        "status": "brand",
+        "fr": "Circulation Bio",
+        "sizes": [
+          [
+            "20 ampoules",
+            null
+          ]
+        ],
+        "photo": "img/products/dt-circulation-bio-20-ampoules",
+        "source": "https://universparadiscount.ma/circulation-sanguine-et-coeur/7708-dietaroma-dietaroma-circulation-bio-20-ampoules-circulation-sanguine-et-coeur.html"
+      },
+      {
+        "id": "dt-complexe-collagene-marin-20-sachets",
+        "cat": "complements",
+        "brand": "Dietaroma",
+        "status": "brand",
+        "fr": "Complexe Collagène Marin",
+        "sizes": [
+          [
+            "20 sachets",
+            null
+          ]
+        ],
+        "photo": "img/products/dt-complexe-collagene-marin-20-sachets",
+        "source": "https://universparadiscount.ma/accueil/11520-dietaroma-complexe-collagene-marin-20-sachets.html"
+      },
+      {
+        "id": "dt-complexe-magnesium-marin-b6-et-b5",
+        "cat": "vitamines",
+        "brand": "Dietaroma",
+        "status": "brand",
+        "fr": "Complexe Magnesium Marin+ B6 et B5",
+        "sizes": [
+          [
+            "Format standard",
+            null
+          ]
+        ],
+        "photo": "img/products/dt-complexe-magnesium-marin-b6-et-b5",
+        "source": "https://universparadiscount.ma/complements-alimentaires/1324-dietaroma-dietaroma-complexe-magnesium-marin-b6-et-b5-complements-alimentaires.html"
+      },
+      {
+        "id": "dt-curcuma-forte-gingembre-20-ampoules",
+        "cat": "complements",
+        "brand": "Dietaroma",
+        "status": "brand",
+        "fr": "Curcuma Forte+ Gingembre",
+        "sizes": [
+          [
+            "20 ampoules",
+            null
+          ]
+        ],
+        "photo": "img/products/dt-curcuma-forte-gingembre-20-ampoules",
+        "source": "https://universparadiscount.ma/articulations-et-crampes/7302-dietaroma-curcuma-forte-gingembre-20-ampoules.html"
+      },
+      {
+        "id": "dt-articulior-curcuma-et-poivre-noir-60-comprimes",
+        "cat": "complements",
+        "brand": "Dietaroma",
+        "status": "brand",
+        "fr": "Articulior Curcuma et Poivre Noir",
+        "sizes": [
+          [
+            "60 comprimés",
+            null
+          ]
+        ],
+        "photo": "img/products/dt-articulior-curcuma-et-poivre-noir-60-comprimes",
+        "source": "https://universparadiscount.ma/complements-alimentaires-anti-age/3833-dietaroma-articulior-curcuma-et-poivre-noir-60-comprimes.html"
+      },
+      {
+        "id": "dt-dermideal-anti-age-20-ampoules",
+        "cat": "complements",
+        "brand": "Dietaroma",
+        "status": "brand",
+        "fr": "Dermidéal+ Anti-âge",
+        "sizes": [
+          [
+            "20 ampoules",
+            null
+          ]
+        ],
+        "photo": "img/products/dt-dermideal-anti-age-20-ampoules",
+        "source": "https://universparadiscount.ma/complements-alimentaires-anti-age/24921-dietaroma-dermideal-anti-age-20-ampoules.html"
+      },
+      {
+        "id": "dt-dermideal-plus-collagene-coq10-60-comprimes",
+        "cat": "complements",
+        "brand": "Dietaroma",
+        "status": "brand",
+        "fr": "Dermidéal Plus Collagène + COQ10",
+        "sizes": [
+          [
+            "60 comprimés",
+            null
+          ]
+        ],
+        "photo": "img/products/dt-dermideal-plus-collagene-coq10-60-comprimes",
+        "source": "https://universparadiscount.ma/complements-alimentaires-anti-age/3932-dietaroma-dermideal-plus-collagene-coq10-60-comprimes.html"
+      },
+      {
+        "id": "dt-desmodium-15-mg-de-flavones-60-comprimes",
+        "cat": "complements",
+        "brand": "Dietaroma",
+        "status": "brand",
+        "fr": "Desmodium 15 mg de Flavones",
+        "sizes": [
+          [
+            "60 comprimés",
+            null
+          ]
+        ],
+        "photo": "img/products/dt-desmodium-15-mg-de-flavones-60-comprimes",
+        "source": "https://universparadiscount.ma/defenses-immunitaires/20138-dietaroma-desmodium-15-mg-de-flavones-60-comprimes.html"
+      },
+      {
+        "id": "dt-digestion-20-ampoules",
+        "cat": "complements",
+        "brand": "Dietaroma",
+        "status": "brand",
+        "fr": "Digestion",
+        "sizes": [
+          [
+            "20 ampoules",
+            null
+          ]
+        ],
+        "photo": "img/products/dt-digestion-20-ampoules",
+        "source": "https://universparadiscount.ma/transit-digestion-et-elimination/5198-dietaroma-dietaroma-digestion-20-ampoules-transit-digestion-elimination.html"
+      },
+      {
+        "id": "dt-drain-ideal-detox-5-emonctoires-bio-20-ampoules",
+        "cat": "complements",
+        "brand": "Dietaroma",
+        "status": "brand",
+        "fr": "Drain Idéal Detox 5 Émonctoires Bio",
+        "sizes": [
+          [
+            "20 ampoules",
+            null
+          ]
+        ],
+        "photo": "img/products/dt-drain-ideal-detox-5-emonctoires-bio-20-ampoules",
+        "source": "https://universparadiscount.ma/complements-alimentaires/1326-dietaroma-drain-ideal-detox-5-emonctoires-bio-20-ampoules.html"
+      },
+      {
+        "id": "dt-ephytem-spiruline-300-comprimes",
+        "cat": "superaliments",
+        "brand": "Dietaroma",
+        "status": "brand",
+        "fr": "Ephytem Spiruline",
+        "sizes": [
+          [
+            "300 comprimés",
+            null
+          ]
+        ],
+        "photo": "img/products/dt-ephytem-spiruline-300-comprimes",
+        "source": "https://universparadiscount.ma/defenses-immunitaires/26494-dietaroma-ephytem-spiruline-300-comprimes.html"
+      },
+      {
+        "id": "dt-ginseng-extra-fort-20-ampoules",
+        "cat": "vitalite",
+        "brand": "Dietaroma",
+        "status": "brand",
+        "fr": "Ginseng Extra Fort",
+        "sizes": [
+          [
+            "20 ampoules",
+            null
+          ]
+        ],
+        "photo": "img/products/dt-ginseng-extra-fort-20-ampoules",
+        "source": "https://universparadiscount.ma/complements-alimentaires/3708-dietaroma-dietaroma-ginseng-extra-fort-20-ampoules-complements-alimentaires.html"
+      },
+      {
+        "id": "dt-ginseng-gelee-royale-acerola-fortifiant-et-dynamisant-ampoul",
+        "cat": "ruche",
+        "brand": "Dietaroma",
+        "status": "brand",
+        "fr": "Ginseng Gelée Royale Acerola Fortifiant et Dynamisant Ampoules",
+        "sizes": [
+          [
+            "20 jours",
+            null
+          ]
+        ],
+        "photo": "img/products/dt-ginseng-gelee-royale-acerola-fortifiant-et-dynamisant-ampoul",
+        "source": "https://universparadiscount.ma/vitamines-et-formes/20575-dietaroma-dietaroma-ginseng-gelee-royale-acerola-fortifiant-et-dynamisant-ampoules-20-jours-vitamines-et-formes.html"
+      },
+      {
+        "id": "dt-gouttes-propolis-bio-15-ml",
+        "cat": "ruche",
+        "brand": "Dietaroma",
+        "status": "brand",
+        "fr": "Gouttes Propolis Bio",
+        "sizes": [
+          [
+            "15 ml",
+            null
+          ]
+        ],
+        "photo": "img/products/dt-gouttes-propolis-bio-15-ml",
+        "source": "https://universparadiscount.ma/vitamines-et-formes/3352-dietaroma-gouttes-propolis-bio-15-ml.html"
+      },
+      {
+        "id": "dt-harpagophytum-20-ampoules",
+        "cat": "complements",
+        "brand": "Dietaroma",
+        "status": "brand",
+        "fr": "Harpagophytum",
+        "sizes": [
+          [
+            "20 ampoules",
+            null
+          ]
+        ],
+        "photo": "img/products/dt-harpagophytum-20-ampoules",
+        "source": "https://universparadiscount.ma/articulations-et-crampes/20136-dietaroma-harpagophytum-20-ampoules.html"
+      },
+      {
+        "id": "dt-la-ruche-miel-gelee-royale-pollen-propolis-20-ampoules",
+        "cat": "ruche",
+        "brand": "Dietaroma",
+        "status": "brand",
+        "fr": "La Ruche Miel + Gelée Royale + Pollen + Propolis",
+        "sizes": [
+          [
+            "20 ampoules",
+            null
+          ]
+        ],
+        "photo": "img/products/dt-la-ruche-miel-gelee-royale-pollen-propolis-20-ampoules",
+        "source": "https://universparadiscount.ma/defenses-immunitaires/3622-dietaroma-dietaroma-la-ruche-miel-gelee-royale-pollen-propolis-20-ampoules-vitamine-et-forme.html"
+      },
+      {
+        "id": "dt-la-ruche-propolis-500mg-a-croquer-20-comprimes-gout-citron",
+        "cat": "ruche",
+        "brand": "Dietaroma",
+        "status": "brand",
+        "fr": "La Ruche Propolis 500mg à croquer 20 comprimés Goût Citron",
+        "sizes": [
+          [
+            "Format standard",
+            null
+          ]
+        ],
+        "photo": "img/products/dt-la-ruche-propolis-500mg-a-croquer-20-comprimes-gout-citron",
+        "source": "https://universparadiscount.ma/vitamines-et-formes/26028-dietaroma-dietaroma-la-ruche-propolis-500mg-a-croquer-20-comprimes-gout-citron-vitamines-et-formes.html"
+      },
+      {
+        "id": "dt-maca-haute-concentration-60-gelules",
+        "cat": "vitalite",
+        "brand": "Dietaroma",
+        "status": "brand",
+        "fr": "Maca Haute Concentration",
+        "sizes": [
+          [
+            "60 gélules",
+            null
+          ]
+        ],
+        "photo": "img/products/dt-maca-haute-concentration-60-gelules",
+        "source": "https://universparadiscount.ma/accueil/13188-dietaroma-maca-haute-concentration-60-gelules.html"
+      },
+      {
+        "id": "dt-memo-viv-capital-memoire-60-comprimes",
+        "cat": "complements",
+        "brand": "Dietaroma",
+        "status": "brand",
+        "fr": "Memo Viv Capital Mémoire",
+        "sizes": [
+          [
+            "60 comprimés",
+            null
+          ]
+        ],
+        "photo": "img/products/dt-memo-viv-capital-memoire-60-comprimes",
+        "source": "https://universparadiscount.ma/memoire-et-concentration/8519-dietaroma-memo-viv-capital-memoire-60-comprimes.html"
+      },
+      {
+        "id": "dt-mineavit-booster-30-comprimes-bicouche",
+        "cat": "vitamines",
+        "brand": "Dietaroma",
+        "status": "brand",
+        "fr": "Mineavit Booster",
+        "sizes": [
+          [
+            "30 comprimés bicouche",
+            null
+          ]
+        ],
+        "photo": "img/products/dt-mineavit-booster-30-comprimes-bicouche",
+        "source": "https://universparadiscount.ma/vitamines-et-formes/27815-dietaroma-dietaroma-mineavit-booster-30-comprimes-bicouche-vitamines-et-formes.html"
+      },
+      {
+        "id": "dt-mix-b12-fer-d3-calcium-et-vitamine-c",
+        "cat": "vitamines",
+        "brand": "Dietaroma",
+        "status": "brand",
+        "fr": "Mix B12 Fer D3 Calcium et Vitamine C",
+        "sizes": [
+          [
+            "Format standard",
+            null
+          ]
+        ],
+        "photo": "img/products/dt-mix-b12-fer-d3-calcium-et-vitamine-c",
+        "source": "https://universparadiscount.ma/complements-alimentaires/5849-dietaroma-dietaroma-mix-b12-fer-d3-calcium-et-vitamine-c-complements-alimentaires.html"
+      },
+      {
+        "id": "dt-nocta-plus-melatonine-sommeil-40-comprimes",
+        "cat": "complements",
+        "brand": "Dietaroma",
+        "status": "brand",
+        "fr": "Nocta Plus Mélatonine Sommeil",
+        "sizes": [
+          [
+            "40 comprimés",
+            null
+          ]
+        ],
+        "photo": "img/products/dt-nocta-plus-melatonine-sommeil-40-comprimes",
+        "source": "https://universparadiscount.ma/sommeil-et-detente/18956-dietaroma-dietaroma-nocta-plus-melatonine-sommeil-40-comprimes-sommeil-detente.html"
+      },
+      {
+        "id": "dt-nocta-melatonine-flash-spray-buccal-sommeil-30-ml",
+        "cat": "complements",
+        "brand": "Dietaroma",
+        "status": "brand",
+        "fr": "Nocta+ Mélatonine Flash Spray Buccal Sommeil",
+        "sizes": [
+          [
+            "30 ml",
+            null
+          ]
+        ],
+        "photo": "img/products/dt-nocta-melatonine-flash-spray-buccal-sommeil-30-ml",
+        "source": "https://universparadiscount.ma/sommeil-et-detente/19494-dietaroma-noctamelatonine-flash-spray-buccal-sommeil-30-ml.html"
+      },
+      {
+        "id": "dt-oleopolis-immunite-60-capsules",
+        "cat": "complements",
+        "brand": "Dietaroma",
+        "status": "brand",
+        "fr": "Oleopolis Immunité",
+        "sizes": [
+          [
+            "60 capsules",
+            null
+          ]
+        ],
+        "photo": "img/products/dt-oleopolis-immunite-60-capsules",
+        "source": "https://universparadiscount.ma/vitamines-et-formes/3353-dietaroma-dietaroma-oleopolis-immunite-60-capsules-vitamine-et-forme.html"
+      },
+      {
+        "id": "dt-oleopolis-sirop-gorge-bronche-125ml",
+        "cat": "complements",
+        "brand": "Dietaroma",
+        "status": "brand",
+        "fr": "Oleopolis Sirop Gorge Bronche",
+        "sizes": [
+          [
+            "125 ml",
+            null
+          ]
+        ],
+        "photo": "img/products/dt-oleopolis-sirop-gorge-bronche-125ml",
+        "source": "https://universparadiscount.ma/defenses-immunitaires/26493-dietaroma-oleopolis-sirop-gorge-bronche-125ml.html"
+      },
+      {
+        "id": "dt-osteoprotect-60-comprimes",
+        "cat": "complements",
+        "brand": "Dietaroma",
+        "status": "brand",
+        "fr": "Osteoprotect+",
+        "sizes": [
+          [
+            "60 comprimés",
+            null
+          ]
+        ],
+        "photo": "img/products/dt-osteoprotect-60-comprimes",
+        "source": "https://universparadiscount.ma/complements-alimentaires-seniors/6542-dietaroma-dietaroma-osteoprotect-60-comprimes-complements-alimentaires-seniors.html"
+      },
+      {
+        "id": "dt-philaromal-quotidien-60-gelules",
+        "cat": "complements",
+        "brand": "Dietaroma",
+        "status": "brand",
+        "fr": "Philaromal Quotidien",
+        "sizes": [
+          [
+            "60 gélules",
+            null
+          ]
+        ],
+        "photo": "img/products/dt-philaromal-quotidien-60-gelules",
+        "source": "https://universparadiscount.ma/transit-digestion-et-elimination/1331-dietaroma-philaromal-quotidien-60-gelules.html"
+      },
+      {
+        "id": "dt-phyt-allerg-40-gelules",
+        "cat": "complements",
+        "brand": "Dietaroma",
+        "status": "brand",
+        "fr": "Phyt'allerg",
+        "sizes": [
+          [
+            "40 gélules",
+            null
+          ]
+        ],
+        "photo": "img/products/dt-phyt-allerg-40-gelules",
+        "source": "https://universparadiscount.ma/defenses-immunitaires/24603-dietaroma-phyt-allerg-40-gelules.html"
+      },
+      {
+        "id": "dt-probiotiques-enfants-15-sachets",
+        "cat": "complements",
+        "brand": "Dietaroma",
+        "status": "brand",
+        "fr": "Probiotiques Enfants",
+        "sizes": [
+          [
+            "15 sachets",
+            null
+          ]
+        ],
+        "photo": "img/products/dt-probiotiques-enfants-15-sachets",
+        "source": "https://universparadiscount.ma/complements-alimentaires-enfants/26232-dietaroma-probiotiques-enfants-15-sachets.html"
+      },
+      {
+        "id": "dt-probiotiques-forte-confort-express-14-sachets",
+        "cat": "complements",
+        "brand": "Dietaroma",
+        "status": "brand",
+        "fr": "Probiotiques Forte Confort Express",
+        "sizes": [
+          [
+            "14 sachets",
+            null
+          ]
+        ],
+        "photo": "img/products/dt-probiotiques-forte-confort-express-14-sachets",
+        "source": "https://universparadiscount.ma/complements-alimentaires/13768-dietaroma-probiotiques-forte-confort-express-14-sachets.html"
+      },
+      {
+        "id": "dt-radis-noir-artichaud-bio-20-ampoules",
+        "cat": "complements",
+        "brand": "Dietaroma",
+        "status": "brand",
+        "fr": "Radis Noir Artichaut Bio",
+        "sizes": [
+          [
+            "20 ampoules",
+            null
+          ]
+        ],
+        "photo": "img/products/dt-radis-noir-artichaud-bio-20-ampoules",
+        "source": "https://universparadiscount.ma/transit-digestion-et-elimination/6759-dietaroma-radis-noir-artichaud-bio-20-ampoules.html"
+      },
+      {
+        "id": "dt-spray-gorge-bio-a-la-propolis-et-aux-huiles-essentielles",
+        "cat": "ruche",
+        "brand": "Dietaroma",
+        "status": "brand",
+        "fr": "Spray Gorge Bio à la Propolis et aux Huiles Essentielles",
+        "sizes": [
+          [
+            "Format standard",
+            null
+          ]
+        ],
+        "photo": "img/products/dt-spray-gorge-bio-a-la-propolis-et-aux-huiles-essentielles",
+        "source": "https://universparadiscount.ma/bucco-dentaire/13179-dietaroma-dietaroma-spray-gorge-bio-a-la-propolis-et-aux-huiles-essentielles-dentaire.html"
+      },
+      {
+        "id": "dt-syndrome-premenstruel-30-comprimes",
+        "cat": "complements",
+        "brand": "Dietaroma",
+        "status": "brand",
+        "fr": "Syndrome Prémenstruel",
+        "sizes": [
+          [
+            "30 comprimés",
+            null
+          ]
+        ],
+        "photo": "img/products/dt-syndrome-premenstruel-30-comprimes",
+        "source": "https://universparadiscount.ma/complements-alimentaires/18957-dietaroma-dietaroma-syndrome-premenstruel-30-comprimes-complements-alimentaires.html"
+      },
+      {
+        "id": "dt-vinalege-jambes-legeres-20-ampoules",
+        "cat": "complements",
+        "brand": "Dietaroma",
+        "status": "brand",
+        "fr": "Vinalège Jambes Légères",
+        "sizes": [
+          [
+            "20 ampoules",
+            null
+          ]
+        ],
+        "photo": "img/products/dt-vinalege-jambes-legeres-20-ampoules",
+        "source": "https://universparadiscount.ma/circulation-sanguine-et-coeur/24444-dietaroma-vinalege-jambes-legeres-20-ampoules.html"
+      },
+      {
+        "id": "dt-vinalege-jambes-legeres-45-comprimes",
+        "cat": "complements",
+        "brand": "Dietaroma",
+        "status": "brand",
+        "fr": "Vinalège Jambes Légères",
+        "sizes": [
+          [
+            "45 comprimés",
+            null
+          ]
+        ],
+        "photo": "img/products/dt-vinalege-jambes-legeres-45-comprimes",
+        "source": "https://universparadiscount.ma/complements-alimentaires-anti-age/4029-dietaroma-dietaroma-vinalege-jambes-legeres-45-comprimes-complements-alimentaires-anti-age.html"
+      },
+      {
+        "id": "dt-vitamine-d3-vegetales-2000ui",
+        "cat": "vitamines",
+        "brand": "Dietaroma",
+        "status": "brand",
+        "fr": "Vitamine D3 Végétales 2000 UI",
+        "sizes": [
+          [
+            "Format standard",
+            null
+          ]
+        ],
+        "photo": "img/products/dt-vitamine-d3-vegetales-2000ui",
+        "source": "https://universparadiscount.ma/defenses-immunitaires/7151-dietaroma-vitamine-d3-vegetales-2000ui.html"
+      },
+      {
+        "id": "dt-zinc-vitamine-b6-60-comprimes",
+        "cat": "vitamines",
+        "brand": "Dietaroma",
+        "status": "brand",
+        "fr": "Zinc + Vitamine B6",
+        "sizes": [
+          [
+            "60 comprimés",
+            null
+          ]
+        ],
+        "photo": "img/products/dt-zinc-vitamine-b6-60-comprimes",
+        "source": "https://universparadiscount.ma/accueil/13186-dietaroma-zinc-vitamine-b6-60-comprimes.html"
+      },
+      {
+        "id": "dt-cap-ligne-berberine-chrome-moringa-40-gelules",
+        "cat": "complements",
+        "brand": "Dietaroma",
+        "status": "brand",
+        "fr": "Cap Ligne Berbérine Chrome + Moringa",
+        "sizes": [
+          [
+            "40 gélules",
+            null
+          ]
+        ],
+        "photo": "img/products/dt-cap-ligne-berberine-chrome-moringa-40-gelules",
+        "source": "https://universparadiscount.ma/complements-alimentaires/28437-dietaroma-cap-ligne-berberine-chrome-moringa-40-gelules.html"
+      },
+      {
+        "id": "dt-gaba-500mg-40-gelules",
+        "cat": "complements",
+        "brand": "Dietaroma",
+        "status": "brand",
+        "fr": "GABA 500mg",
+        "sizes": [
+          [
+            "40 gélules",
+            null
+          ]
+        ],
+        "photo": "img/products/dt-gaba-500mg-40-gelules",
+        "source": "https://universparadiscount.ma/bien-etre-et-equilibre-emotionnel/30149-dietaroma-gaba-500mg-40-gelules.html"
+      },
+      {
+        "id": "dt-complexe-vitamines-b-energie-30-gelules",
+        "cat": "vitamines",
+        "brand": "Dietaroma",
+        "status": "brand",
+        "fr": "Complexe Vitamines B Énergie",
+        "sizes": [
+          [
+            "30 gélules",
+            null
+          ]
+        ],
+        "photo": "img/products/dt-complexe-vitamines-b-energie-30-gelules",
+        "source": "https://universparadiscount.ma/vitamines-et-formes/30150-dietaroma-complexe-vitamines-b-energie-30-gelules.html"
+      },
+      {
+        "id": "dt-complexe-antioxydant-protection-cellulaire-40-gelules",
+        "cat": "complements",
+        "brand": "Dietaroma",
+        "status": "brand",
+        "fr": "Complexe Antioxydant Protection Cellulaire",
+        "sizes": [
+          [
+            "40 gélules",
+            null
+          ]
+        ],
+        "photo": "img/products/dt-complexe-antioxydant-protection-cellulaire-40-gelules",
+        "source": "https://universparadiscount.ma/complements-alimentaires/30146-dietaroma-complexe-antioxydant-protection-cellulaire-40-gelules.html"
+      },
+      {
+        "id": "dt-magnesium-bisglycinate-300-mg-fatigue-et-stress-80-comprimes",
+        "cat": "vitamines",
+        "brand": "Dietaroma",
+        "status": "brand",
+        "fr": "Magnesium Bisglycinate 300 mg Fatigue et Stress",
+        "sizes": [
+          [
+            "80 comprimés",
+            null
+          ]
+        ],
+        "photo": "img/products/dt-magnesium-bisglycinate-300-mg-fatigue-et-stress-80-comprimes",
+        "source": "https://universparadiscount.ma/bien-etre-et-equilibre-emotionnel/30151-dietaroma-magnesium-bisglycinate-300-mg-fatigue-et-stress-80-comprimes.html"
+      },
+      {
+        "id": "dt-nac-antioxydant-40-gelules",
+        "cat": "complements",
+        "brand": "Dietaroma",
+        "status": "brand",
+        "fr": "NAC Antioxydant",
+        "sizes": [
+          [
+            "40 gélules",
+            null
+          ]
+        ],
+        "photo": "img/products/dt-nac-antioxydant-40-gelules",
+        "source": "https://universparadiscount.ma/complements-alimentaires/30152-dietaroma-nac-antioxydant-40-gelules.html"
+      },
+      {
+        "id": "dt-omega-3-1500-mg-60-capsules",
+        "cat": "complements",
+        "brand": "Dietaroma",
+        "status": "brand",
+        "fr": "Omega 3 1500 mg",
+        "sizes": [
+          [
+            "60 capsules",
+            null
+          ]
+        ],
+        "photo": "img/products/dt-omega-3-1500-mg-60-capsules",
+        "source": "https://universparadiscount.ma/circulation-sanguine-et-coeur/24445-dietaroma-omega-3-1500-mg-60-capsules.html"
+      },
+      {
+        "id": "dt-nocta-melatonine-maxi-15-comprimes-secables",
+        "cat": "complements",
+        "brand": "Dietaroma",
+        "status": "brand",
+        "fr": "Nocta+ Mélatonine Maxi",
+        "sizes": [
+          [
+            "15 comprimés sécables",
+            null
+          ]
+        ],
+        "photo": "img/products/dt-nocta-melatonine-maxi-15-comprimes-secables",
+        "source": "https://universparadiscount.ma/bien-etre-et-equilibre-emotionnel/27809-dietaroma-nocta-melatonine-maxi-15-comprimes-secables.html"
+      },
+      {
+        "id": "dt-probiotiques-flore-intime-20-gelules",
+        "cat": "complements",
+        "brand": "Dietaroma",
+        "status": "brand",
+        "fr": "Probiotiques Flore Intime",
+        "sizes": [
+          [
+            "20 gélules",
+            null
+          ]
+        ],
+        "photo": "img/products/dt-probiotiques-flore-intime-20-gelules",
+        "source": "https://universparadiscount.ma/gynecologie-et-troubles-urinaires/13182-dietaroma-dietaroma-probiotiques-flore-intime-20-gelules-gynecologie-et-troubles-urinaires.html"
+      },
+      {
+        "id": "dt-articulation-reine-des-pres-ortie-harpagophytum-ampoules-20-",
+        "cat": "complements",
+        "brand": "Dietaroma",
+        "status": "brand",
+        "fr": "Articulation Reine des Prés Ortie Harpagophytum Ampoules",
+        "sizes": [
+          [
+            "20 jours",
+            null
+          ]
+        ],
+        "photo": "img/products/dt-articulation-reine-des-pres-ortie-harpagophytum-ampoules-20-",
+        "source": "https://universparadiscount.ma/complements-alimentaires/20576-dietaroma-dietaroma-articulation-reine-des-pres-ortie-harpagophytum-ampoules-20-jours-complements-alimentaires.html"
+      },
+      {
+        "id": "dt-cap-ligne-brule-graisse-forte-bio-20-ampoules",
+        "cat": "complements",
+        "brand": "Dietaroma",
+        "status": "brand",
+        "fr": "Cap Ligne Brûle Graisse Forte Bio",
+        "sizes": [
+          [
+            "20 ampoules",
+            null
+          ]
+        ],
+        "photo": "img/products/dt-cap-ligne-brule-graisse-forte-bio-20-ampoules",
+        "source": "https://universparadiscount.ma/detox-coup-faim-ventre-plat/27042-dietaroma-cap-ligne-brule-graisse-forte-bio-20-ampoules.html"
+      },
+      {
+        "id": "dt-complexe-fer-vitamine-c-30-gelules",
+        "cat": "vitamines",
+        "brand": "Dietaroma",
+        "status": "brand",
+        "fr": "Complexe Fer + Vitamine C",
+        "sizes": [
+          [
+            "30 gélules",
+            null
+          ]
+        ],
+        "photo": "img/products/dt-complexe-fer-vitamine-c-30-gelules",
+        "source": "https://universparadiscount.ma/complements-alimentaires/1323-dietaroma-dietaroma-complexe-fer-vitamine-c-30-gelules-complements-alimentaires.html"
+      },
+      {
+        "id": "dt-gastrideal-confort-gastrique-vegan-45-gelules",
+        "cat": "complements",
+        "brand": "Dietaroma",
+        "status": "brand",
+        "fr": "Gastridéal Confort Gastrique Vegan",
+        "sizes": [
+          [
+            "45 gélules",
+            null
+          ]
+        ],
+        "photo": "img/products/dt-gastrideal-confort-gastrique-vegan-45-gelules",
+        "source": "https://universparadiscount.ma/complements-alimentaires/6541-dietaroma-gastrideal-confort-gastrique-vegan-45-gelules.html"
+      },
+      {
+        "id": "dt-la-ruche-gelee-royale-forte-3500-mg-20-ampoules",
+        "cat": "ruche",
+        "brand": "Dietaroma",
+        "status": "brand",
+        "fr": "La Ruche Gelée Royale Forte 3500 mg",
+        "sizes": [
+          [
+            "20 ampoules",
+            null
+          ]
+        ],
+        "photo": "img/products/dt-la-ruche-gelee-royale-forte-3500-mg-20-ampoules",
+        "source": "https://universparadiscount.ma/accueil/12572-dietaroma-la-ruche-gele-royale-forte-3500-mg-20-ampoules.html"
+      },
+      {
+        "id": "dt-la-ruche-gelee-royale-bio-1500-mg-30-ampoules",
+        "cat": "ruche",
+        "brand": "Dietaroma",
+        "status": "brand",
+        "fr": "La Ruche Gelée Royale Bio 1500 mg",
+        "sizes": [
+          [
+            "30 ampoules",
+            null
+          ]
+        ],
+        "photo": "img/products/dt-la-ruche-gelee-royale-bio-1500-mg-30-ampoules",
+        "source": "https://universparadiscount.ma/defenses-immunitaires/3358-dietaroma-dietaroma-la-ruche-gelee-royale-bio-1500-mg-30-ampoules-vitamine-et-forme.html"
+      },
+      {
+        "id": "dt-sommeil-60-comprimes",
+        "cat": "complements",
+        "brand": "Dietaroma",
+        "status": "brand",
+        "fr": "Sommeil",
+        "sizes": [
+          [
+            "60 comprimés",
+            null
+          ]
+        ],
+        "photo": "img/products/dt-sommeil-60-comprimes",
+        "source": "https://universparadiscount.ma/sommeil-et-detente/24601-dietaroma-sommeil-60-comprimes.html"
+      },
+      {
+        "id": "dt-vitamines-k2mkl7-et-d3-20-ml",
+        "cat": "vitamines",
+        "brand": "Dietaroma",
+        "status": "brand",
+        "fr": "Vitamines K2MKL7 et D3",
+        "sizes": [
+          [
+            "20 ml",
+            null
+          ]
+        ],
+        "photo": "img/products/dt-vitamines-k2mkl7-et-d3-20-ml",
+        "source": "https://universparadiscount.ma/vitamines-et-formes/28395-dietaroma-vitamines-k2mkl7-et-d3-20-ml.html"
+      },
+      {
+        "id": "gph-magnesium-bisglycinate-vitamine-b6-500-mg",
+        "cat": "vitamines",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Magnésium Bisglycinate + Vitamine B6",
+        "sizes": [
+          [
+            "500 mg",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-magnesium-bisglycinate-vitamine-b6-500-mg",
+        "source": "https://www.123gelules.com/1784-magnesium-bisglycinate-vitamine-b6-500-mg.html"
+      },
+      {
+        "id": "gph-melatonine-fort-1-8-mg-comprimes",
+        "cat": "complements",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Mélatonine Fort",
+        "sizes": [
+          [
+            "1.8 mg · Comprimés",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-melatonine-fort-1-8-mg-comprimes",
+        "source": "https://www.123gelules.com/1372-melatonine-fort-18mg-180-comprimes.html"
+      },
+      {
+        "id": "gph-collagene-marin-vitamine-c-350-mg-180-gelules",
+        "cat": "vitamines",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Collagène marin + Vitamine C",
+        "sizes": [
+          [
+            "350 mg · 180 gélules",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-collagene-marin-vitamine-c-350-mg-180-gelules",
+        "source": "https://www.123gelules.com/1619-collagène-marin-vitamine-c.html"
+      },
+      {
+        "id": "gph-omega-3-500-mg-epa-660mg-dha-440mg",
+        "cat": "complements",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Oméga 3",
+        "sizes": [
+          [
+            "500 mg · EPA : 660mg / DHA : 440mg",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-omega-3-500-mg-epa-660mg-dha-440mg",
+        "source": "https://www.123gelules.com/1479-oméga-3-500-mg-200-cpasules.html"
+      },
+      {
+        "id": "gph-vitamine-c-acerola-bio-1000-mg-comprimes",
+        "cat": "vitamines",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Vitamine C Acérola Bio",
+        "sizes": [
+          [
+            "1000 mg · Comprimés",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-vitamine-c-acerola-bio-1000-mg-comprimes",
+        "source": "https://www.123gelules.com/142-vitamine-c-acérola-bio-1000-mg-comprimés.html"
+      },
+      {
+        "id": "gph-huile-de-foie-de-morue-500-mg-capsules",
+        "cat": "complements",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Huile de Foie de Morue",
+        "sizes": [
+          [
+            "500 mg · capsules",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-huile-de-foie-de-morue-500-mg-capsules",
+        "source": "https://www.123gelules.com/95-huile-de-foie-de-morue-200-capsules.html"
+      },
+      {
+        "id": "gph-spiruline-bio-500-mg-1200-comprimes",
+        "cat": "superaliments",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Spiruline Bio",
+        "sizes": [
+          [
+            "500 mg · 1200 comprimés",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-spiruline-bio-500-mg-1200-comprimes",
+        "source": "https://www.123gelules.com/1292-spiruline-bio-500-mg-1200-comprimes.html"
+      },
+      {
+        "id": "gph-huile-essentielle-de-ravintsara-bio",
+        "cat": "huiles-essentielles",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Huile essentielle de Ravintsara Bio",
+        "sizes": [
+          [
+            "Format standard",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-huile-essentielle-de-ravintsara-bio",
+        "source": "https://www.123gelules.com/1547-huile-essentielle-de-ravintsara-bio-10-ml.html"
+      },
+      {
+        "id": "gph-levure-de-riz-rouge-bio-180-comprimes",
+        "cat": "complements",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Levure de Riz Rouge Bio",
+        "sizes": [
+          [
+            "180 comprimés",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-levure-de-riz-rouge-bio-180-comprimes",
+        "source": "https://www.123gelules.com/507-levure-de-riz-rouge-16-60-comprimés-bio-600-mg.html"
+      },
+      {
+        "id": "gph-vitamine-c-liposomale-675-mg-gelules-vegetales",
+        "cat": "vitamines",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Vitamine C Liposomale",
+        "sizes": [
+          [
+            "675 mg · Gélules végétales",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-vitamine-c-liposomale-675-mg-gelules-vegetales",
+        "source": "https://www.123gelules.com/1578-vitamine-c-liposomale-200-mg-180-gélules-végétales.html"
+      },
+      {
+        "id": "gph-huile-essentielle-de-menthe-poivree-bio",
+        "cat": "huiles-essentielles",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Huile Essentielle de Menthe Poivrée Bio",
+        "sizes": [
+          [
+            "Format standard",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-huile-essentielle-de-menthe-poivree-bio",
+        "source": "https://www.123gelules.com/1027-huile-essentielle-de-menthe-poivrée-bio.html"
+      },
+      {
+        "id": "gph-multivitamines-et-mineraux-comprimes",
+        "cat": "vitamines",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "MultiVitamines et Minéraux",
+        "sizes": [
+          [
+            "comprimés",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-multivitamines-et-mineraux-comprimes",
+        "source": "https://www.123gelules.com/1515-multi-vitamines-et-minéraux-200-comprimés.html"
+      },
+      {
+        "id": "gph-magnesium-marin-vitamine-b6-548-mg-200-comprimes",
+        "cat": "vitamines",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Magnésium Marin + Vitamine B6",
+        "sizes": [
+          [
+            "548 mg · 200 comprimés",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-magnesium-marin-vitamine-b6-548-mg-200-comprimes",
+        "source": "https://www.123gelules.com/1071-magnésium-marin-vitamine-b6.html"
+      },
+      {
+        "id": "gph-huile-essentielle-de-lavande-officinale-bio",
+        "cat": "huiles-essentielles",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Huile Essentielle de Lavande officinale Bio",
+        "sizes": [
+          [
+            "Format standard",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-huile-essentielle-de-lavande-officinale-bio",
+        "source": "https://www.123gelules.com/1002-huile-essentielle-de-lavande-officinale-bio.html"
+      },
+      {
+        "id": "gph-spiruline-bio-500-mg-500-comprimes",
+        "cat": "superaliments",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Spiruline Bio",
+        "sizes": [
+          [
+            "500 mg · 500 comprimés",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-spiruline-bio-500-mg-500-comprimes",
+        "source": "https://www.123gelules.com/1048-spiruline-bio-500-comprimés-500-mg.html"
+      },
+      {
+        "id": "gph-magnesium-zinc-b6-comprimes",
+        "cat": "vitamines",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Magnésium + Zinc + B6",
+        "sizes": [
+          [
+            "Comprimés",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-magnesium-zinc-b6-comprimes",
+        "source": "https://www.123gelules.com/1514-magnesium-zinc-b6-200-comprimes.html"
+      },
+      {
+        "id": "gph-huile-essentielle-de-tea-tree-bio",
+        "cat": "huiles-essentielles",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Huile Essentielle de Tea Tree Bio",
+        "sizes": [
+          [
+            "Format standard",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-huile-essentielle-de-tea-tree-bio",
+        "source": "https://www.123gelules.com/1034-huile-essentielle-de-tea-tree-bio.html"
+      },
+      {
+        "id": "gph-huile-essentielle-de-lavandin-super",
+        "cat": "huiles-essentielles",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Huile Essentielle de Lavandin Super",
+        "sizes": [
+          [
+            "Format standard",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-huile-essentielle-de-lavandin-super",
+        "source": "https://www.123gelules.com/1025-huile-essentielle-de-lavandin-super.html"
+      },
+      {
+        "id": "gph-chlorella-bio-500-mg-500-comprimes",
+        "cat": "superaliments",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Chlorella Bio",
+        "sizes": [
+          [
+            "500 mg · 500 comprimés",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-chlorella-bio-500-mg-500-comprimes",
+        "source": "https://www.123gelules.com/1196-chlorella-500-comprimés.html"
+      },
+      {
+        "id": "gph-vitamine-d3-5-g-comprimes",
+        "cat": "vitamines",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Vitamine D3",
+        "sizes": [
+          [
+            "5 µg · Comprimés",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-vitamine-d3-5-g-comprimes",
+        "source": "https://www.123gelules.com/1512-vitamine-d-200-comprimes.html"
+      },
+      {
+        "id": "gph-complexe-5-magnesium-gelules-vegetales",
+        "cat": "vitamines",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Complexe 5 Magnésium",
+        "sizes": [
+          [
+            "Gélules végétales",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-complexe-5-magnesium-gelules-vegetales",
+        "source": "https://www.123gelules.com/1805-complexe-5-magnésium-180-gélules-végétales.html"
+      },
+      {
+        "id": "gph-vitamine-b-complexe-comprimes",
+        "cat": "vitamines",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Vitamine B Complexe",
+        "sizes": [
+          [
+            "comprimés",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-vitamine-b-complexe-comprimes",
+        "source": "https://www.123gelules.com/1513-vitamine-b-complexe-200-comprimes.html"
+      },
+      {
+        "id": "gph-vitamine-c-1000-mg-acide-l-ascorbique-gelules-vegetales",
+        "cat": "vitamines",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Vitamine C 1000 mg",
+        "sizes": [
+          [
+            "Acide L Ascorbique · Gélules végétales",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-vitamine-c-1000-mg-acide-l-ascorbique-gelules-vegetales",
+        "source": "https://www.123gelules.com/1566-vitamine-c-1000-mg-180-gélules-végétales-acide-ascorbique.html"
+      },
+      {
+        "id": "gph-epilobe-bio-200-mg",
+        "cat": "complements",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Epilobe Bio",
+        "sizes": [
+          [
+            "200 mg",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-epilobe-bio-200-mg",
+        "source": "https://www.123gelules.com/1609-epilobe-200-mg.html"
+      },
+      {
+        "id": "gph-huile-de-pepins-de-courge-ecocert-420-mg-capsules",
+        "cat": "complements",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Huile de Pépins de Courge Ecocert 420 mg",
+        "sizes": [
+          [
+            "Capsules",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-huile-de-pepins-de-courge-ecocert-420-mg-capsules",
+        "source": "https://www.123gelules.com/113-huile-de-pepins-de-courge-200-capsules.html"
+      },
+      {
+        "id": "gph-huile-essentielle-d-eucalyptus-radiata-bio",
+        "cat": "huiles-essentielles",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Huile Essentielle d'Eucalyptus Radiata Bio",
+        "sizes": [
+          [
+            "Format standard",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-huile-essentielle-d-eucalyptus-radiata-bio",
+        "source": "https://www.123gelules.com/1023-huile-essentielle-d-eucalyptus-radiata-bio.html"
+      },
+      {
+        "id": "gph-spiruline-bio-500-mg-2500-comprimes",
+        "cat": "superaliments",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Spiruline Bio",
+        "sizes": [
+          [
+            "500 mg · 2500 comprimés",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-spiruline-bio-500-mg-2500-comprimes",
+        "source": "https://www.123gelules.com/1051-5-piluliers-spiruline-bio-500-comprimés-500-mg.html"
+      },
+      {
+        "id": "gph-hydrolysat-de-collagene-marin-vitamine-c-200-g-poudre",
+        "cat": "vitamines",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Hydrolysat de Collagène Marin +Vitamine C",
+        "sizes": [
+          [
+            "200 g poudre",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-hydrolysat-de-collagene-marin-vitamine-c-200-g-poudre",
+        "source": "https://www.123gelules.com/1608-hydrolysat-de-collagène-marin.html"
+      },
+      {
+        "id": "gph-multivitamines-a-d3-c-groupe-b-200-gelules",
+        "cat": "vitamines",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Multivitamines A + D3 + C + Groupe B",
+        "sizes": [
+          [
+            "200 gélules",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-multivitamines-a-d3-c-groupe-b-200-gelules",
+        "source": "https://www.123gelules.com/1122-multivitamines-a-d3-c-groupe-b.html"
+      },
+      {
+        "id": "gph-gluconate-de-zinc-15-mg-comprimes",
+        "cat": "vitamines",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Gluconate de zinc 15 mg",
+        "sizes": [
+          [
+            "comprimés",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-gluconate-de-zinc-15-mg-comprimes",
+        "source": "https://www.123gelules.com/1506-gluconate-de-zinc-15-mg-200-comprimés.html"
+      },
+      {
+        "id": "gph-msm-en-poudre-soufre-organique",
+        "cat": "superaliments",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "MSM en poudre",
+        "sizes": [
+          [
+            "Soufre organique",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-msm-en-poudre-soufre-organique",
+        "source": "https://www.123gelules.com/1509-msm-en-poudre.html"
+      },
+      {
+        "id": "gph-huile-essentielle-de-clou-de-girofle-bio",
+        "cat": "huiles-essentielles",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Huile Essentielle de Clou de Girofle Bio",
+        "sizes": [
+          [
+            "Format standard",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-huile-essentielle-de-clou-de-girofle-bio",
+        "source": "https://www.123gelules.com/1019-huile-essentielle-de-clou-de-girofle-bio.html"
+      },
+      {
+        "id": "gph-huile-essentielle-d-orange-douce-bio",
+        "cat": "huiles-essentielles",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Huile Essentielle d'Orange Douce Bio",
+        "sizes": [
+          [
+            "Format standard",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-huile-essentielle-d-orange-douce-bio",
+        "source": "https://www.123gelules.com/1030-huile-essentielle-d-orange-douce-bio.html"
+      },
+      {
+        "id": "gph-vitamine-b8-biotine-10-000-g",
+        "cat": "vitamines",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Vitamine B8 Biotine",
+        "sizes": [
+          [
+            "10 000 µg",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-vitamine-b8-biotine-10-000-g",
+        "source": "https://www.123gelules.com/1570-vitamine-b8-biotine-10-000-μg-365-comprimés.html"
+      },
+      {
+        "id": "gph-huile-essentielle-de-citron-bio",
+        "cat": "huiles-essentielles",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Huile Essentielle de Citron Bio",
+        "sizes": [
+          [
+            "Format standard",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-huile-essentielle-de-citron-bio",
+        "source": "https://www.123gelules.com/1451-huile-essentielle-de-citron-bio.html"
+      },
+      {
+        "id": "gph-vitamine-c-acerola-bio-sucre-de-coco-1000-mg-comprimes",
+        "cat": "vitamines",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Vitamine C Acérola Bio Sucre de Coco",
+        "sizes": [
+          [
+            "1000 mg · Comprimés",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-vitamine-c-acerola-bio-sucre-de-coco-1000-mg-comprimes",
+        "source": "https://www.123gelules.com/1636-vitamine-c-acérola-bio-sucre-de-coco-1000-mg-comprimés.html"
+      },
+      {
+        "id": "gph-ashwagandha-400-mg",
+        "cat": "complements",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Ashwagandha 400 mg",
+        "sizes": [
+          [
+            "Format standard",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-ashwagandha-400-mg",
+        "source": "https://www.123gelules.com/1788-ashwagandha-400-mg.html"
+      },
+      {
+        "id": "gph-comprimes-neutres-bio",
+        "cat": "superaliments",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Comprimés Neutres Bio",
+        "sizes": [
+          [
+            "Format standard",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-comprimes-neutres-bio",
+        "source": "https://www.123gelules.com/1796-comprimés-neutre-bio.html"
+      },
+      {
+        "id": "gph-multivitamines-et-fer-60-gelules",
+        "cat": "vitamines",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "MultiVitamines et Fer",
+        "sizes": [
+          [
+            "60 gélules",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-multivitamines-et-fer-60-gelules",
+        "source": "https://www.123gelules.com/1799-multivitamines-et-fer-60-gélules.html"
+      },
+      {
+        "id": "gph-huile-essentielle-de-romarin-cineol-bio",
+        "cat": "huiles-essentielles",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Huile Essentielle de Romarin Cinéol Bio",
+        "sizes": [
+          [
+            "Format standard",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-huile-essentielle-de-romarin-cineol-bio",
+        "source": "https://www.123gelules.com/1033-huile-essentielle-de-romarin-cinéol-bio.html"
+      },
+      {
+        "id": "gph-huile-de-nigelle-500-mg-800-capsules",
+        "cat": "complements",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Huile de Nigelle",
+        "sizes": [
+          [
+            "500 mg · 800 capsules",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-huile-de-nigelle-500-mg-800-capsules",
+        "source": "https://www.123gelules.com/1532-nigella-sativa-200-capsules-a-500-mg.html"
+      },
+      {
+        "id": "gph-chlorella-bio-500-mg-300-comprimes",
+        "cat": "superaliments",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Chlorella Bio",
+        "sizes": [
+          [
+            "500 mg · 300 comprimés",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-chlorella-bio-500-mg-300-comprimes",
+        "source": "https://www.123gelules.com/167-chlorella-300-comprimés-à-500-mg.html"
+      },
+      {
+        "id": "gph-bicarbonate-de-soude-poudre",
+        "cat": "superaliments",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Bicarbonate de Soude",
+        "sizes": [
+          [
+            "poudre",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-bicarbonate-de-soude-poudre",
+        "source": "https://www.123gelules.com/521-bicarbonate-de-sodium-poudre.html"
+      },
+      {
+        "id": "gph-myrtille-baie-biologique-250-mg",
+        "cat": "complements",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Myrtille baie biologique 250 mg",
+        "sizes": [
+          [
+            "Format standard",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-myrtille-baie-biologique-250-mg",
+        "source": "https://www.123gelules.com/1127-baie-de-myrtille-bio-250-mg-200-gélules-végétales.html"
+      },
+      {
+        "id": "gph-moringa-oleifera-biologique-400mg",
+        "cat": "complements",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Moringa oleifera biologique",
+        "sizes": [
+          [
+            "400mg",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-moringa-oleifera-biologique-400mg",
+        "source": "https://www.123gelules.com/1596-moringa-oleifera-biologique-400mg.html"
+      },
+      {
+        "id": "gph-huile-de-nigelle-500-mg-capsules",
+        "cat": "complements",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Huile de Nigelle 500 mg",
+        "sizes": [
+          [
+            "capsules",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-huile-de-nigelle-500-mg-capsules",
+        "source": "https://www.123gelules.com/56-nigella-sativa-200-capsules-a-500-mg.html"
+      },
+      {
+        "id": "gph-chlorella-bio-500-mg-100-comprimes",
+        "cat": "superaliments",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Chlorella Bio",
+        "sizes": [
+          [
+            "500 mg · 100 comprimés",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-chlorella-bio-500-mg-100-comprimes",
+        "source": "https://www.123gelules.com/166-chlorella-bio-100-comprimés-à-500-mg.html"
+      },
+      {
+        "id": "gph-chondroitine-glucosamine-gelules",
+        "cat": "complements",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Chondroïtine Glucosamine",
+        "sizes": [
+          [
+            "Gélules",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-chondroitine-glucosamine-gelules",
+        "source": "https://www.123gelules.com/826-chondroïtine-glucosamine-gélules.html"
+      },
+      {
+        "id": "gph-spiruline-bio-500-mg-300-comprimes",
+        "cat": "superaliments",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Spiruline Bio",
+        "sizes": [
+          [
+            "500 mg · 300 comprimés",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-spiruline-bio-500-mg-300-comprimes",
+        "source": "https://www.123gelules.com/1040-spiruline-bio-300-comprimés-500-mg.html"
+      },
+      {
+        "id": "gph-huile-essentielle-de-thym-thymol-bio",
+        "cat": "huiles-essentielles",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Huile Essentielle de Thym Thymol Bio",
+        "sizes": [
+          [
+            "Format standard",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-huile-essentielle-de-thym-thymol-bio",
+        "source": "https://www.123gelules.com/969-huile-essentielle-de-thym-thymol-bio.html"
+      },
+      {
+        "id": "gph-bourrache-onagre-ecocert-200-capsules",
+        "cat": "complements",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Bourrache",
+        "sizes": [
+          [
+            "Onagre Ecocert · 200 capsules",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-bourrache-onagre-ecocert-200-capsules",
+        "source": "https://www.123gelules.com/31-bourrache-onagre-bio-200-capsules-marines.html"
+      },
+      {
+        "id": "gph-bourrache-onagre-ecocert-503-mg-100-capsules-marines",
+        "cat": "complements",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Bourrache Onagre Ecocert",
+        "sizes": [
+          [
+            "503 mg · 100 capsules marines",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-bourrache-onagre-ecocert-503-mg-100-capsules-marines",
+        "source": "https://www.123gelules.com/32-bourrache-onagre-bio-100-capsules-marines.html"
+      },
+      {
+        "id": "gph-saule-blanc-ecorce-biologique-200-mg",
+        "cat": "complements",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Saule Blanc écorce biologique 200 mg",
+        "sizes": [
+          [
+            "Format standard",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-saule-blanc-ecorce-biologique-200-mg",
+        "source": "https://www.123gelules.com/48-saule-blanc-ecorce-biologique-200-mg.html"
+      },
+      {
+        "id": "gph-huile-essentielle-d-eucalyptus-globulus-bio",
+        "cat": "huiles-essentielles",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Huile Essentielle d'Eucalyptus Globulus Bio",
+        "sizes": [
+          [
+            "Format standard",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-huile-essentielle-d-eucalyptus-globulus-bio",
+        "source": "https://www.123gelules.com/1022-huile-essentielle-d-eucalyptus-globulus-bio.html"
+      },
+      {
+        "id": "gph-huile-essentielle-de-geranium-rosat-bio",
+        "cat": "huiles-essentielles",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Huile Essentielle de Geranium Rosat Bio",
+        "sizes": [
+          [
+            "Format standard",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-huile-essentielle-de-geranium-rosat-bio",
+        "source": "https://www.123gelules.com/1024-huile-essentielle-de-geranium-rosat-bio.html"
+      },
+      {
+        "id": "gph-hibiscus-bio-fleur",
+        "cat": "tisanes",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Hibiscus Bio Fleur",
+        "sizes": [
+          [
+            "Format standard",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-hibiscus-bio-fleur",
+        "source": "https://www.123gelules.com/1101-hibiscus-bio-fleur.html"
+      },
+      {
+        "id": "gph-citrate-de-zinc-15-mg-comprimes",
+        "cat": "vitamines",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Citrate de Zinc 15 mg",
+        "sizes": [
+          [
+            "Comprimés",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-citrate-de-zinc-15-mg-comprimes",
+        "source": "https://www.123gelules.com/1511-citrate-de-zinc-15-mg-200-comprimés.html"
+      },
+      {
+        "id": "gph-huile-essentielle-de-petit-grain-bigaradier-bio",
+        "cat": "huiles-essentielles",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Huile essentielle de Petit grain Bigaradier Bio",
+        "sizes": [
+          [
+            "Format standard",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-huile-essentielle-de-petit-grain-bigaradier-bio",
+        "source": "https://www.123gelules.com/924-huile-essentielle-de-petit-grain-bigaradier-bio.html"
+      },
+      {
+        "id": "gph-huile-essentielle-de-cedre-atlas-bio",
+        "cat": "huiles-essentielles",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Huile Essentielle de Cèdre Atlas Bio",
+        "sizes": [
+          [
+            "Format standard",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-huile-essentielle-de-cedre-atlas-bio",
+        "source": "https://www.123gelules.com/1016-huile-essentielle-de-cèdre-atlas-bio.html"
+      },
+      {
+        "id": "gph-harpagophytum-racine-biologique-330-mg",
+        "cat": "complements",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Harpagophytum racine biologique 330 mg",
+        "sizes": [
+          [
+            "Format standard",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-harpagophytum-racine-biologique-330-mg",
+        "source": "https://www.123gelules.com/35-harpagophytum-bio-330-mg-gélules-végétales.html"
+      },
+      {
+        "id": "gph-vitamine-c-acerola-bio-poudre-50-g",
+        "cat": "superaliments",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Vitamine C Acérola Bio Poudre",
+        "sizes": [
+          [
+            "50 g",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-vitamine-c-acerola-bio-poudre-50-g",
+        "source": "https://www.123gelules.com/249-vitamine-c-acérola-bio-poudre-50-grammes.html"
+      },
+      {
+        "id": "gph-huile-essentielle-d-eucalyptus-citriodora-bio",
+        "cat": "huiles-essentielles",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Huile Essentielle d'Eucalyptus Citriodora Bio",
+        "sizes": [
+          [
+            "Format standard",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-huile-essentielle-d-eucalyptus-citriodora-bio",
+        "source": "https://www.123gelules.com/1021-huile-essentielle-de-eucalyptus-citriodora-bio.html"
+      },
+      {
+        "id": "gph-huile-essentielle-de-niaouli-bio",
+        "cat": "huiles-essentielles",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Huile Essentielle de Niaouli Bio",
+        "sizes": [
+          [
+            "Format standard",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-huile-essentielle-de-niaouli-bio",
+        "source": "https://www.123gelules.com/1028-huile-essentielle-de-niaouli-bio.html"
+      },
+      {
+        "id": "gph-curcuma-biologique-250-mg-gelules-vegetales",
+        "cat": "complements",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Curcuma biologique 250 mg",
+        "sizes": [
+          [
+            "Gélules végétales",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-curcuma-biologique-250-mg-gelules-vegetales",
+        "source": "https://www.123gelules.com/1079-curcuma-racine-biologique-250-mg.html"
+      },
+      {
+        "id": "gph-respir-200-gelules-250-mg",
+        "cat": "complements",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Respir",
+        "sizes": [
+          [
+            "200 gélules · 250 mg",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-respir-200-gelules-250-mg",
+        "source": "https://www.123gelules.com/1439-respir-200-gélules-250-mg.html"
+      },
+      {
+        "id": "gph-calcium-vitamine-d3-161mg-comprimes",
+        "cat": "vitamines",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Calcium + Vitamine D3",
+        "sizes": [
+          [
+            "161mg · Comprimés",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-calcium-vitamine-d3-161mg-comprimes",
+        "source": "https://www.123gelules.com/1770-calcium-vitamine-d3-161mg-comprimés.html"
+      },
+      {
+        "id": "gph-spiruline-acerola-bio-498mg-comprimes",
+        "cat": "superaliments",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "SPIRULINE + ACEROLA BIO",
+        "sizes": [
+          [
+            "498mg · Comprimés",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-spiruline-acerola-bio-498mg-comprimes",
+        "source": "https://www.123gelules.com/1774-spiruline-acerola-bio-498mg-300-comprimés.html"
+      },
+      {
+        "id": "gph-onagre-ecocert-503-mg-200-capsules-marines",
+        "cat": "complements",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Onagre Ecocert",
+        "sizes": [
+          [
+            "503 mg · 200 capsules marines",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-onagre-ecocert-503-mg-200-capsules-marines",
+        "source": "https://www.123gelules.com/27-onagre-bio-200-capsules-à-500-mg.html"
+      },
+      {
+        "id": "gph-huile-essentielle-de-cannelle-de-ceylan-bio",
+        "cat": "huiles-essentielles",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Huile Essentielle de Cannelle de Ceylan Bio",
+        "sizes": [
+          [
+            "Format standard",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-huile-essentielle-de-cannelle-de-ceylan-bio",
+        "source": "https://www.123gelules.com/1015-huile-essentielle-de-cannelle-de-ceylan-bio.html"
+      },
+      {
+        "id": "gph-huile-essentielle-de-citronnelle-bio",
+        "cat": "huiles-essentielles",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Huile Essentielle de Citronnelle Bio",
+        "sizes": [
+          [
+            "Format standard",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-huile-essentielle-de-citronnelle-bio",
+        "source": "https://www.123gelules.com/1018-huile-essentielle-de-citronnelle-bio-10ml.html"
+      },
+      {
+        "id": "gph-spiruline-bio-500-mg-600-comprimes",
+        "cat": "superaliments",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Spiruline Bio",
+        "sizes": [
+          [
+            "500 mg · 600 comprimés",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-spiruline-bio-500-mg-600-comprimes",
+        "source": "https://www.123gelules.com/1041-2-piluliers-spiruline-bio-300-comprimés-500-mg.html"
+      },
+      {
+        "id": "gph-ortie-piquante-bio-feuille",
+        "cat": "tisanes",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Ortie Piquante bio feuille",
+        "sizes": [
+          [
+            "Format standard",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-ortie-piquante-bio-feuille",
+        "source": "https://www.123gelules.com/1086-ortie-piquante-bio-feuille.html"
+      },
+      {
+        "id": "gph-fenouil-bio",
+        "cat": "tisanes",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Fenouil bio",
+        "sizes": [
+          [
+            "Format standard",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-fenouil-bio",
+        "source": "https://www.123gelules.com/1094-fenouil-bio.html"
+      },
+      {
+        "id": "gph-psyllium-blond-bio",
+        "cat": "superaliments",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Psyllium Blond Bio",
+        "sizes": [
+          [
+            "Format standard",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-psyllium-blond-bio",
+        "source": "https://www.123gelules.com/1521-psyllium-blond-bio.html"
+      },
+      {
+        "id": "gph-acide-citrique-e330",
+        "cat": "superaliments",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Acide Citrique E330",
+        "sizes": [
+          [
+            "Format standard",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-acide-citrique-e330",
+        "source": "https://www.123gelules.com/1554-acide-citrique-e330.html"
+      },
+      {
+        "id": "gph-millepertuis-biologique-250-mg",
+        "cat": "complements",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Millepertuis biologique 250 mg",
+        "sizes": [
+          [
+            "Format standard",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-millepertuis-biologique-250-mg",
+        "source": "https://www.123gelules.com/827-millepertuis-biologique-250-mg.html"
+      },
+      {
+        "id": "gph-huile-essentielle-de-basilic-tropical-bio",
+        "cat": "huiles-essentielles",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Huile essentielle de Basilic Tropical Bio",
+        "sizes": [
+          [
+            "Format standard",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-huile-essentielle-de-basilic-tropical-bio",
+        "source": "https://www.123gelules.com/921-huile-essentielle-de-basilic-tropical-bio.html"
+      },
+      {
+        "id": "gph-huile-essentielle-de-cypres-vert-bio",
+        "cat": "huiles-essentielles",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Huile Essentielle de Cyprès Vert Bio",
+        "sizes": [
+          [
+            "Format standard",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-huile-essentielle-de-cypres-vert-bio",
+        "source": "https://www.123gelules.com/1036-cyprés-vert-bio-10-ml.html"
+      },
+      {
+        "id": "gph-passiflore-bio",
+        "cat": "tisanes",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Passiflore bio",
+        "sizes": [
+          [
+            "Format standard",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-passiflore-bio",
+        "source": "https://www.123gelules.com/1087-passiflore-bio.html"
+      },
+      {
+        "id": "gph-bouleau-feuille-bio-25g",
+        "cat": "tisanes",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Bouleau Feuille Bio 25g",
+        "sizes": [
+          [
+            "Format standard",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-bouleau-feuille-bio-25g",
+        "source": "https://www.123gelules.com/1090-bouleau-feuille-bio.html"
+      },
+      {
+        "id": "gph-melisse-bio-feuille-30-g",
+        "cat": "tisanes",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Mélisse bio Feuille",
+        "sizes": [
+          [
+            "30 g",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-melisse-bio-feuille-30-g",
+        "source": "https://www.123gelules.com/1100-melisse-bio-feuille.html"
+      },
+      {
+        "id": "gph-thym-feuilles-bio-50-g",
+        "cat": "tisanes",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Thym Feuilles Bio 50 g",
+        "sizes": [
+          [
+            "Format standard",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-thym-feuilles-bio-50-g",
+        "source": "https://www.123gelules.com/1106-thym-fleur-bio.html"
+      },
+      {
+        "id": "gph-curcuma-poivre-noir-biologique-300-mg",
+        "cat": "complements",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Curcuma + Poivre Noir biologique 300 mg",
+        "sizes": [
+          [
+            "Format standard",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-curcuma-poivre-noir-biologique-300-mg",
+        "source": "https://www.123gelules.com/1487-curcuma-bio-et-poivre-noir-bio-300-mg-200-gélules-végétales.html"
+      },
+      {
+        "id": "gph-acide-ascorbique-e300-vitamine-c",
+        "cat": "superaliments",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Acide ascorbique E300",
+        "sizes": [
+          [
+            "Vitamine C",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-acide-ascorbique-e300-vitamine-c",
+        "source": "https://www.123gelules.com/1553-acide-ascorbique-e300-sachet.html"
+      },
+      {
+        "id": "gph-huile-de-lecithine-de-soja-1200-mg-70-capsules",
+        "cat": "complements",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Huile de Lécithine de Soja",
+        "sizes": [
+          [
+            "1200 mg · 70 capsules",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-huile-de-lecithine-de-soja-1200-mg-70-capsules",
+        "source": "https://www.123gelules.com/54-huile-de-lecithine-de-soja-70-capsules.html"
+      },
+      {
+        "id": "gph-extrait-de-yam-300-mg-80-gelules-vegetales",
+        "cat": "complements",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Extrait de Yam",
+        "sizes": [
+          [
+            "300 mg · 80 gélules végétales",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-extrait-de-yam-300-mg-80-gelules-vegetales",
+        "source": "https://www.123gelules.com/58-extrait-de-yam-80-gélules-végétales.html"
+      },
+      {
+        "id": "gph-xylitol-en-poudre",
+        "cat": "superaliments",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Xylitol en poudre",
+        "sizes": [
+          [
+            "Format standard",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-xylitol-en-poudre",
+        "source": "https://www.123gelules.com/497-xylitol-en-poudre-1kg.html"
+      },
+      {
+        "id": "gph-huile-essentielle-de-pamplemousse-bio",
+        "cat": "huiles-essentielles",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Huile Essentielle de Pamplemousse Bio",
+        "sizes": [
+          [
+            "Format standard",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-huile-essentielle-de-pamplemousse-bio",
+        "source": "https://www.123gelules.com/1031-huile-essentielle-de-pamplemousse-bio.html"
+      },
+      {
+        "id": "gph-basilic-bio-feuille",
+        "cat": "tisanes",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Basilic bio Feuille",
+        "sizes": [
+          [
+            "Format standard",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-basilic-bio-feuille",
+        "source": "https://www.123gelules.com/1085-basilic-bio-feuille.html"
+      },
+      {
+        "id": "gph-eucalyptus-globulus-bio-feuille",
+        "cat": "tisanes",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Eucalyptus Globulus Bio Feuille",
+        "sizes": [
+          [
+            "Format standard",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-eucalyptus-globulus-bio-feuille",
+        "source": "https://www.123gelules.com/1089-eucalyptus-globulus-bio-feuille.html"
+      },
+      {
+        "id": "gph-romarin-bio",
+        "cat": "tisanes",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Romarin Bio",
+        "sizes": [
+          [
+            "Format standard",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-romarin-bio",
+        "source": "https://www.123gelules.com/1102-romarin-bio.html"
+      },
+      {
+        "id": "gph-menthe-poivree-bio",
+        "cat": "tisanes",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Menthe Poivrée Bio",
+        "sizes": [
+          [
+            "Format standard",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-menthe-poivree-bio",
+        "source": "https://www.123gelules.com/1105-menthe-poivree-bio.html"
+      },
+      {
+        "id": "gph-spiruline-500-mg-1000-comprimes",
+        "cat": "superaliments",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Spiruline",
+        "sizes": [
+          [
+            "500 mg · 1000 comprimés",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-spiruline-500-mg-1000-comprimes",
+        "source": "https://www.123gelules.com/1291-spiruline-500-mg-1000-comprimes.html"
+      },
+      {
+        "id": "gph-spiruline-bio-400-mg-180-gelules-vegetales",
+        "cat": "superaliments",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Spiruline Bio",
+        "sizes": [
+          [
+            "400 mg · 180 gélules végétales",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-spiruline-bio-400-mg-180-gelules-vegetales",
+        "source": "https://www.123gelules.com/1429-spiruline-bio-180-gélules-à-400mg.html"
+      },
+      {
+        "id": "gph-huile-de-nigelle-biologique",
+        "cat": "cosmetiques",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Huile de Nigelle biologique",
+        "sizes": [
+          [
+            "Format standard",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-huile-de-nigelle-biologique",
+        "source": "https://www.123gelules.com/1631-huile-de-nigelle-biologique.html"
+      },
+      {
+        "id": "gph-artichaut-radis-noir-bio-gelules-vegetales",
+        "cat": "complements",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Artichaut, Radis noir + BIO",
+        "sizes": [
+          [
+            "Gélules végétales",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-artichaut-radis-noir-bio-gelules-vegetales",
+        "source": "https://www.123gelules.com/1804-artichaut-radis-noir-chardon-marie-desmodium-bio-gph-diffusion-gélules-végétales.html"
+      },
+      {
+        "id": "gph-levure-de-biere-revivifiable-320-mg-200-gelules-vegetales",
+        "cat": "superaliments",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Levure de Bière Revivifiable",
+        "sizes": [
+          [
+            "320 mg · 200 gélules végétales",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-levure-de-biere-revivifiable-320-mg-200-gelules-vegetales",
+        "source": "https://www.123gelules.com/19-levure-de-bière-200-gélules-végétale.html"
+      },
+      {
+        "id": "gph-ail-bulbe-biologique-250-mg",
+        "cat": "complements",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Ail Bulbe Biologique",
+        "sizes": [
+          [
+            "250 mg",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-ail-bulbe-biologique-250-mg",
+        "source": "https://www.123gelules.com/37-ail-bulbe-biologique-200-gélules-végétales.html"
+      },
+      {
+        "id": "gph-aubepine-biologique-270-mg",
+        "cat": "complements",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Aubépine biologique 270 mg",
+        "sizes": [
+          [
+            "Format standard",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-aubepine-biologique-270-mg",
+        "source": "https://www.123gelules.com/38-aubépine-biologique-270-mg.html"
+      },
+      {
+        "id": "gph-the-vert-biologique-250-mg",
+        "cat": "complements",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Thé vert biologique 250 mg",
+        "sizes": [
+          [
+            "Format standard",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-the-vert-biologique-250-mg",
+        "source": "https://www.123gelules.com/46-thé-vert-biologique-250-mg.html"
+      },
+      {
+        "id": "gph-olivier-feuille-biologique-200-mg",
+        "cat": "complements",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Olivier feuille biologique 200 mg",
+        "sizes": [
+          [
+            "Format standard",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-olivier-feuille-biologique-200-mg",
+        "source": "https://www.123gelules.com/49-olivier-feuille-biologique-200-mg.html"
+      },
+      {
+        "id": "gph-valeriane-racine-biologique-250-mg",
+        "cat": "complements",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Valériane racine biologique 250 mg",
+        "sizes": [
+          [
+            "Format standard",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-valeriane-racine-biologique-250-mg",
+        "source": "https://www.123gelules.com/50-valériane-racine-biologique-250-mg.html"
+      },
+      {
+        "id": "gph-spiruline-bio-500-mg-2000-comprimes",
+        "cat": "superaliments",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Spiruline Bio",
+        "sizes": [
+          [
+            "500 mg · 2000 Comprimés",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-spiruline-bio-500-mg-2000-comprimes",
+        "source": "https://www.123gelules.com/1050-4-piluliers-spiruline-bio-500-comprimés-500-mg.html"
+      },
+      {
+        "id": "gph-artichaut-bio-feuille",
+        "cat": "tisanes",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Artichaut Bio Feuille",
+        "sizes": [
+          [
+            "Format standard",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-artichaut-bio-feuille",
+        "source": "https://www.123gelules.com/1093-artichaut-bio-feuille.html"
+      },
+      {
+        "id": "gph-fenouil-bio-300-mg",
+        "cat": "complements",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Fenouil Bio",
+        "sizes": [
+          [
+            "300 mg",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-fenouil-bio-300-mg",
+        "source": "https://www.123gelules.com/1203-fenouil-bio-300-mg-gélules-végétales.html"
+      },
+      {
+        "id": "gph-levure-de-biere-bio-320-mg-200-gelules-vegetales",
+        "cat": "superaliments",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Levure de Bière Bio",
+        "sizes": [
+          [
+            "320 mg · 200 gélules végétales",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-levure-de-biere-bio-320-mg-200-gelules-vegetales",
+        "source": "https://www.123gelules.com/1341-levure-de-biere-bio-320mg-200-gelules-vegetales.html"
+      },
+      {
+        "id": "gph-graines-de-chia-bio",
+        "cat": "superaliments",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Graines de Chia Bio",
+        "sizes": [
+          [
+            "Format standard",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-graines-de-chia-bio",
+        "source": "https://www.123gelules.com/1516-graines-de-chia-bio-325-g.html"
+      },
+      {
+        "id": "gph-graines-de-courge-bio",
+        "cat": "superaliments",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Graines de Courge Bio",
+        "sizes": [
+          [
+            "Format standard",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-graines-de-courge-bio",
+        "source": "https://www.123gelules.com/1517-graines-de-courge-bio.html"
+      },
+      {
+        "id": "gph-huile-noix-de-coco-bio",
+        "cat": "cosmetiques",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Huile Noix de Coco Bio",
+        "sizes": [
+          [
+            "Format standard",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-huile-noix-de-coco-bio",
+        "source": "https://www.123gelules.com/1523-huile-noix-de-coco-bio.html"
+      },
+      {
+        "id": "gph-huile-d-amande-douce-cosmos-natural-bouteille",
+        "cat": "cosmetiques",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Huile d'Amande douce Cosmos Natural",
+        "sizes": [
+          [
+            "Bouteille",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-huile-d-amande-douce-cosmos-natural-bouteille",
+        "source": "https://www.123gelules.com/1632-huile-d-amande-douce-biologique-bouteille.html"
+      },
+      {
+        "id": "gph-huile-de-neem-biologique",
+        "cat": "cosmetiques",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Huile de Neem Biologique",
+        "sizes": [
+          [
+            "Format standard",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-huile-de-neem-biologique",
+        "source": "https://www.123gelules.com/1762-huile-de-neem-biologique.html"
+      },
+      {
+        "id": "gph-berberine-300-mg-60-gelules-vegetales",
+        "cat": "complements",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Berbérine",
+        "sizes": [
+          [
+            "300 mg · 60 gélules végétales",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-berberine-300-mg-60-gelules-vegetales",
+        "source": "https://www.123gelules.com/1807-berbérine-300-mg-60-gélules-végétales.html"
+      },
+      {
+        "id": "gph-chardon-marie-biologique-300-mg",
+        "cat": "complements",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Chardon Marie biologique 300 mg",
+        "sizes": [
+          [
+            "Format standard",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-chardon-marie-biologique-300-mg",
+        "source": "https://www.123gelules.com/36-chardon-marie-bio-300-mg-200-gélules-végétales.html"
+      },
+      {
+        "id": "gph-passiflore-biologique-230-mg",
+        "cat": "complements",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Passiflore biologique 230 mg",
+        "sizes": [
+          [
+            "Format standard",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-passiflore-biologique-230-mg",
+        "source": "https://www.123gelules.com/41-passiflore-biologique-230-mg.html"
+      },
+      {
+        "id": "gph-reine-des-pres-biologique-215-mg",
+        "cat": "complements",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Reine des Prés biologique 215 mg",
+        "sizes": [
+          [
+            "Format standard",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-reine-des-pres-biologique-215-mg",
+        "source": "https://www.123gelules.com/44-reine-des-prés-biologique-215-mg.html"
+      },
+      {
+        "id": "gph-maca-du-perou-bio-libido-500-mg-180-gelules-vegetales",
+        "cat": "vitalite",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Maca du Pérou Bio (Libido)",
+        "sizes": [
+          [
+            "500 mg · 180 gélules végétales",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-maca-du-perou-bio-libido-500-mg-180-gelules-vegetales",
+        "source": "https://www.123gelules.com/158-maca-bio-180-gélules.html"
+      },
+      {
+        "id": "gph-citronat-800-mg",
+        "cat": "complements",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Citronat 800 mg",
+        "sizes": [
+          [
+            "Format standard",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-citronat-800-mg",
+        "source": "https://www.123gelules.com/253-citronat-800-mg.html"
+      },
+      {
+        "id": "gph-marron-d-inde-biologique-250-mg",
+        "cat": "complements",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Marron d'Inde biologique 250 mg",
+        "sizes": [
+          [
+            "Format standard",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-marron-d-inde-biologique-250-mg",
+        "source": "https://www.123gelules.com/267-marron-d-inde-bio-250-mg-végétales.html"
+      },
+      {
+        "id": "gph-gingembre-racine-biologique-250-mg",
+        "cat": "complements",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Gingembre racine biologique 250 mg",
+        "sizes": [
+          [
+            "Format standard",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-gingembre-racine-biologique-250-mg",
+        "source": "https://www.123gelules.com/449-gingembre-bio-250-mg-200-gélules-végétales.html"
+      },
+      {
+        "id": "gph-huile-essentielle-de-marjolaine-sylvestre-bio",
+        "cat": "huiles-essentielles",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Huile Essentielle de Marjolaine Sylvestre Bio",
+        "sizes": [
+          [
+            "Format standard",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-huile-essentielle-de-marjolaine-sylvestre-bio",
+        "source": "https://www.123gelules.com/1026-huile-essentielle-de-marjolaine-sylvestre-bio.html"
+      },
+      {
+        "id": "gph-spiruline-bio-500-mg-1200-comprimes-2",
+        "cat": "superaliments",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Spiruline Bio",
+        "sizes": [
+          [
+            "500 mg · 1200 comprimés",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-spiruline-bio-500-mg-1200-comprimes-2",
+        "source": "https://www.123gelules.com/1042-4-piluliers-spiruline-bio-300-comprimés-500-mg.html"
+      },
+      {
+        "id": "gph-spiruline-bio-500-mg-1500-comprimes",
+        "cat": "superaliments",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Spiruline Bio",
+        "sizes": [
+          [
+            "500 mg · 1500 comprimés",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-spiruline-bio-500-mg-1500-comprimes",
+        "source": "https://www.123gelules.com/1043-5-piluliers-spiruline-bio-300-comprimés-500-mg.html"
+      },
+      {
+        "id": "gph-reglisse-bio-racine",
+        "cat": "tisanes",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Réglisse bio Racine",
+        "sizes": [
+          [
+            "Format standard",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-reglisse-bio-racine",
+        "source": "https://www.123gelules.com/1092-reglisse-bio-racine.html"
+      },
+      {
+        "id": "gph-guimauve-bio-racine",
+        "cat": "tisanes",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Guimauve Bio Racine",
+        "sizes": [
+          [
+            "Format standard",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-guimauve-bio-racine",
+        "source": "https://www.123gelules.com/1096-guimauve-bio-racine.html"
+      },
+      {
+        "id": "gph-tilleul-bracte-bio",
+        "cat": "tisanes",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Tilleul Bracté Bio",
+        "sizes": [
+          [
+            "Format standard",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-tilleul-bracte-bio",
+        "source": "https://www.123gelules.com/1098-tilleul-bracte-bio.html"
+      },
+      {
+        "id": "gph-verveine-odorante-bio",
+        "cat": "tisanes",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Verveine Odorante Bio",
+        "sizes": [
+          [
+            "Format standard",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-verveine-odorante-bio",
+        "source": "https://www.123gelules.com/1103-verveine-odorante-bio.html"
+      },
+      {
+        "id": "gph-framboisier",
+        "cat": "tisanes",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Framboisier",
+        "sizes": [
+          [
+            "Format standard",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-framboisier",
+        "source": "https://www.123gelules.com/1104-framboisier.html"
+      },
+      {
+        "id": "gph-vigne-rouge-bio-feuille",
+        "cat": "tisanes",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Vigne Rouge Bio Feuille",
+        "sizes": [
+          [
+            "Format standard",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-vigne-rouge-bio-feuille",
+        "source": "https://www.123gelules.com/1108-vigne-rouge-bio-feuille.html"
+      },
+      {
+        "id": "gph-cassis-bio-feuille",
+        "cat": "tisanes",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Cassis Bio Feuille",
+        "sizes": [
+          [
+            "Format standard",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-cassis-bio-feuille",
+        "source": "https://www.123gelules.com/1113-cassis-bio-feuille.html"
+      },
+      {
+        "id": "gph-methylsulfonylmethane-msm-180-gelules",
+        "cat": "complements",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Méthylsulfonylméthane",
+        "sizes": [
+          [
+            "MSM+ · 180 Gélules",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-methylsulfonylmethane-msm-180-gelules",
+        "source": "https://www.123gelules.com/1123-méthylsulfonylméthane-msm-180-gélules.html"
+      },
+      {
+        "id": "gph-melisse-feuille-biologique-250-mg",
+        "cat": "complements",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Mélisse feuille biologique 250 mg",
+        "sizes": [
+          [
+            "Format standard",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-melisse-feuille-biologique-250-mg",
+        "source": "https://www.123gelules.com/1393-mélisse-feuille-biologique-250-mg.html"
+      },
+      {
+        "id": "gph-msm-en-poudre-150-grammes",
+        "cat": "superaliments",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "MSM en poudre",
+        "sizes": [
+          [
+            "150 grammes",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-msm-en-poudre-150-grammes",
+        "source": "https://www.123gelules.com/1507-msm-en-poudre-150-grammes.html"
+      },
+      {
+        "id": "gph-baies-de-goji-bio",
+        "cat": "superaliments",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Baies de Goji Bio",
+        "sizes": [
+          [
+            "Format standard",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-baies-de-goji-bio",
+        "source": "https://www.123gelules.com/1525-baies-de-goji-bio.html"
+      },
+      {
+        "id": "gph-pack-vitamines-et-mineraux",
+        "cat": "vitamines",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Pack Vitamines et Minéraux",
+        "sizes": [
+          [
+            "Format standard",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-pack-vitamines-et-mineraux",
+        "source": "https://www.123gelules.com/1587-pack-vitamines-et-minéraux.html"
+      },
+      {
+        "id": "gph-huile-de-jojoba-biologique",
+        "cat": "cosmetiques",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Huile de jojoba Biologique",
+        "sizes": [
+          [
+            "Format standard",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-huile-de-jojoba-biologique",
+        "source": "https://www.123gelules.com/1642-huile-de-jojoba-biologique.html"
+      },
+      {
+        "id": "gph-beurre-de-karite-biologique",
+        "cat": "cosmetiques",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Beurre de Karité biologique",
+        "sizes": [
+          [
+            "Format standard",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-beurre-de-karite-biologique",
+        "source": "https://www.123gelules.com/1765-beurre-de-karité-biologique.html"
+      },
+      {
+        "id": "gph-glucosamine-sulfate-2kcl-500mg-gelules",
+        "cat": "complements",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Glucosamine Sulfate 2KCL",
+        "sizes": [
+          [
+            "500mg · Gélules",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-glucosamine-sulfate-2kcl-500mg-gelules",
+        "source": "https://www.123gelules.com/1771-glucosamine-500mg-gélules.html"
+      },
+      {
+        "id": "gph-sauge-feuille-biologique-230-mg",
+        "cat": "complements",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Sauge feuille biologique 230 mg",
+        "sizes": [
+          [
+            "Format standard",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-sauge-feuille-biologique-230-mg",
+        "source": "https://www.123gelules.com/14-sauge-feuille-biologique-250-mg.html"
+      },
+      {
+        "id": "gph-pensee-sauvage-biologique-220-mg",
+        "cat": "complements",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Pensée Sauvage biologique 220 mg",
+        "sizes": [
+          [
+            "Format standard",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-pensee-sauvage-biologique-220-mg",
+        "source": "https://www.123gelules.com/24-pensée-sauvage-biologique-220-mg.html"
+      },
+      {
+        "id": "gph-onagre-ecocert-503-mg-100-capsules-marines",
+        "cat": "complements",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Onagre Ecocert",
+        "sizes": [
+          [
+            "503 mg · 100 capsules marines",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-onagre-ecocert-503-mg-100-capsules-marines",
+        "source": "https://www.123gelules.com/26-onagre-bio-100-capsules-à-500-mg.html"
+      },
+      {
+        "id": "gph-bourrache-ecocert-503-mg-capsules",
+        "cat": "complements",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Bourrache Ecocert",
+        "sizes": [
+          [
+            "503 mg · capsules",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-bourrache-ecocert-503-mg-capsules",
+        "source": "https://www.123gelules.com/29-bourrache-bio-200-capsules-à-500-mg.html"
+      },
+      {
+        "id": "gph-echinacea-racine-biologique-210-mg",
+        "cat": "complements",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Echinacea racine biologique 210 mg",
+        "sizes": [
+          [
+            "Format standard",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-echinacea-racine-biologique-210-mg",
+        "source": "https://www.123gelules.com/39-echinacéa-racine-biologique-210-mg.html"
+      },
+      {
+        "id": "gph-artichaut-biologique-200-mg",
+        "cat": "complements",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Artichaut Biologique",
+        "sizes": [
+          [
+            "200 mg",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-artichaut-biologique-200-mg",
+        "source": "https://www.123gelules.com/40-artichaut-bio-200-mg.html"
+      },
+      {
+        "id": "gph-hamamelis-feuille-biologique-220-mg",
+        "cat": "complements",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Hamamélis feuille biologique 220 mg",
+        "sizes": [
+          [
+            "Format standard",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-hamamelis-feuille-biologique-220-mg",
+        "source": "https://www.123gelules.com/42-hamamélis-bio-220-mg-gélules-végétales.html"
+      },
+      {
+        "id": "gph-cassis-feuille-biologique-250-mg",
+        "cat": "complements",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Cassis feuille biologique 250 mg",
+        "sizes": [
+          [
+            "Format standard",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-cassis-feuille-biologique-250-mg",
+        "source": "https://www.123gelules.com/43-cassis-bio-200-gélules-végétales-250-mg.html"
+      },
+      {
+        "id": "gph-aubier-de-tilleul-biologique-200-mg",
+        "cat": "complements",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Aubier de Tilleul biologique 200 mg",
+        "sizes": [
+          [
+            "Format standard",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-aubier-de-tilleul-biologique-200-mg",
+        "source": "https://www.123gelules.com/45-aubier-de-tilleul-biologique-220-mg.html"
+      },
+      {
+        "id": "gph-ginseng-rouge-racine-biologique-300-mg",
+        "cat": "vitalite",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Ginseng rouge racine biologique 300 mg",
+        "sizes": [
+          [
+            "Format standard",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-ginseng-rouge-racine-biologique-300-mg",
+        "source": "https://www.123gelules.com/47-ginseng-rouge-racine-biologique-300-mg.html"
+      },
+      {
+        "id": "gph-pissenlit-racine-biologique-270-mg",
+        "cat": "complements",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Pissenlit racine biologique 270 mg",
+        "sizes": [
+          [
+            "Format standard",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-pissenlit-racine-biologique-270-mg",
+        "source": "https://www.123gelules.com/53-pissenlit-racine-biologique-270-mg.html"
+      },
+      {
+        "id": "gph-vigne-rouge-feuille-biologique-250-mg",
+        "cat": "complements",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Vigne rouge feuille biologique 250 mg",
+        "sizes": [
+          [
+            "Format standard",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-vigne-rouge-feuille-biologique-250-mg",
+        "source": "https://www.123gelules.com/55-vigne-rouge-feuille-biologique-250-mg.html"
+      },
+      {
+        "id": "gph-bardane-racine-biologique-250-mg",
+        "cat": "complements",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Bardane racine biologique 250 mg",
+        "sizes": [
+          [
+            "Format standard",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-bardane-racine-biologique-250-mg",
+        "source": "https://www.123gelules.com/275-bardane-racine-biologique-250-mg.html"
+      },
+      {
+        "id": "gph-cetone-de-framboise-250-mg-gelules",
+        "cat": "complements",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Cétone de Framboise 250 mg",
+        "sizes": [
+          [
+            "gélules",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-cetone-de-framboise-250-mg-gelules",
+        "source": "https://www.123gelules.com/978-cétone-de-framboise-180-gélules-250-mg.html"
+      },
+      {
+        "id": "gph-prele-biologique-190-mg",
+        "cat": "complements",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Prêle biologique 190 mg",
+        "sizes": [
+          [
+            "Format standard",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-prele-biologique-190-mg",
+        "source": "https://www.123gelules.com/979-prêle-biologique-190-mg.html"
+      },
+      {
+        "id": "gph-huile-essentielle-de-pin-sylvestre-bio",
+        "cat": "huiles-essentielles",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Huile Essentielle de Pin Sylvestre Bio",
+        "sizes": [
+          [
+            "Format standard",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-huile-essentielle-de-pin-sylvestre-bio",
+        "source": "https://www.123gelules.com/1032-huile-essentielle-de-pin-sylvestre-bio.html"
+      },
+      {
+        "id": "gph-guarana-biologique-300-mg",
+        "cat": "vitalite",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Guarana biologique 300 mg",
+        "sizes": [
+          [
+            "Format standard",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-guarana-biologique-300-mg",
+        "source": "https://www.123gelules.com/1046-guarana-bio-300-mg-gélules-végétales.html"
+      },
+      {
+        "id": "gph-anis-vert-bio",
+        "cat": "tisanes",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Anis Vert Bio",
+        "sizes": [
+          [
+            "Format standard",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-anis-vert-bio",
+        "source": "https://www.123gelules.com/1088-anis-vert-bio.html"
+      },
+      {
+        "id": "gph-ginkgo-biloba-bio-feuille-25-g",
+        "cat": "tisanes",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Ginkgo Biloba bio Feuille",
+        "sizes": [
+          [
+            "25 g",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-ginkgo-biloba-bio-feuille-25-g",
+        "source": "https://www.123gelules.com/1091-ginkgo-biloba-bio-feuille.html"
+      },
+      {
+        "id": "gph-lavande-fleur-bio",
+        "cat": "tisanes",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Lavande Fleur Bio",
+        "sizes": [
+          [
+            "Format standard",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-lavande-fleur-bio",
+        "source": "https://www.123gelules.com/1095-lavande-fleur-bio.html"
+      },
+      {
+        "id": "gph-reine-des-pres-bio-25-g-tisane",
+        "cat": "tisanes",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Reine des Prés Bio",
+        "sizes": [
+          [
+            "25 g · Tisane",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-reine-des-pres-bio-25-g-tisane",
+        "source": "https://www.123gelules.com/1097-reine-des-pres-bio.html"
+      },
+      {
+        "id": "gph-fenugrec-bio-semence",
+        "cat": "tisanes",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Fenugrec bio Semence",
+        "sizes": [
+          [
+            "Format standard",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-fenugrec-bio-semence",
+        "source": "https://www.123gelules.com/1099-fenugrec-bio-semence.html"
+      },
+      {
+        "id": "gph-sauge-bio",
+        "cat": "tisanes",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Sauge Bio",
+        "sizes": [
+          [
+            "Format standard",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-sauge-bio",
+        "source": "https://www.123gelules.com/1107-sauge-bio.html"
+      },
+      {
+        "id": "gph-aubepine-bio-50-g",
+        "cat": "tisanes",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Aubépine Bio",
+        "sizes": [
+          [
+            "50 g",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-aubepine-bio-50-g",
+        "source": "https://www.123gelules.com/1109-aubepine-bio.html"
+      },
+      {
+        "id": "gph-millepertuis-bio-30-g-sommite-fleuries-coupee",
+        "cat": "tisanes",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Millepertuis Bio",
+        "sizes": [
+          [
+            "30 g · Sommité fleuries coupée",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-millepertuis-bio-30-g-sommite-fleuries-coupee",
+        "source": "https://www.123gelules.com/1110-millepertuis-bio.html"
+      },
+      {
+        "id": "gph-tilleul-aubier-rouge-bio",
+        "cat": "tisanes",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Tilleul Aubier Rouge Bio",
+        "sizes": [
+          [
+            "Format standard",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-tilleul-aubier-rouge-bio",
+        "source": "https://www.123gelules.com/1111-tilleul-aubier-rouge-bio.html"
+      },
+      {
+        "id": "gph-sureau-bio-fleur",
+        "cat": "tisanes",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Sureau bio Fleur",
+        "sizes": [
+          [
+            "Format standard",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-sureau-bio-fleur",
+        "source": "https://www.123gelules.com/1112-sureau-bio-fleur.html"
+      },
+      {
+        "id": "gph-harpagophytum-bio-racine-40-g",
+        "cat": "tisanes",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Harpagophytum Bio Racine 40 g",
+        "sizes": [
+          [
+            "Format standard",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-harpagophytum-bio-racine-40-g",
+        "source": "https://www.123gelules.com/1116-harpagophytum-bio-racine.html"
+      },
+      {
+        "id": "gph-ortie-partie-aerienne-biologique-210-mg",
+        "cat": "complements",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Ortie partie aérienne biologique 210 mg",
+        "sizes": [
+          [
+            "Format standard",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-ortie-partie-aerienne-biologique-210-mg",
+        "source": "https://www.123gelules.com/1146-ortie-feuille-piquante-biologique-210-mg.html"
+      },
+      {
+        "id": "gph-rhodiola-rosea-extrait-250-mg-100-gelules-vegetales",
+        "cat": "complements",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Rhodiola Rosea Extrait",
+        "sizes": [
+          [
+            "250 mg · 100 gélules végétales",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-rhodiola-rosea-extrait-250-mg-100-gelules-vegetales",
+        "source": "https://www.123gelules.com/1197-rhodiola-rosea-extrait-250mg-100-gélules-végetales.html"
+      },
+      {
+        "id": "gph-bruyere-biologique-230-mg-gelules-vegetales",
+        "cat": "complements",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Bruyère biologique 230 mg",
+        "sizes": [
+          [
+            "Gélules végétales",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-bruyere-biologique-230-mg-gelules-vegetales",
+        "source": "https://www.123gelules.com/1201-bruyère-bio-230-mg-200-gélules-végétales.html"
+      },
+      {
+        "id": "gph-escholtzia-biologique-240-mg",
+        "cat": "complements",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Escholtzia biologique 240 mg",
+        "sizes": [
+          [
+            "Format standard",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-escholtzia-biologique-240-mg",
+        "source": "https://www.123gelules.com/1202-escholtzia-biologique-240-mg.html"
+      },
+      {
+        "id": "gph-radis-noir-racine-biologique-270-mg",
+        "cat": "complements",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Radis noir racine biologique 270 mg",
+        "sizes": [
+          [
+            "Format standard",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-radis-noir-racine-biologique-270-mg",
+        "source": "https://www.123gelules.com/1332-radis-noir-racine-biologique-270-mg.html"
+      },
+      {
+        "id": "gph-fumeterre-bio-200-mg-200-gelules-vegetales",
+        "cat": "complements",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Fumeterre Bio",
+        "sizes": [
+          [
+            "200 mg · 200 gélules végétales",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-fumeterre-bio-200-mg-200-gelules-vegetales",
+        "source": "https://www.123gelules.com/1340-fumeterre-bio-200-gélules-végétales-200mg.html"
+      },
+      {
+        "id": "gph-marc-de-raisin-biologique-360-mg-gelules-vegetales",
+        "cat": "complements",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Marc de raisin biologique 360 mg",
+        "sizes": [
+          [
+            "Gélules végétales",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-marc-de-raisin-biologique-360-mg-gelules-vegetales",
+        "source": "https://www.123gelules.com/1344-marc-de-raisin-biologique-360-mg-gélules-végétales.html"
+      },
+      {
+        "id": "gph-maca-bio-perou-500-mg-340-comprimes",
+        "cat": "vitalite",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Maca Bio Pérou",
+        "sizes": [
+          [
+            "500 mg · 340 Comprimés",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-maca-bio-perou-500-mg-340-comprimes",
+        "source": "https://www.123gelules.com/1346-maca-bio-500mg-340-comprimés.html"
+      },
+      {
+        "id": "gph-msm-en-poudre-70-grammes",
+        "cat": "superaliments",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "MSM en poudre",
+        "sizes": [
+          [
+            "70 grammes",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-msm-en-poudre-70-grammes",
+        "source": "https://www.123gelules.com/1508-msm-en-poudre-70-grammes.html"
+      },
+      {
+        "id": "gph-graines-de-nigelle-bio",
+        "cat": "superaliments",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Graines de Nigelle Bio",
+        "sizes": [
+          [
+            "Format standard",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-graines-de-nigelle-bio",
+        "source": "https://www.123gelules.com/1519-graines-de-nigelle-bio.html"
+      },
+      {
+        "id": "gph-noix-de-cajou-bio",
+        "cat": "superaliments",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Noix de Cajou Bio",
+        "sizes": [
+          [
+            "Format standard",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-noix-de-cajou-bio",
+        "source": "https://www.123gelules.com/1520-noix-de-cajou-bio.html"
+      },
+      {
+        "id": "gph-sucre-de-noix-de-coco-bio",
+        "cat": "superaliments",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Sucre de Noix de Coco Bio",
+        "sizes": [
+          [
+            "Format standard",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-sucre-de-noix-de-coco-bio",
+        "source": "https://www.123gelules.com/1522-sucre-de-noix-de-coco-bio.html"
+      },
+      {
+        "id": "gph-huile-de-ricin-bio",
+        "cat": "cosmetiques",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Huile de Ricin Bio",
+        "sizes": [
+          [
+            "Format standard",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-huile-de-ricin-bio",
+        "source": "https://www.123gelules.com/1526-huile-de-ricin-bio.html"
+      },
+      {
+        "id": "gph-amandes-bio-250g",
+        "cat": "superaliments",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Amandes Bio",
+        "sizes": [
+          [
+            "250g",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-amandes-bio-250g",
+        "source": "https://www.123gelules.com/1606-amandes-bio-boîte-gph-250g.html"
+      },
+      {
+        "id": "gph-beurre-de-cacao-biologique",
+        "cat": "cosmetiques",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Beurre de Cacao biologique",
+        "sizes": [
+          [
+            "Format standard",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-beurre-de-cacao-biologique",
+        "source": "https://www.123gelules.com/1621-beurre-de-cacao-biologique-400g.html"
+      },
+      {
+        "id": "gph-bourrache-ecocert-503-mg-200-capsules",
+        "cat": "complements",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Bourrache Ecocert",
+        "sizes": [
+          [
+            "503 mg · 200 capsules",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-bourrache-ecocert-503-mg-200-capsules",
+        "source": "https://www.123gelules.com/1644-bourrache-ecocert-503-mg-200-capsules.html"
+      },
+      {
+        "id": "gph-oligo-basic-complexe-200-gelules-vegetales",
+        "cat": "vitamines",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Oligo Basic complexe",
+        "sizes": [
+          [
+            "200 gélules végétales",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-oligo-basic-complexe-200-gelules-vegetales",
+        "source": "https://www.123gelules.com/1772-oligo-basic-complexe-gélules-végétales.html"
+      },
+      {
+        "id": "gph-chlorella-bio-300-mg-180-gelules-vegetales",
+        "cat": "superaliments",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Chlorella Bio",
+        "sizes": [
+          [
+            "300 mg · 180 gélules végétales",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-chlorella-bio-300-mg-180-gelules-vegetales",
+        "source": "https://www.123gelules.com/1777-chlorella-bio-300-mg-180-gélules-végétales.html"
+      },
+      {
+        "id": "gph-fumeterre-bio-200-mg-200-gelules-vegetales-2",
+        "cat": "complements",
+        "brand": "GPH Diffusion",
+        "status": "brand",
+        "fr": "Fumeterre Bio",
+        "sizes": [
+          [
+            "200 mg · 200 gélules végétales",
+            null
+          ]
+        ],
+        "photo": "img/products/gph-fumeterre-bio-200-mg-200-gelules-vegetales-2",
+        "source": "https://www.123gelules.com/1778-fumeterre-bio-200-mg-200-gélules-végétales.html"
+      }
+    ],
+    "faq": [
+      {
+        "fr": "Comment passer une commande ?",
+        "ar": "كيفاش ندير طلبية؟",
+        "answerFr": "",
+        "answerAr": ""
+      },
+      {
+        "fr": "Livrez-vous à domicile ? Dans quelles villes ?",
+        "ar": "واش كتوصلو للدار؟ لأي مدن؟",
+        "answerFr": "",
+        "answerAr": ""
+      },
+      {
+        "fr": "Combien coûte la livraison et en combien de temps ?",
+        "ar": "شحال ثمن التوصيل وشحال كياخذ من وقت؟",
+        "answerFr": "",
+        "answerAr": ""
+      },
+      {
+        "fr": "Comment se fait le paiement ?",
+        "ar": "كيفاش كيتم الدفع؟",
+        "answerFr": "",
+        "answerAr": ""
+      },
+      {
+        "fr": "Quels sont vos horaires d’ouverture ?",
+        "ar": "شنو هي أوقات العمل ديالكم؟",
+        "answerFr": "",
+        "answerAr": ""
+      },
+      {
+        "fr": "Un produit n’est pas sur le site. Pouvez-vous l’avoir ?",
+        "ar": "منتوج ما كاينش فالموقع. واش تقدرو تجيبوه؟",
+        "answerFr": "",
+        "answerAr": ""
+      },
+      {
+        "fr": "Pouvez-vous me conseiller un produit ?",
+        "ar": "واش تقدرو تنصحوني بشي منتوج؟",
+        "answerFr": "",
+        "answerAr": ""
+      },
+      {
+        "fr": "Peut-on échanger ou retourner un produit ?",
+        "ar": "واش نقدر نبدل ولا نرجع منتوج؟",
+        "answerFr": "",
+        "answerAr": ""
+      }
     ]
   };
   if (typeof module === 'object' && module.exports) module.exports = CATALOGUE;

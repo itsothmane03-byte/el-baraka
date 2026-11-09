@@ -13,42 +13,37 @@
       {
         "id": "ruche",
         "fr": "Miel & ruche",
-        "ar": "العسل ومنتجات النحل"
+        "ar": "العسل ومنتجات النحل",
+        "plate": "img/botanical/oranger",
+        "plateRatio": 1.414
       },
       {
         "id": "complements",
-        "fr": "Compléments alimentaires",
-        "ar": "المكملات الغذائية"
+        "fr": "Compléments & vitamines",
+        "ar": "المكملات والفيتامينات",
+        "plate": "img/botanical/curcuma",
+        "plateRatio": 0.79
       },
       {
-        "id": "vitamines",
-        "fr": "Vitamines & minéraux",
-        "ar": "الفيتامينات والمعادن"
+        "id": "plantes",
+        "fr": "Plantes & épicerie bio",
+        "ar": "الأعشاب والأغذية الطبيعية",
+        "plate": "img/botanical/menthe",
+        "plateRatio": 0.529
       },
       {
-        "id": "vitalite",
-        "fr": "Vitalité",
-        "ar": "الحيوية"
-      },
-      {
-        "id": "superaliments",
-        "fr": "Superaliments & épicerie bio",
-        "ar": "أغذية طبيعية"
-      },
-      {
-        "id": "tisanes",
-        "fr": "Plantes & tisanes",
-        "ar": "الأعشاب"
-      },
-      {
-        "id": "huiles-essentielles",
+        "id": "huiles",
         "fr": "Huiles essentielles",
-        "ar": "الزيوت العطرية"
+        "ar": "الزيوت العطرية",
+        "plate": "img/botanical/lavande",
+        "plateRatio": 0.348
       },
       {
         "id": "cosmetiques",
-        "fr": "Cosmétiques & huiles végétales",
-        "ar": "مستحضرات التجميل"
+        "fr": "Cosmétiques naturels",
+        "ar": "مستحضرات التجميل",
+        "plate": "img/botanical/rose",
+        "plateRatio": 0.591
       }
     ],
     "products": [
@@ -99,7 +94,7 @@
       },
       {
         "id": "sexomiel",
-        "cat": "vitalite",
+        "cat": "ruche",
         "fr": "Sexo Miel",
         "ar": "العسل السحري سكسوميل",
         "sizes": [
@@ -195,7 +190,7 @@
       },
       {
         "id": "nutralie-magnesium",
-        "cat": "vitamines",
+        "cat": "complements",
         "brand": "Nutralie",
         "fr": "Magnesium Complex",
         "sizes": [
@@ -303,7 +298,7 @@
       },
       {
         "id": "dt-6-magnesium-forte-30-jours",
-        "cat": "vitamines",
+        "cat": "complements",
         "brand": "Dietaroma",
         "status": "brand",
         "fr": "6 Magnesium Forte",
@@ -543,7 +538,7 @@
       },
       {
         "id": "dt-complexe-magnesium-marin-b6-et-b5",
-        "cat": "vitamines",
+        "cat": "complements",
         "brand": "Dietaroma",
         "status": "brand",
         "fr": "Complexe Magnesium Marin+ B6 et B5",
@@ -663,7 +658,7 @@
       },
       {
         "id": "dt-ephytem-spiruline-300-comprimes",
-        "cat": "superaliments",
+        "cat": "plantes",
         "brand": "Dietaroma",
         "status": "brand",
         "fr": "Ephytem Spiruline",
@@ -678,7 +673,7 @@
       },
       {
         "id": "dt-ginseng-extra-fort-20-ampoules",
-        "cat": "vitalite",
+        "cat": "complements",
         "brand": "Dietaroma",
         "status": "brand",
         "fr": "Ginseng Extra Fort",
@@ -768,7 +763,7 @@
       },
       {
         "id": "dt-maca-haute-concentration-60-gelules",
-        "cat": "vitalite",
+        "cat": "complements",
         "brand": "Dietaroma",
         "status": "brand",
         "fr": "Maca Haute Concentration",
@@ -798,7 +793,7 @@
       },
       {
         "id": "dt-mineavit-booster-30-comprimes-bicouche",
-        "cat": "vitamines",
+        "cat": "complements",
         "brand": "Dietaroma",
         "status": "brand",
         "fr": "Mineavit Booster",
@@ -813,7 +808,7 @@
       },
       {
         "id": "dt-mix-b12-fer-d3-calcium-et-vitamine-c",
-        "cat": "vitamines",
+        "cat": "complements",
         "brand": "Dietaroma",
         "status": "brand",
         "fr": "Mix B12 Fer D3 Calcium et Vitamine C",
@@ -1038,7 +1033,7 @@
       },
       {
         "id": "dt-vitamine-d3-vegetales-2000ui",
-        "cat": "vitamines",
+        "cat": "complements",
         "brand": "Dietaroma",
         "status": "brand",
         "fr": "Vitamine D3 Végétales 2000 UI",
@@ -1053,7 +1048,7 @@
       },
       {
         "id": "dt-zinc-vitamine-b6-60-comprimes",
-        "cat": "vitamines",
+        "cat": "complements",
         "brand": "Dietaroma",
         "status": "brand",
         "fr": "Zinc + Vitamine B6",
@@ -1098,7 +1093,7 @@
       },
       {
         "id": "dt-complexe-vitamines-b-energie-30-gelules",
-        "cat": "vitamines",
+        "cat": "complements",
         "brand": "Dietaroma",
         "status": "brand",
         "fr": "Complexe Vitamines B Énergie",
@@ -1128,7 +1123,7 @@
       },
       {
         "id": "dt-magnesium-bisglycinate-300-mg-fatigue-et-stress-80-comprimes",
-        "cat": "vitamines",
+        "cat": "complements",
         "brand": "Dietaroma",
         "status": "brand",
         "fr": "Magnesium Bisglycinate 300 mg Fatigue et Stress",
@@ -1233,7 +1228,7 @@
       },
       {
         "id": "dt-complexe-fer-vitamine-c-30-gelules",
-        "cat": "vitamines",
+        "cat": "complements",
         "brand": "Dietaroma",
         "status": "brand",
         "fr": "Complexe Fer + Vitamine C",
@@ -1308,7 +1303,7 @@
       },
       {
         "id": "dt-vitamines-k2mkl7-et-d3-20-ml",
-        "cat": "vitamines",
+        "cat": "complements",
         "brand": "Dietaroma",
         "status": "brand",
         "fr": "Vitamines K2MKL7 et D3",
@@ -1323,7 +1318,7 @@
       },
       {
         "id": "gph-magnesium-bisglycinate-vitamine-b6-500-mg",
-        "cat": "vitamines",
+        "cat": "complements",
         "brand": "GPH Diffusion",
         "status": "brand",
         "fr": "Magnésium Bisglycinate + Vitamine B6",
@@ -1353,7 +1348,7 @@
       },
       {
         "id": "gph-collagene-marin-vitamine-c-350-mg-180-gelules",
-        "cat": "vitamines",
+        "cat": "complements",
         "brand": "GPH Diffusion",
         "status": "brand",
         "fr": "Collagène marin + Vitamine C",
@@ -1383,7 +1378,7 @@
       },
       {
         "id": "gph-vitamine-c-acerola-bio-1000-mg-comprimes",
-        "cat": "vitamines",
+        "cat": "complements",
         "brand": "GPH Diffusion",
         "status": "brand",
         "fr": "Vitamine C Acérola Bio",
@@ -1413,7 +1408,7 @@
       },
       {
         "id": "gph-spiruline-bio-500-mg-1200-comprimes",
-        "cat": "superaliments",
+        "cat": "plantes",
         "brand": "GPH Diffusion",
         "status": "brand",
         "fr": "Spiruline Bio",
@@ -1428,7 +1423,7 @@
       },
       {
         "id": "gph-huile-essentielle-de-ravintsara-bio",
-        "cat": "huiles-essentielles",
+        "cat": "huiles",
         "brand": "GPH Diffusion",
         "status": "brand",
         "fr": "Huile essentielle de Ravintsara Bio",
@@ -1458,7 +1453,7 @@
       },
       {
         "id": "gph-vitamine-c-liposomale-675-mg-gelules-vegetales",
-        "cat": "vitamines",
+        "cat": "complements",
         "brand": "GPH Diffusion",
         "status": "brand",
         "fr": "Vitamine C Liposomale",
@@ -1473,7 +1468,7 @@
       },
       {
         "id": "gph-huile-essentielle-de-menthe-poivree-bio",
-        "cat": "huiles-essentielles",
+        "cat": "huiles",
         "brand": "GPH Diffusion",
         "status": "brand",
         "fr": "Huile Essentielle de Menthe Poivrée Bio",
@@ -1488,7 +1483,7 @@
       },
       {
         "id": "gph-multivitamines-et-mineraux-comprimes",
-        "cat": "vitamines",
+        "cat": "complements",
         "brand": "GPH Diffusion",
         "status": "brand",
         "fr": "MultiVitamines et Minéraux",
@@ -1503,7 +1498,7 @@
       },
       {
         "id": "gph-magnesium-marin-vitamine-b6-548-mg-200-comprimes",
-        "cat": "vitamines",
+        "cat": "complements",
         "brand": "GPH Diffusion",
         "status": "brand",
         "fr": "Magnésium Marin + Vitamine B6",
@@ -1518,7 +1513,7 @@
       },
       {
         "id": "gph-huile-essentielle-de-lavande-officinale-bio",
-        "cat": "huiles-essentielles",
+        "cat": "huiles",
         "brand": "GPH Diffusion",
         "status": "brand",
         "fr": "Huile Essentielle de Lavande officinale Bio",
@@ -1533,7 +1528,7 @@
       },
       {
         "id": "gph-spiruline-bio-500-mg-500-comprimes",
-        "cat": "superaliments",
+        "cat": "plantes",
         "brand": "GPH Diffusion",
         "status": "brand",
         "fr": "Spiruline Bio",
@@ -1548,7 +1543,7 @@
       },
       {
         "id": "gph-magnesium-zinc-b6-comprimes",
-        "cat": "vitamines",
+        "cat": "complements",
         "brand": "GPH Diffusion",
         "status": "brand",
         "fr": "Magnésium + Zinc + B6",
@@ -1563,7 +1558,7 @@
       },
       {
         "id": "gph-huile-essentielle-de-tea-tree-bio",
-        "cat": "huiles-essentielles",
+        "cat": "huiles",
         "brand": "GPH Diffusion",
         "status": "brand",
         "fr": "Huile Essentielle de Tea Tree Bio",
@@ -1578,7 +1573,7 @@
       },
       {
         "id": "gph-huile-essentielle-de-lavandin-super",
-        "cat": "huiles-essentielles",
+        "cat": "huiles",
         "brand": "GPH Diffusion",
         "status": "brand",
         "fr": "Huile Essentielle de Lavandin Super",
@@ -1593,7 +1588,7 @@
       },
       {
         "id": "gph-chlorella-bio-500-mg-500-comprimes",
-        "cat": "superaliments",
+        "cat": "plantes",
         "brand": "GPH Diffusion",
         "status": "brand",
         "fr": "Chlorella Bio",
@@ -1608,7 +1603,7 @@
       },
       {
         "id": "gph-vitamine-d3-5-g-comprimes",
-        "cat": "vitamines",
+        "cat": "complements",
         "brand": "GPH Diffusion",
         "status": "brand",
         "fr": "Vitamine D3",
@@ -1623,7 +1618,7 @@
       },
       {
         "id": "gph-complexe-5-magnesium-gelules-vegetales",
-        "cat": "vitamines",
+        "cat": "complements",
         "brand": "GPH Diffusion",
         "status": "brand",
         "fr": "Complexe 5 Magnésium",
@@ -1638,7 +1633,7 @@
       },
       {
         "id": "gph-vitamine-b-complexe-comprimes",
-        "cat": "vitamines",
+        "cat": "complements",
         "brand": "GPH Diffusion",
         "status": "brand",
         "fr": "Vitamine B Complexe",
@@ -1653,7 +1648,7 @@
       },
       {
         "id": "gph-vitamine-c-1000-mg-acide-l-ascorbique-gelules-vegetales",
-        "cat": "vitamines",
+        "cat": "complements",
         "brand": "GPH Diffusion",
         "status": "brand",
         "fr": "Vitamine C 1000 mg",
@@ -1698,7 +1693,7 @@
       },
       {
         "id": "gph-huile-essentielle-d-eucalyptus-radiata-bio",
-        "cat": "huiles-essentielles",
+        "cat": "huiles",
         "brand": "GPH Diffusion",
         "status": "brand",
         "fr": "Huile Essentielle d'Eucalyptus Radiata Bio",
@@ -1713,7 +1708,7 @@
       },
       {
         "id": "gph-spiruline-bio-500-mg-2500-comprimes",
-        "cat": "superaliments",
+        "cat": "plantes",
         "brand": "GPH Diffusion",
         "status": "brand",
         "fr": "Spiruline Bio",
@@ -1728,7 +1723,7 @@
       },
       {
         "id": "gph-hydrolysat-de-collagene-marin-vitamine-c-200-g-poudre",
-        "cat": "vitamines",
+        "cat": "complements",
         "brand": "GPH Diffusion",
         "status": "brand",
         "fr": "Hydrolysat de Collagène Marin +Vitamine C",
@@ -1743,7 +1738,7 @@
       },
       {
         "id": "gph-multivitamines-a-d3-c-groupe-b-200-gelules",
-        "cat": "vitamines",
+        "cat": "complements",
         "brand": "GPH Diffusion",
         "status": "brand",
         "fr": "Multivitamines A + D3 + C + Groupe B",
@@ -1758,7 +1753,7 @@
       },
       {
         "id": "gph-gluconate-de-zinc-15-mg-comprimes",
-        "cat": "vitamines",
+        "cat": "complements",
         "brand": "GPH Diffusion",
         "status": "brand",
         "fr": "Gluconate de zinc 15 mg",
@@ -1773,7 +1768,7 @@
       },
       {
         "id": "gph-msm-en-poudre-soufre-organique",
-        "cat": "superaliments",
+        "cat": "plantes",
         "brand": "GPH Diffusion",
         "status": "brand",
         "fr": "MSM en poudre",
@@ -1788,7 +1783,7 @@
       },
       {
         "id": "gph-huile-essentielle-de-clou-de-girofle-bio",
-        "cat": "huiles-essentielles",
+        "cat": "huiles",
         "brand": "GPH Diffusion",
         "status": "brand",
         "fr": "Huile Essentielle de Clou de Girofle Bio",
@@ -1803,7 +1798,7 @@
       },
       {
         "id": "gph-huile-essentielle-d-orange-douce-bio",
-        "cat": "huiles-essentielles",
+        "cat": "huiles",
         "brand": "GPH Diffusion",
         "status": "brand",
         "fr": "Huile Essentielle d'Orange Douce Bio",
@@ -1818,7 +1813,7 @@
       },
       {
         "id": "gph-vitamine-b8-biotine-10-000-g",
-        "cat": "vitamines",
+        "cat": "complements",
         "brand": "GPH Diffusion",
         "status": "brand",
         "fr": "Vitamine B8 Biotine",
@@ -1833,7 +1828,7 @@
       },
       {
         "id": "gph-huile-essentielle-de-citron-bio",
-        "cat": "huiles-essentielles",
+        "cat": "huiles",
         "brand": "GPH Diffusion",
         "status": "brand",
         "fr": "Huile Essentielle de Citron Bio",
@@ -1848,7 +1843,7 @@
       },
       {
         "id": "gph-vitamine-c-acerola-bio-sucre-de-coco-1000-mg-comprimes",
-        "cat": "vitamines",
+        "cat": "complements",
         "brand": "GPH Diffusion",
         "status": "brand",
         "fr": "Vitamine C Acérola Bio Sucre de Coco",
@@ -1878,7 +1873,7 @@
       },
       {
         "id": "gph-comprimes-neutres-bio",
-        "cat": "superaliments",
+        "cat": "plantes",
         "brand": "GPH Diffusion",
         "status": "brand",
         "fr": "Comprimés Neutres Bio",
@@ -1893,7 +1888,7 @@
       },
       {
         "id": "gph-multivitamines-et-fer-60-gelules",
-        "cat": "vitamines",
+        "cat": "complements",
         "brand": "GPH Diffusion",
         "status": "brand",
         "fr": "MultiVitamines et Fer",
@@ -1908,7 +1903,7 @@
       },
       {
         "id": "gph-huile-essentielle-de-romarin-cineol-bio",
-        "cat": "huiles-essentielles",
+        "cat": "huiles",
         "brand": "GPH Diffusion",
         "status": "brand",
         "fr": "Huile Essentielle de Romarin Cinéol Bio",
@@ -1938,7 +1933,7 @@
       },
       {
         "id": "gph-chlorella-bio-500-mg-300-comprimes",
-        "cat": "superaliments",
+        "cat": "plantes",
         "brand": "GPH Diffusion",
         "status": "brand",
         "fr": "Chlorella Bio",
@@ -1953,7 +1948,7 @@
       },
       {
         "id": "gph-bicarbonate-de-soude-poudre",
-        "cat": "superaliments",
+        "cat": "plantes",
         "brand": "GPH Diffusion",
         "status": "brand",
         "fr": "Bicarbonate de Soude",
@@ -2013,7 +2008,7 @@
       },
       {
         "id": "gph-chlorella-bio-500-mg-100-comprimes",
-        "cat": "superaliments",
+        "cat": "plantes",
         "brand": "GPH Diffusion",
         "status": "brand",
         "fr": "Chlorella Bio",
@@ -2043,7 +2038,7 @@
       },
       {
         "id": "gph-spiruline-bio-500-mg-300-comprimes",
-        "cat": "superaliments",
+        "cat": "plantes",
         "brand": "GPH Diffusion",
         "status": "brand",
         "fr": "Spiruline Bio",
@@ -2058,7 +2053,7 @@
       },
       {
         "id": "gph-huile-essentielle-de-thym-thymol-bio",
-        "cat": "huiles-essentielles",
+        "cat": "huiles",
         "brand": "GPH Diffusion",
         "status": "brand",
         "fr": "Huile Essentielle de Thym Thymol Bio",
@@ -2118,7 +2113,7 @@
       },
       {
         "id": "gph-huile-essentielle-d-eucalyptus-globulus-bio",
-        "cat": "huiles-essentielles",
+        "cat": "huiles",
         "brand": "GPH Diffusion",
         "status": "brand",
         "fr": "Huile Essentielle d'Eucalyptus Globulus Bio",
@@ -2133,7 +2128,7 @@
       },
       {
         "id": "gph-huile-essentielle-de-geranium-rosat-bio",
-        "cat": "huiles-essentielles",
+        "cat": "huiles",
         "brand": "GPH Diffusion",
         "status": "brand",
         "fr": "Huile Essentielle de Geranium Rosat Bio",
@@ -2148,7 +2143,7 @@
       },
       {
         "id": "gph-hibiscus-bio-fleur",
-        "cat": "tisanes",
+        "cat": "plantes",
         "brand": "GPH Diffusion",
         "status": "brand",
         "fr": "Hibiscus Bio Fleur",
@@ -2163,7 +2158,7 @@
       },
       {
         "id": "gph-citrate-de-zinc-15-mg-comprimes",
-        "cat": "vitamines",
+        "cat": "complements",
         "brand": "GPH Diffusion",
         "status": "brand",
         "fr": "Citrate de Zinc 15 mg",
@@ -2178,7 +2173,7 @@
       },
       {
         "id": "gph-huile-essentielle-de-petit-grain-bigaradier-bio",
-        "cat": "huiles-essentielles",
+        "cat": "huiles",
         "brand": "GPH Diffusion",
         "status": "brand",
         "fr": "Huile essentielle de Petit grain Bigaradier Bio",
@@ -2193,7 +2188,7 @@
       },
       {
         "id": "gph-huile-essentielle-de-cedre-atlas-bio",
-        "cat": "huiles-essentielles",
+        "cat": "huiles",
         "brand": "GPH Diffusion",
         "status": "brand",
         "fr": "Huile Essentielle de Cèdre Atlas Bio",
@@ -2223,7 +2218,7 @@
       },
       {
         "id": "gph-vitamine-c-acerola-bio-poudre-50-g",
-        "cat": "superaliments",
+        "cat": "plantes",
         "brand": "GPH Diffusion",
         "status": "brand",
         "fr": "Vitamine C Acérola Bio Poudre",
@@ -2238,7 +2233,7 @@
       },
       {
         "id": "gph-huile-essentielle-d-eucalyptus-citriodora-bio",
-        "cat": "huiles-essentielles",
+        "cat": "huiles",
         "brand": "GPH Diffusion",
         "status": "brand",
         "fr": "Huile Essentielle d'Eucalyptus Citriodora Bio",
@@ -2253,7 +2248,7 @@
       },
       {
         "id": "gph-huile-essentielle-de-niaouli-bio",
-        "cat": "huiles-essentielles",
+        "cat": "huiles",
         "brand": "GPH Diffusion",
         "status": "brand",
         "fr": "Huile Essentielle de Niaouli Bio",
@@ -2298,7 +2293,7 @@
       },
       {
         "id": "gph-calcium-vitamine-d3-161mg-comprimes",
-        "cat": "vitamines",
+        "cat": "complements",
         "brand": "GPH Diffusion",
         "status": "brand",
         "fr": "Calcium + Vitamine D3",
@@ -2313,7 +2308,7 @@
       },
       {
         "id": "gph-spiruline-acerola-bio-498mg-comprimes",
-        "cat": "superaliments",
+        "cat": "plantes",
         "brand": "GPH Diffusion",
         "status": "brand",
         "fr": "SPIRULINE + ACEROLA BIO",
@@ -2343,7 +2338,7 @@
       },
       {
         "id": "gph-huile-essentielle-de-cannelle-de-ceylan-bio",
-        "cat": "huiles-essentielles",
+        "cat": "huiles",
         "brand": "GPH Diffusion",
         "status": "brand",
         "fr": "Huile Essentielle de Cannelle de Ceylan Bio",
@@ -2358,7 +2353,7 @@
       },
       {
         "id": "gph-huile-essentielle-de-citronnelle-bio",
-        "cat": "huiles-essentielles",
+        "cat": "huiles",
         "brand": "GPH Diffusion",
         "status": "brand",
         "fr": "Huile Essentielle de Citronnelle Bio",
@@ -2373,7 +2368,7 @@
       },
       {
         "id": "gph-spiruline-bio-500-mg-600-comprimes",
-        "cat": "superaliments",
+        "cat": "plantes",
         "brand": "GPH Diffusion",
         "status": "brand",
         "fr": "Spiruline Bio",
@@ -2388,7 +2383,7 @@
       },
       {
         "id": "gph-ortie-piquante-bio-feuille",
-        "cat": "tisanes",
+        "cat": "plantes",
         "brand": "GPH Diffusion",
         "status": "brand",
         "fr": "Ortie Piquante bio feuille",
@@ -2403,7 +2398,7 @@
       },
       {
         "id": "gph-fenouil-bio",
-        "cat": "tisanes",
+        "cat": "plantes",
         "brand": "GPH Diffusion",
         "status": "brand",
         "fr": "Fenouil bio",
@@ -2418,7 +2413,7 @@
       },
       {
         "id": "gph-psyllium-blond-bio",
-        "cat": "superaliments",
+        "cat": "plantes",
         "brand": "GPH Diffusion",
         "status": "brand",
         "fr": "Psyllium Blond Bio",
@@ -2433,7 +2428,7 @@
       },
       {
         "id": "gph-acide-citrique-e330",
-        "cat": "superaliments",
+        "cat": "plantes",
         "brand": "GPH Diffusion",
         "status": "brand",
         "fr": "Acide Citrique E330",
@@ -2463,7 +2458,7 @@
       },
       {
         "id": "gph-huile-essentielle-de-basilic-tropical-bio",
-        "cat": "huiles-essentielles",
+        "cat": "huiles",
         "brand": "GPH Diffusion",
         "status": "brand",
         "fr": "Huile essentielle de Basilic Tropical Bio",
@@ -2478,7 +2473,7 @@
       },
       {
         "id": "gph-huile-essentielle-de-cypres-vert-bio",
-        "cat": "huiles-essentielles",
+        "cat": "huiles",
         "brand": "GPH Diffusion",
         "status": "brand",
         "fr": "Huile Essentielle de Cyprès Vert Bio",
@@ -2493,7 +2488,7 @@
       },
       {
         "id": "gph-passiflore-bio",
-        "cat": "tisanes",
+        "cat": "plantes",
         "brand": "GPH Diffusion",
         "status": "brand",
         "fr": "Passiflore bio",
@@ -2508,7 +2503,7 @@
       },
       {
         "id": "gph-bouleau-feuille-bio-25g",
-        "cat": "tisanes",
+        "cat": "plantes",
         "brand": "GPH Diffusion",
         "status": "brand",
         "fr": "Bouleau Feuille Bio 25g",
@@ -2523,7 +2518,7 @@
       },
       {
         "id": "gph-melisse-bio-feuille-30-g",
-        "cat": "tisanes",
+        "cat": "plantes",
         "brand": "GPH Diffusion",
         "status": "brand",
         "fr": "Mélisse bio Feuille",
@@ -2538,7 +2533,7 @@
       },
       {
         "id": "gph-thym-feuilles-bio-50-g",
-        "cat": "tisanes",
+        "cat": "plantes",
         "brand": "GPH Diffusion",
         "status": "brand",
         "fr": "Thym Feuilles Bio 50 g",
@@ -2568,7 +2563,7 @@
       },
       {
         "id": "gph-acide-ascorbique-e300-vitamine-c",
-        "cat": "superaliments",
+        "cat": "plantes",
         "brand": "GPH Diffusion",
         "status": "brand",
         "fr": "Acide ascorbique E300",
@@ -2613,7 +2608,7 @@
       },
       {
         "id": "gph-xylitol-en-poudre",
-        "cat": "superaliments",
+        "cat": "plantes",
         "brand": "GPH Diffusion",
         "status": "brand",
         "fr": "Xylitol en poudre",
@@ -2628,7 +2623,7 @@
       },
       {
         "id": "gph-huile-essentielle-de-pamplemousse-bio",
-        "cat": "huiles-essentielles",
+        "cat": "huiles",
         "brand": "GPH Diffusion",
         "status": "brand",
         "fr": "Huile Essentielle de Pamplemousse Bio",
@@ -2643,7 +2638,7 @@
       },
       {
         "id": "gph-basilic-bio-feuille",
-        "cat": "tisanes",
+        "cat": "plantes",
         "brand": "GPH Diffusion",
         "status": "brand",
         "fr": "Basilic bio Feuille",
@@ -2658,7 +2653,7 @@
       },
       {
         "id": "gph-eucalyptus-globulus-bio-feuille",
-        "cat": "tisanes",
+        "cat": "plantes",
         "brand": "GPH Diffusion",
         "status": "brand",
         "fr": "Eucalyptus Globulus Bio Feuille",
@@ -2673,7 +2668,7 @@
       },
       {
         "id": "gph-romarin-bio",
-        "cat": "tisanes",
+        "cat": "plantes",
         "brand": "GPH Diffusion",
         "status": "brand",
         "fr": "Romarin Bio",
@@ -2688,7 +2683,7 @@
       },
       {
         "id": "gph-menthe-poivree-bio",
-        "cat": "tisanes",
+        "cat": "plantes",
         "brand": "GPH Diffusion",
         "status": "brand",
         "fr": "Menthe Poivrée Bio",
@@ -2703,7 +2698,7 @@
       },
       {
         "id": "gph-spiruline-500-mg-1000-comprimes",
-        "cat": "superaliments",
+        "cat": "plantes",
         "brand": "GPH Diffusion",
         "status": "brand",
         "fr": "Spiruline",
@@ -2718,7 +2713,7 @@
       },
       {
         "id": "gph-spiruline-bio-400-mg-180-gelules-vegetales",
-        "cat": "superaliments",
+        "cat": "plantes",
         "brand": "GPH Diffusion",
         "status": "brand",
         "fr": "Spiruline Bio",
@@ -2763,7 +2758,7 @@
       },
       {
         "id": "gph-levure-de-biere-revivifiable-320-mg-200-gelules-vegetales",
-        "cat": "superaliments",
+        "cat": "plantes",
         "brand": "GPH Diffusion",
         "status": "brand",
         "fr": "Levure de Bière Revivifiable",
@@ -2853,7 +2848,7 @@
       },
       {
         "id": "gph-spiruline-bio-500-mg-2000-comprimes",
-        "cat": "superaliments",
+        "cat": "plantes",
         "brand": "GPH Diffusion",
         "status": "brand",
         "fr": "Spiruline Bio",
@@ -2868,7 +2863,7 @@
       },
       {
         "id": "gph-artichaut-bio-feuille",
-        "cat": "tisanes",
+        "cat": "plantes",
         "brand": "GPH Diffusion",
         "status": "brand",
         "fr": "Artichaut Bio Feuille",
@@ -2898,7 +2893,7 @@
       },
       {
         "id": "gph-levure-de-biere-bio-320-mg-200-gelules-vegetales",
-        "cat": "superaliments",
+        "cat": "plantes",
         "brand": "GPH Diffusion",
         "status": "brand",
         "fr": "Levure de Bière Bio",
@@ -2913,7 +2908,7 @@
       },
       {
         "id": "gph-graines-de-chia-bio",
-        "cat": "superaliments",
+        "cat": "plantes",
         "brand": "GPH Diffusion",
         "status": "brand",
         "fr": "Graines de Chia Bio",
@@ -2928,7 +2923,7 @@
       },
       {
         "id": "gph-graines-de-courge-bio",
-        "cat": "superaliments",
+        "cat": "plantes",
         "brand": "GPH Diffusion",
         "status": "brand",
         "fr": "Graines de Courge Bio",
@@ -3048,7 +3043,7 @@
       },
       {
         "id": "gph-maca-du-perou-bio-libido-500-mg-180-gelules-vegetales",
-        "cat": "vitalite",
+        "cat": "complements",
         "brand": "GPH Diffusion",
         "status": "brand",
         "fr": "Maca du Pérou Bio (Libido)",
@@ -3108,7 +3103,7 @@
       },
       {
         "id": "gph-huile-essentielle-de-marjolaine-sylvestre-bio",
-        "cat": "huiles-essentielles",
+        "cat": "huiles",
         "brand": "GPH Diffusion",
         "status": "brand",
         "fr": "Huile Essentielle de Marjolaine Sylvestre Bio",
@@ -3123,7 +3118,7 @@
       },
       {
         "id": "gph-spiruline-bio-500-mg-1200-comprimes-2",
-        "cat": "superaliments",
+        "cat": "plantes",
         "brand": "GPH Diffusion",
         "status": "brand",
         "fr": "Spiruline Bio",
@@ -3138,7 +3133,7 @@
       },
       {
         "id": "gph-spiruline-bio-500-mg-1500-comprimes",
-        "cat": "superaliments",
+        "cat": "plantes",
         "brand": "GPH Diffusion",
         "status": "brand",
         "fr": "Spiruline Bio",
@@ -3153,7 +3148,7 @@
       },
       {
         "id": "gph-reglisse-bio-racine",
-        "cat": "tisanes",
+        "cat": "plantes",
         "brand": "GPH Diffusion",
         "status": "brand",
         "fr": "Réglisse bio Racine",
@@ -3168,7 +3163,7 @@
       },
       {
         "id": "gph-guimauve-bio-racine",
-        "cat": "tisanes",
+        "cat": "plantes",
         "brand": "GPH Diffusion",
         "status": "brand",
         "fr": "Guimauve Bio Racine",
@@ -3183,7 +3178,7 @@
       },
       {
         "id": "gph-tilleul-bracte-bio",
-        "cat": "tisanes",
+        "cat": "plantes",
         "brand": "GPH Diffusion",
         "status": "brand",
         "fr": "Tilleul Bracté Bio",
@@ -3198,7 +3193,7 @@
       },
       {
         "id": "gph-verveine-odorante-bio",
-        "cat": "tisanes",
+        "cat": "plantes",
         "brand": "GPH Diffusion",
         "status": "brand",
         "fr": "Verveine Odorante Bio",
@@ -3213,7 +3208,7 @@
       },
       {
         "id": "gph-framboisier",
-        "cat": "tisanes",
+        "cat": "plantes",
         "brand": "GPH Diffusion",
         "status": "brand",
         "fr": "Framboisier",
@@ -3228,7 +3223,7 @@
       },
       {
         "id": "gph-vigne-rouge-bio-feuille",
-        "cat": "tisanes",
+        "cat": "plantes",
         "brand": "GPH Diffusion",
         "status": "brand",
         "fr": "Vigne Rouge Bio Feuille",
@@ -3243,7 +3238,7 @@
       },
       {
         "id": "gph-cassis-bio-feuille",
-        "cat": "tisanes",
+        "cat": "plantes",
         "brand": "GPH Diffusion",
         "status": "brand",
         "fr": "Cassis Bio Feuille",
@@ -3288,7 +3283,7 @@
       },
       {
         "id": "gph-msm-en-poudre-150-grammes",
-        "cat": "superaliments",
+        "cat": "plantes",
         "brand": "GPH Diffusion",
         "status": "brand",
         "fr": "MSM en poudre",
@@ -3303,7 +3298,7 @@
       },
       {
         "id": "gph-baies-de-goji-bio",
-        "cat": "superaliments",
+        "cat": "plantes",
         "brand": "GPH Diffusion",
         "status": "brand",
         "fr": "Baies de Goji Bio",
@@ -3318,7 +3313,7 @@
       },
       {
         "id": "gph-pack-vitamines-et-mineraux",
-        "cat": "vitamines",
+        "cat": "complements",
         "brand": "GPH Diffusion",
         "status": "brand",
         "fr": "Pack Vitamines et Minéraux",
@@ -3513,7 +3508,7 @@
       },
       {
         "id": "gph-ginseng-rouge-racine-biologique-300-mg",
-        "cat": "vitalite",
+        "cat": "complements",
         "brand": "GPH Diffusion",
         "status": "brand",
         "fr": "Ginseng rouge racine biologique 300 mg",
@@ -3603,7 +3598,7 @@
       },
       {
         "id": "gph-huile-essentielle-de-pin-sylvestre-bio",
-        "cat": "huiles-essentielles",
+        "cat": "huiles",
         "brand": "GPH Diffusion",
         "status": "brand",
         "fr": "Huile Essentielle de Pin Sylvestre Bio",
@@ -3618,7 +3613,7 @@
       },
       {
         "id": "gph-guarana-biologique-300-mg",
-        "cat": "vitalite",
+        "cat": "complements",
         "brand": "GPH Diffusion",
         "status": "brand",
         "fr": "Guarana biologique 300 mg",
@@ -3633,7 +3628,7 @@
       },
       {
         "id": "gph-anis-vert-bio",
-        "cat": "tisanes",
+        "cat": "plantes",
         "brand": "GPH Diffusion",
         "status": "brand",
         "fr": "Anis Vert Bio",
@@ -3648,7 +3643,7 @@
       },
       {
         "id": "gph-ginkgo-biloba-bio-feuille-25-g",
-        "cat": "tisanes",
+        "cat": "plantes",
         "brand": "GPH Diffusion",
         "status": "brand",
         "fr": "Ginkgo Biloba bio Feuille",
@@ -3663,7 +3658,7 @@
       },
       {
         "id": "gph-lavande-fleur-bio",
-        "cat": "tisanes",
+        "cat": "plantes",
         "brand": "GPH Diffusion",
         "status": "brand",
         "fr": "Lavande Fleur Bio",
@@ -3678,7 +3673,7 @@
       },
       {
         "id": "gph-reine-des-pres-bio-25-g-tisane",
-        "cat": "tisanes",
+        "cat": "plantes",
         "brand": "GPH Diffusion",
         "status": "brand",
         "fr": "Reine des Prés Bio",
@@ -3693,7 +3688,7 @@
       },
       {
         "id": "gph-fenugrec-bio-semence",
-        "cat": "tisanes",
+        "cat": "plantes",
         "brand": "GPH Diffusion",
         "status": "brand",
         "fr": "Fenugrec bio Semence",
@@ -3708,7 +3703,7 @@
       },
       {
         "id": "gph-sauge-bio",
-        "cat": "tisanes",
+        "cat": "plantes",
         "brand": "GPH Diffusion",
         "status": "brand",
         "fr": "Sauge Bio",
@@ -3723,7 +3718,7 @@
       },
       {
         "id": "gph-aubepine-bio-50-g",
-        "cat": "tisanes",
+        "cat": "plantes",
         "brand": "GPH Diffusion",
         "status": "brand",
         "fr": "Aubépine Bio",
@@ -3738,7 +3733,7 @@
       },
       {
         "id": "gph-millepertuis-bio-30-g-sommite-fleuries-coupee",
-        "cat": "tisanes",
+        "cat": "plantes",
         "brand": "GPH Diffusion",
         "status": "brand",
         "fr": "Millepertuis Bio",
@@ -3753,7 +3748,7 @@
       },
       {
         "id": "gph-tilleul-aubier-rouge-bio",
-        "cat": "tisanes",
+        "cat": "plantes",
         "brand": "GPH Diffusion",
         "status": "brand",
         "fr": "Tilleul Aubier Rouge Bio",
@@ -3768,7 +3763,7 @@
       },
       {
         "id": "gph-sureau-bio-fleur",
-        "cat": "tisanes",
+        "cat": "plantes",
         "brand": "GPH Diffusion",
         "status": "brand",
         "fr": "Sureau bio Fleur",
@@ -3783,7 +3778,7 @@
       },
       {
         "id": "gph-harpagophytum-bio-racine-40-g",
-        "cat": "tisanes",
+        "cat": "plantes",
         "brand": "GPH Diffusion",
         "status": "brand",
         "fr": "Harpagophytum Bio Racine 40 g",
@@ -3903,7 +3898,7 @@
       },
       {
         "id": "gph-maca-bio-perou-500-mg-340-comprimes",
-        "cat": "vitalite",
+        "cat": "complements",
         "brand": "GPH Diffusion",
         "status": "brand",
         "fr": "Maca Bio Pérou",
@@ -3918,7 +3913,7 @@
       },
       {
         "id": "gph-msm-en-poudre-70-grammes",
-        "cat": "superaliments",
+        "cat": "plantes",
         "brand": "GPH Diffusion",
         "status": "brand",
         "fr": "MSM en poudre",
@@ -3933,7 +3928,7 @@
       },
       {
         "id": "gph-graines-de-nigelle-bio",
-        "cat": "superaliments",
+        "cat": "plantes",
         "brand": "GPH Diffusion",
         "status": "brand",
         "fr": "Graines de Nigelle Bio",
@@ -3948,7 +3943,7 @@
       },
       {
         "id": "gph-noix-de-cajou-bio",
-        "cat": "superaliments",
+        "cat": "plantes",
         "brand": "GPH Diffusion",
         "status": "brand",
         "fr": "Noix de Cajou Bio",
@@ -3963,7 +3958,7 @@
       },
       {
         "id": "gph-sucre-de-noix-de-coco-bio",
-        "cat": "superaliments",
+        "cat": "plantes",
         "brand": "GPH Diffusion",
         "status": "brand",
         "fr": "Sucre de Noix de Coco Bio",
@@ -3993,7 +3988,7 @@
       },
       {
         "id": "gph-amandes-bio-250g",
-        "cat": "superaliments",
+        "cat": "plantes",
         "brand": "GPH Diffusion",
         "status": "brand",
         "fr": "Amandes Bio",
@@ -4038,7 +4033,7 @@
       },
       {
         "id": "gph-oligo-basic-complexe-200-gelules-vegetales",
-        "cat": "vitamines",
+        "cat": "complements",
         "brand": "GPH Diffusion",
         "status": "brand",
         "fr": "Oligo Basic complexe",
@@ -4053,7 +4048,7 @@
       },
       {
         "id": "gph-chlorella-bio-300-mg-180-gelules-vegetales",
-        "cat": "superaliments",
+        "cat": "plantes",
         "brand": "GPH Diffusion",
         "status": "brand",
         "fr": "Chlorella Bio",

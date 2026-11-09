@@ -47,8 +47,9 @@
         "fr": "Cosmétiques naturels",
         "ar": "مستحضرات التجميل",
         "plate": "img/botanical/rose",
-        "plateRatio": 0.783,
-        "plateScale": 0.92
+        "plateRatio": 0.766,
+        "plateScale": 0.84,
+        "plateY": 7
       }
     ],
     "products": [

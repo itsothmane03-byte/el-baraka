@@ -298,7 +298,7 @@ h2{font-size:clamp(2rem,3.8vw,3.1rem);line-height:1.05}
 [dir=rtl] .filters select{background-position:left .85rem center;padding:.5rem .95rem .5rem 2.1rem}
 .filters .count{margin-inline-start:auto;font-size:.86rem;color:var(--muted)}
 .grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:2rem clamp(.8rem,1.6vw,1.3rem);padding-top:2rem}
-.grid .card{animation:cin 420ms var(--ease) both;animation-delay:calc(var(--i,0) * 22ms)}
+.grid .card{animation:cin 300ms var(--ease) both;animation-delay:calc(var(--i,0) * 14ms)}
 @keyframes cin{from{transform:translateY(10px);opacity:.001}}
 .more-wrap{display:flex;justify-content:center;padding-top:2.6rem}
 .empty-r{padding:3rem 0;text-align:center;color:var(--muted)}
@@ -425,6 +425,15 @@ dialog.search[open]{display:flex;flex-direction:column;animation:pop 220ms var(-
 .sgroup{font-size:.84rem;color:var(--muted);padding:.8rem .6rem .35rem}
 .scats{display:flex;flex-wrap:wrap;gap:.45rem;padding:.3rem .6rem .8rem}
 .snone{padding:2rem 1rem;text-align:center;color:var(--muted)}
+
+@media (pointer:coarse){
+  .qty{height:2.75rem}
+  .qty button{width:2.75rem}
+  .lang button{padding:.6rem .5rem}
+  .x{width:2.75rem;height:2.75rem}
+  .add{width:2.75rem;height:2.75rem}
+}
+.sfield input,.hsearch input{font-size:max(16px,1rem)}
 
 /* phone tab bar and the rayons sheet */
 .tabbar{display:none}
@@ -1067,7 +1076,7 @@ dialog.search[open]{display:flex;flex-direction:column;animation:pop 220ms var(-
     Object.assign(f.style, { width: s + 'px', height: s + 'px', left: (a.left + a.width / 2 - s / 2) + 'px', top: (a.top + a.height / 2 - s / 2) + 'px' });
     document.body.appendChild(f);
     const dx = b.left + b.width / 2 - (a.left + a.width / 2), dy = b.top + b.height / 2 - (a.top + a.height / 2);
-    f.animate([{ transform: 'translate(0,0) scale(1)' }, { transform: `translate(${dx * .5}px,${dy * .5 - 70}px) scale(.7)`, offset: .55 }, { transform: `translate(${dx}px,${dy}px) scale(.2)`, opacity: .4 }], { duration: 700, easing: 'cubic-bezier(.4,.1,.3,1)' }).onfinish = () => f.remove();
+    f.animate([{ transform: 'translate(0,0) scale(1)' }, { transform: `translate(${dx * .5}px,${dy * .5 - 70}px) scale(.7)`, offset: .55 }, { transform: `translate(${dx}px,${dy}px) scale(.2)`, opacity: .4 }], { duration: 420, easing: 'cubic-bezier(.4,.1,.3,1)' }).onfinish = () => f.remove();
   }
   document.addEventListener('click', (e) => {
     if (e.target.closest('[data-rail]')) return;
@@ -1146,7 +1155,7 @@ dialog.search[open]{display:flex;flex-direction:column;animation:pop 220ms var(-
   function openSearch(text){ ['detail', 'cart', 'menu'].forEach(id => { if ($(id).open) $(id).close(); }); $('q').placeholder = t('searchDlg'); $('q').value = text || ''; $('search').showModal(); $('q').focus(); runSearch(); }
   document.querySelectorAll('[data-search]').forEach(b => b.onclick = () => openSearch(''));
   $('hform').addEventListener('submit', (e) => { e.preventDefault(); openSearch($('hq').value); });
-  $('hq').addEventListener('input', () => { if ($('hq').value.trim().length >= 2) { const v = $('hq').value; $('hq').value = ''; openSearch(v); } });
+  $('hq').addEventListener('focus', () => { const v = $('hq').value; $('hq').value = ''; $('hq').blur(); openSearch(v); });
   $('q').addEventListener('input', runSearch);
   $('q').addEventListener('keydown', (e) => {
     const items = [...$('sres').querySelectorAll('.hit')];
@@ -1162,6 +1171,20 @@ dialog.search[open]{display:flex;flex-direction:column;animation:pop 220ms var(-
     $('faqSec').hidden = !list.length;
     $('faq').innerHTML = list.map(x => `<details><summary>${esc(x.q)}</summary><p class="${x.a ? '' : 'todo'}">${esc(x.a || t('todo'))}</p></details>`).join('');
   }
+
+  /* ---------------- Back button closes sheets ---------------- */
+  let sheetState = false;
+  document.querySelectorAll('dialog').forEach(d => {
+    new MutationObserver(() => {
+      if (d.open && !sheetState) { sheetState = true; try { history.pushState({ sheet: d.id }, ''); } catch (e) { sheetState = false; } }
+      if (!document.querySelector('dialog[open]') && sheetState) { sheetState = false; if (history.state && history.state.sheet) history.back(); }
+    }).observe(d, { attributes: true, attributeFilter: ['open'] });
+  });
+  addEventListener('popstate', () => {
+    if (!sheetState) return;
+    sheetState = false;
+    document.querySelectorAll('dialog[open]').forEach(d => d.close());
+  });
 
   /* ---------------- static bits ---------------- */
   function applyStatic(){
@@ -1187,6 +1210,11 @@ dialog.search[open]{display:flex;flex-direction:column;animation:pop 220ms var(-
       + (D.problems.length ? `<span class="bad">${D.problems.length} erreur(s) : ${esc(D.problems.join(' · '))}</span>` : '<span>catalogue.js OK</span>')
       + '<a href="editor.html">Ouvrir l’éditeur</a>';
     document.body.prepend(bar);
+  }
+
+  if ('IntersectionObserver' in window) {
+    const mq = document.querySelector('.marquee .row');
+    new IntersectionObserver(([e]) => { mq.style.animationPlayState = e.isIntersecting ? '' : 'paused'; }).observe(document.querySelector('.marquee'));
   }
 
   function render(){

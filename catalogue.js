@@ -118,7 +118,7 @@
         "cat": "cosmetiques",
         "brand": "El Baraka",
         "fr": "Shampoing 100 % naturel",
-        "ar": "شمبوان طبيعي",
+        "ar": "شامبو طبيعي",
         "sizes": [
           [
             "Flacon",
@@ -4086,49 +4086,49 @@
     "faq": [
       {
         "fr": "Comment passer une commande ?",
-        "ar": "كيفاش ندير طلبية؟",
+        "ar": "كيف أقدّم طلبًا؟",
         "answerFr": "",
         "answerAr": ""
       },
       {
         "fr": "Livrez-vous à domicile ? Dans quelles villes ?",
-        "ar": "واش كتوصلو للدار؟ لأي مدن؟",
+        "ar": "هل توصلون الطلبات إلى المنازل؟ وإلى أي مدن؟",
         "answerFr": "",
         "answerAr": ""
       },
       {
         "fr": "Combien coûte la livraison et en combien de temps ?",
-        "ar": "شحال ثمن التوصيل وشحال كياخذ من وقت؟",
+        "ar": "كم تبلغ تكلفة التوصيل وكم يستغرق من الوقت؟",
         "answerFr": "",
         "answerAr": ""
       },
       {
         "fr": "Comment se fait le paiement ?",
-        "ar": "كيفاش كيتم الدفع؟",
+        "ar": "ما هي طرق الدفع؟",
         "answerFr": "",
         "answerAr": ""
       },
       {
         "fr": "Quels sont vos horaires d’ouverture ?",
-        "ar": "شنو هي أوقات العمل ديالكم؟",
+        "ar": "ما هي أوقات العمل؟",
         "answerFr": "",
         "answerAr": ""
       },
       {
         "fr": "Un produit n’est pas sur le site. Pouvez-vous l’avoir ?",
-        "ar": "منتوج ما كاينش فالموقع. واش تقدرو تجيبوه؟",
+        "ar": "منتج غير موجود في الموقع، هل يمكنكم توفيره؟",
         "answerFr": "",
         "answerAr": ""
       },
       {
         "fr": "Pouvez-vous me conseiller un produit ?",
-        "ar": "واش تقدرو تنصحوني بشي منتوج؟",
+        "ar": "هل يمكنكم أن تنصحوني بمنتج مناسب؟",
         "answerFr": "",
         "answerAr": ""
       },
       {
         "fr": "Peut-on échanger ou retourner un produit ?",
-        "ar": "واش نقدر نبدل ولا نرجع منتوج؟",
+        "ar": "هل يمكنني استبدال منتج أو إرجاعه؟",
         "answerFr": "",
         "answerAr": ""
       }

@@ -88,9 +88,11 @@ h2{font-size:clamp(2rem,3.8vw,3.1rem);line-height:1.05}
 .brand img{height:52px;width:auto}
 .nav{display:flex;gap:clamp(1.2rem,2.6vw,2.6rem);font-size:.98rem}
 .nav a{text-decoration:none;position:relative;padding-block:.3rem;white-space:nowrap}
-.nav a::after{content:"";position:absolute;inset:auto 0 0;height:1.5px;background:currentColor;transform:scaleX(0);transform-origin:left;transition:transform 260ms var(--ease)}
-[dir=rtl] .nav a::after{transform-origin:right}
-.nav a:hover::after{transform:scaleX(1)}
+.nav a .scrib{bottom:-.35em;height:.5em}
+.nav a .scrib path{stroke:var(--green);stroke-width:2;opacity:1;transition:stroke-dashoffset 360ms var(--ease)}
+.nav a:hover .scrib path{stroke-dashoffset:.45}
+.nav a[aria-current="true"]{color:var(--green)}
+.nav a[aria-current="true"] .scrib path{stroke-dashoffset:0}
 .hsearch{display:flex;align-items:center;gap:.6rem;width:clamp(12rem,20vw,19rem);height:2.7rem;padding:0 .9rem;border:1.5px solid #d6ccb6;background:transparent;transition:border-color 180ms ease,background-color 180ms ease,width 320ms var(--ease)}
 .hsearch:focus-within{border-color:var(--green);background:#fff;width:clamp(14rem,26vw,24rem)}
 .hsearch svg{width:19px;height:19px;flex:none}
@@ -151,6 +153,7 @@ h2{font-size:clamp(2rem,3.8vw,3.1rem);line-height:1.05}
 .btn-sq:hover .arr{transform:translateX(4px)}
 [dir=rtl] .btn-sq:hover .arr{transform:translateX(-4px) scaleX(-1)}
 .btn-sq:active{transform:scale(.97)}
+.hero .wrap > div:first-child{position:relative;z-index:2}
 .hero .where{display:flex;flex-wrap:wrap;gap:.3rem 1.4rem;margin:2.4rem 0 0;font-size:.86rem;color:var(--forest-muted)}
 .hero .where a{color:var(--forest-ink);text-decoration:none}
 .hero .where a:hover{text-decoration:underline}
@@ -167,6 +170,7 @@ h2{font-size:clamp(2rem,3.8vw,3.1rem);line-height:1.05}
 @keyframes draw{to{stroke-dashoffset:0}}
 .plant{position:absolute;left:var(--pl,25%);top:var(--pt,-25%);width:var(--pw,80%);height:var(--ph,150%);-webkit-mask:var(--pm) center/contain no-repeat;mask:var(--pm) center/contain no-repeat;transform:translate(calc(var(--mx) * 12px),calc(var(--my) * 9px));transition:transform 420ms var(--ease);animation:grow 650ms var(--ease) 120ms both}
 .plant.out{background:#e9dfc6}
+.plant[data-b="1"]{opacity:0}
 .plant.in{background:var(--forest)}
 @keyframes grow{from{clip-path:inset(100% 0 0 0)}to{clip-path:inset(0 0 0 0)}}
 
@@ -517,7 +521,7 @@ dialog.search[open]{display:flex;flex-direction:column;animation:pop 220ms var(-
   .brand img{height:46px}
   .cartbtn .t{display:none}
   .hero .wrap{grid-template-columns:1fr;min-height:0;padding-block:2.2rem 0}
-  .plate{width:min(86%,26rem);margin-block:1rem -18%}
+  .plate{width:min(86%,26rem);margin-block:clamp(7rem,34vw,9.5rem) -18%}
   .plate .cap{inset:auto 0 22% auto}
   .shelves .wrap{grid-template-columns:1fr}
   .collage{aspect-ratio:auto;display:flex;gap:1rem;overflow-x:auto;scroll-snap-type:x mandatory;margin-inline:calc(-1 * var(--gut));padding:1rem var(--gut) 1.2rem;scrollbar-width:none}
@@ -543,7 +547,7 @@ dialog.search[open]{display:flex;flex-direction:column;animation:pop 220ms var(-
 <header class="top" id="top">
   <div class="wrap">
     <a class="brand" href="#accueil"><img src="img/logo-green.png" alt="Herboristerie El Baraka" width="1400" height="451"></a>
-    <nav class="nav" aria-label="Sections"><a href="#accueil" data-t="navRay"></a><a href="#marques" data-t="navBrands"></a><a href="#catalogue" data-t="navCat"></a><a href="#boutique" data-t="navShop"></a></nav>
+    <nav class="nav" aria-label="Sections"><a href="#accueil"><span data-t="navRay"></span></a><a href="#marques"><span data-t="navBrands"></span></a><a href="#catalogue"><span data-t="navCat"></span></a><a href="#boutique"><span data-t="navShop"></span></a></nav>
     <button class="menubtn" type="button" data-menu><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg><span data-t="tbRay"></span></button>
     <form class="hsearch" id="hform" role="search"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="8.5" cy="8.5" r="6" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M13 13l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg><input id="hq" type="search" autocomplete="off" spellcheck="false"></form>
     <button class="iconbtn" type="button" data-search data-t-aria="searchShort"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="8.5" cy="8.5" r="6" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M13 13l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
@@ -565,9 +569,9 @@ dialog.search[open]{display:flex;flex-direction:column;animation:pop 220ms var(-
         <p class="where"><span data-t="ribAddr"></span><a class="num" dir="ltr" href="tel:+212671512954">06 71 51 29 54</a></p>
       </div>
       <figure class="plate" id="plate" aria-hidden="true">
-        <span class="plant out"></span>
+        <span class="plant out" data-b="0"></span><span class="plant out" data-b="1"></span>
         <span class="disc"></span>
-        <span class="inner"><span class="plant in"></span></span>
+        <span class="inner"><span class="plant in" data-b="0"></span><span class="plant in" data-b="1"></span></span>
         <svg class="ring" viewBox="0 0 100 100"><circle cx="50" cy="50" r="49.6"/></svg>
       </figure>
     </div>
@@ -859,7 +863,7 @@ dialog.search[open]{display:flex;flex-direction:column;animation:pop 220ms var(-
     $('rlist').innerHTML = CATS.map(c => `<li><button class="rrow" type="button" data-cat="${esc(c.id)}" aria-current="${view === c.id}"><span class="nm">${esc(cn(c))}${SCRIB}</span><span class="sub" dir="${lang === 'ar' ? 'ltr' : 'rtl'}">${esc(other(c))}</span>${ARROW}</button></li>`).join('');
     $('footRay').innerHTML = CATS.map(c => `<button class="fl" type="button" data-cat="${esc(c.id)}">${esc(cn(c))}</button>`).join('');
     bindScribbles();
-    if (!plateCat) setPlate(DEFAULT_PLATE, false);
+    if (!plateCat) { const c = CAT[DEFAULT_PLATE] || CATS.find(x => x.plate); if (c) { plateCat = c.id; layer(0).forEach(el => placePlant(el, c)); } }
   }
   // the underline writes itself under the pointer: the first stroke follows the mouse, the return stroke finishes on its own
   function bindScribbles(){
@@ -867,7 +871,7 @@ dialog.search[open]{display:flex;flex-direction:column;animation:pop 220ms var(-
       const path = row.querySelector('.scrib path'), name = row.querySelector('.nm');
       let max = 0;
       const drawTo = (v) => { path.style.strokeDashoffset = String(1 - v); path.style.opacity = v > 0 ? '1' : '0'; };
-      row.addEventListener('pointerenter', () => { row.classList.remove('leaving'); max = 0; if (fine.matches) setPlate(row.dataset.cat, true); });
+      row.addEventListener('pointerenter', () => { row.classList.remove('leaving'); max = 0; if (fine.matches) wantPlate(row.dataset.cat); });
       row.addEventListener('pointermove', (e) => {
         if (!fine.matches || reduce) return;
         const r = name.getBoundingClientRect();
@@ -880,31 +884,56 @@ dialog.search[open]{display:flex;flex-direction:column;animation:pop 220ms var(-
         row.classList.remove('drawn'); drawTo(max * .52);
       });
       const undraw = () => { if (row.getAttribute('aria-current') === 'true') { path.style.strokeDashoffset = ''; path.style.opacity = ''; return; } row.classList.add('leaving'); row.classList.remove('drawn'); max = 0; drawTo(0); };
-      row.addEventListener('pointerleave', undraw);
-      row.addEventListener('focus', () => { row.classList.add('drawn'); drawTo(1); setPlate(row.dataset.cat, true); });
+      row.addEventListener('pointerleave', () => { clearTimeout(intentT); undraw(); });
+      row.addEventListener('focus', () => { row.classList.add('drawn'); drawTo(1); wantPlate(row.dataset.cat); });
       row.addEventListener('blur', undraw);
     });
   }
   // the plate shows the plant of the rayon under the pointer (one engraving per rayon, set in catalogue.js)
   const DEFAULT_PLATE = 'plantes';
-  let plateCat = null, plateToken = 0;
+  let plateCat = null;
   function placePlant(el, c){
     const r = c.plateRatio || .6, h = Math.min(150, 122 / r) * (c.plateScale || 1), w = h * r;
     el.style.setProperty('--pm', `url("${c.plate}.png")`);
     el.style.setProperty('--ph', h + '%'); el.style.setProperty('--pw', w + '%');
     el.style.setProperty('--pl', (53 - w / 2) + '%'); el.style.setProperty('--pt', (r > 1 ? 50 - h / 2 + 4 : 50 - h / 2 - 2) + '%');
   }
+  // two layers: the new plant grows in on the hidden layer while the shown one fades, so the disc is never empty
+  let front = 0, swapAnims = [];
+  const layer = (b) => [...$('plate').querySelectorAll(`.plant[data-b="${b}"]`)];
   function setPlate(cid, animate){
     const c = CAT[cid] && CAT[cid].plate ? CAT[cid] : CATS.find(x => x.plate);
     if (!c || plateCat === c.id) return;
     plateCat = c.id;
-    const plants = [...$('plate').querySelectorAll('.plant')], token = ++plateToken;
-    if (!animate || reduce) { plants.forEach(el => placePlant(el, c)); return; }
-    Promise.all(plants.map(el => el.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 110, easing: 'ease-out', fill: 'forwards' }).finished)).then(() => {
-      if (token !== plateToken) return;
-      plants.forEach(el => { placePlant(el, c); el.getAnimations().forEach(a => a.cancel()); el.animate([{ clipPath: 'inset(100% 0 0 0)' }, { clipPath: 'inset(0 0 0 0)' }], { duration: 380, easing: 'cubic-bezier(.23,1,.32,1)' }); });
-    });
+    swapAnims.forEach(a => a.finish()); swapAnims = [];
+    const back = 1 - front, incoming = layer(back), outgoing = layer(front);
+    incoming.forEach(el => { el.getAnimations().forEach(a => a.cancel()); placePlant(el, c); });
+    if (!animate || reduce) {
+      incoming.forEach(el => { el.style.opacity = 1; }); outgoing.forEach(el => { el.style.opacity = 0; });
+    } else {
+      incoming.forEach(el => { el.style.opacity = 1; swapAnims.push(el.animate([{ opacity: 0, clipPath: 'inset(35% 0 0 0)' }, { opacity: 1, clipPath: 'inset(0 0 0 0)' }], { duration: 460, easing: 'cubic-bezier(.23,1,.32,1)' })); });
+      outgoing.forEach(el => { el.style.opacity = 0; swapAnims.push(el.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 300, easing: 'ease-out' })); });
+    }
+    front = back;
   }
+  // hover intent: the plate changes only when the pointer rests on a rayon, not while it crosses the list
+  let intentT = 0;
+  function wantPlate(cid){ clearTimeout(intentT); intentT = setTimeout(() => setPlate(cid, true), 150); }
+  // scroll spy: the top bar draws the line under the section on screen
+  const SPY = [['accueil', 'hero'], ['marques', 'marques'], ['catalogue', 'catalogue'], ['boutique', 'boutique']];
+  document.querySelectorAll('.nav a').forEach(a => { a.insertAdjacentHTML('beforeend', SCRIB); });
+  let spyRaf = 0;
+  function spy(){
+    spyRaf = 0;
+    const y = innerHeight * .4;
+    let on = '';
+    SPY.forEach(([href, id]) => { const el = $(id); if (!el) return; const r = el.getBoundingClientRect(); if (r.top <= y && r.bottom > y) on = href; });
+    if (!on && $('faqSec') && $('faqSec').getBoundingClientRect().top <= y) on = 'boutique';
+    document.querySelectorAll('.nav a').forEach(a => a.setAttribute('aria-current', a.getAttribute('href') === '#' + on ? 'true' : 'false'));
+  }
+  addEventListener('scroll', () => { if (!spyRaf) spyRaf = requestAnimationFrame(spy); }, { passive: true });
+  addEventListener('resize', spy);
+
   // the plate leans a little toward the pointer
   if (fine.matches && !reduce) {
     $('hero').addEventListener('pointermove', (e) => { const r = $('hero').getBoundingClientRect(); $('plate').style.setProperty('--mx', ((e.clientX - r.left) / r.width - .5).toFixed(3)); $('plate').style.setProperty('--my', ((e.clientY - r.top) / r.height - .5).toFixed(3)); });
@@ -1227,6 +1256,7 @@ dialog.search[open]{display:flex;flex-direction:column;animation:pop 220ms var(-
   if (m && CAT[m[1]]) view = m[1];
   render();
   startCycle();
+  spy();
   if (m && CAT[m[1]]) requestAnimationFrame(() => selectView(m[1], true));
 })();
 </script>

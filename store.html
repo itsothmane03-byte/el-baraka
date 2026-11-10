@@ -590,12 +590,17 @@ dialog.search[open]{display:flex;flex-direction:column;animation:pop 220ms var(-
   .hero .where a{--ico:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.6' stroke-linejoin='round'%3E%3Cpath d='M6.6 3.5h2.6l1.4 4.1-2 1.4a11.5 11.5 0 0 0 6.4 6.4l1.4-2 4.1 1.4v2.6a1.9 1.9 0 0 1-2 1.9A16.6 16.6 0 0 1 4.7 5.5a1.9 1.9 0 0 1 1.9-2z'/%3E%3C/svg%3E");color:var(--ink)}
   .plate .cap{inset:auto 0 22% auto}
   .shelves .wrap{grid-template-columns:1fr}
-  .collage{aspect-ratio:auto;display:flex;gap:1rem;overflow-x:auto;scroll-snap-type:x mandatory;margin-inline:calc(-1 * var(--gut));padding:1rem var(--gut) 1.2rem;scrollbar-width:none}
-  .collage::-webkit-scrollbar{display:none}
+  /* one swipe row: every shelf product, then the note; the Instagram link sits under it */
+  .shelves .pager{display:none}
+  .collage{aspect-ratio:auto;min-width:0}
+  #cards{display:flex;gap:1rem;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;scroll-padding-inline:var(--gut);margin-inline:calc(-1 * var(--gut));padding:1rem var(--gut) 1.4rem;scrollbar-width:none}
+  #cards::-webkit-scrollbar{display:none}
   .pcard{position:relative;inset:auto;flex:none;width:min(68vw,18rem);height:auto;aspect-ratio:.86;scroll-snap-align:start}
-  .note{position:relative;inset:auto;flex:none;width:min(52vw,13rem);align-self:center;aspect-ratio:1.1}
+  .note{position:relative;inset:auto;flex:none;width:min(52vw,13rem);align-self:center;aspect-ratio:1.1;margin-inline:.4rem;scroll-snap-align:end}
   .choix-arrow{display:none}
-  .choix{position:relative;inset:auto;flex:none;align-self:center;width:auto;transform:rotate(-3deg);white-space:normal;max-width:9rem}
+  .choix{position:static;display:inline-flex;align-items:center;gap:.5rem;width:auto;transform:none;margin-top:.2rem;font-size:1.3rem}
+  .choix::after{content:"";width:1.1rem;height:1.1rem;flex:none;background:currentColor;-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 12h15M13.5 6.5 19 12l-5.5 5.5'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 12h15M13.5 6.5 19 12l-5.5 5.5'/%3E%3C/svg%3E") center/contain no-repeat}
+  [dir=rtl] .choix::after{transform:scaleX(-1)}
 }
 @media (max-width:600px){
   .rrow .sub{display:none}
@@ -655,8 +660,7 @@ dialog.search[open]{display:flex;flex-direction:column;animation:pop 220ms var(-
         <div class="pager"><button class="prev" type="button" id="setPrev" data-t-aria="prev"><svg class="arr" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15M13.5 6.5 19 12l-5.5 5.5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button><span class="num" id="counter" aria-live="polite"></span><button class="next" type="button" id="setNext" data-t-aria="next"><svg class="arr" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15M13.5 6.5 19 12l-5.5 5.5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
       </div>
       <div class="collage" id="collage">
-        <div id="cards"></div>
-        <a class="note" href="#boutique"><span data-t="noteT"></span><svg class="arr" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15M13.5 6.5 19 12l-5.5 5.5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <div id="cards"><a class="note" href="#boutique"><span data-t="noteT"></span><svg class="arr" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15M13.5 6.5 19 12l-5.5 5.5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div>
         <a class="choix" href="https://www.instagram.com/herboristerieelbaraka/" target="_blank" rel="noopener" data-t="igNote"></a>
         <svg class="choix-arrow" viewBox="0 0 100 120" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M60 4 C 96 38, 84 96, 8 104"/><path pathLength="1" d="M22 93 L 8 104 L 23 114"/></svg>
       </div>
@@ -994,19 +998,24 @@ import { createHeroMotion } from "./hero-motion.mjs";
     return `<button class="pcard c${i + 1}" type="button" data-open="${esc(p.id)}" style="--d:${i}"><span class="lab">${pad2(i + 1)} / ${esc(cn(CAT[p.cat]))}</span><span class="im">${p.photo ? `<img src="${esc(p.photo)}.jpg" alt="" decoding="async">` : `<span class="tile name${p.brand === 'El Baraka' ? ' own' : ''}"><b dir="${dirOf(nm(p))}">${esc(nm(p))}</b><img src="img/mark-${p.brand === 'El Baraka' ? 'cream' : 'green'}.png" alt=""></span>`}</span><span class="ft"><span dir="auto">${esc(nm(p))}</span>${ARROW}</span></button>`;
   }
   function showSet(i, animate){
-    if (!SETS.length) { $('cards').innerHTML = ''; return; }
+    const box = $('cards'), note = box.querySelector('.note');
+    const cards = () => [...box.querySelectorAll('.pcard')];
+    const put = (list) => { cards().forEach(c => c.remove()); note.insertAdjacentHTML('beforebegin', list.map(pcard).join('')); };
+    if (!SETS.length) { put([]); return; }
     setIdx = (i + SETS.length) % SETS.length;
-    const box = $('cards');
+    // phones and tablets swipe through every shelf product in one row that ends on the note
+    if (small.matches) { put(SETS.flat()); box.scrollLeft = 0; return; }
     const paint = () => {
-      box.innerHTML = SETS[setIdx].map(pcard).join('');
+      put(SETS[setIdx]);
       $('counter').textContent = `${pad2(setIdx + 1)} / ${pad2(SETS.length)}`;
-      if (animate && !reduce) box.querySelectorAll('.pcard').forEach((c, k) => c.animate([{ opacity: .001, transform: 'translateY(16px)', filter: 'blur(4px)' }, { opacity: 1, transform: 'none', filter: 'blur(0)' }], { duration: 320, delay: k * 45, easing: 'cubic-bezier(.23,1,.32,1)', fill: 'backwards' }));
+      if (animate && !reduce) cards().forEach((c, k) => c.animate([{ opacity: .001, transform: 'translateY(16px)', filter: 'blur(4px)' }, { opacity: 1, transform: 'none', filter: 'blur(0)' }], { duration: 320, delay: k * 45, easing: 'cubic-bezier(.23,1,.32,1)', fill: 'backwards' }));
     };
-    if (animate && !reduce && box.children.length) {
+    if (animate && !reduce && cards().length) {
       $('collage').classList.add('ready');
-      Promise.all([...box.children].map((c, k) => c.animate([{ opacity: 1 }, { opacity: .001, transform: 'translateY(-10px)', filter: 'blur(4px)' }], { duration: 150, delay: k * 25, easing: 'ease-out', fill: 'forwards' }).finished)).then(paint);
+      Promise.all(cards().map((c, k) => c.animate([{ opacity: 1 }, { opacity: .001, transform: 'translateY(-10px)', filter: 'blur(4px)' }], { duration: 150, delay: k * 25, easing: 'ease-out', fill: 'forwards' }).finished)).then(paint);
     } else paint();
   }
+  small.addEventListener('change', () => showSet(setIdx, false));
   function startCycle(){ /* sets change only when the visitor asks */ }
   $('setNext').onclick = () => { showSet(setIdx + 1, true); startCycle(); };
   $('setPrev').onclick = () => { showSet(setIdx - 1, true); startCycle(); };

@@ -4087,50 +4087,50 @@
       {
         "fr": "Comment passer une commande ?",
         "ar": "كيف أقدّم طلبًا؟",
-        "answerFr": "",
-        "answerAr": ""
+        "answerFr": "Choisissez vos produits et ajoutez-les au panier, puis suivez les étapes : votre commande part sur WhatsApp.",
+        "answerAr": "اختر منتجاتك وأضفها إلى السلة، ثم اتبع الخطوات: يُرسَل طلبك عبر واتساب."
       },
       {
         "fr": "Livrez-vous à domicile ? Dans quelles villes ?",
         "ar": "هل توصلون الطلبات إلى المنازل؟ وإلى أي مدن؟",
-        "answerFr": "",
-        "answerAr": ""
+        "answerFr": "Oui, mais cela dépend du transporteur.",
+        "answerAr": "نعم، لكن ذلك يتوقف على شركة النقل."
       },
       {
         "fr": "Combien coûte la livraison et en combien de temps ?",
         "ar": "كم تبلغ تكلفة التوصيل وكم يستغرق من الوقت؟",
-        "answerFr": "",
-        "answerAr": ""
+        "answerFr": "De 20 à 60 DH selon le poids. De 1 heure à 48 heures au maximum, hors jours fériés.",
+        "answerAr": "من 20 إلى 60 درهمًا حسب الوزن. من ساعة واحدة إلى 48 ساعة على الأكثر، دون احتساب أيام العطل."
       },
       {
         "fr": "Comment se fait le paiement ?",
         "ar": "ما هي طرق الدفع؟",
-        "answerFr": "",
-        "answerAr": ""
+        "answerFr": "Par virement bancaire (RIB), par Wafacash ou par un autre moyen.",
+        "answerAr": "عن طريق التحويل البنكي (RIB) أو وفاكاش أو وسيلة أخرى."
       },
       {
         "fr": "Quels sont vos horaires d’ouverture ?",
         "ar": "ما هي أوقات العمل؟",
-        "answerFr": "",
-        "answerAr": ""
+        "answerFr": "De 9h30 à 13h30 et de 15h30 à 21h. Les horaires changent selon les saisons.",
+        "answerAr": "من 9:30 إلى 13:30 ومن 15:30 إلى 21:00. تتغير أوقات العمل حسب الفصول."
       },
       {
         "fr": "Un produit n’est pas sur le site. Pouvez-vous l’avoir ?",
         "ar": "منتج غير موجود في الموقع، هل يمكنكم توفيره؟",
-        "answerFr": "",
-        "answerAr": ""
+        "answerFr": "Nous ferons de notre mieux pour vous le trouver.",
+        "answerAr": "سنبذل ما في وسعنا لتوفيره لك."
       },
       {
         "fr": "Pouvez-vous me conseiller un produit ?",
         "ar": "هل يمكنكم أن تنصحوني بمنتج مناسب؟",
-        "answerFr": "",
-        "answerAr": ""
+        "answerFr": "Oui, c’est possible. Écrivez-nous sur WhatsApp.",
+        "answerAr": "نعم، هذا ممكن. راسلنا عبر واتساب."
       },
       {
         "fr": "Peut-on échanger ou retourner un produit ?",
         "ar": "هل يمكنني استبدال منتج أو إرجاعه؟",
-        "answerFr": "",
-        "answerAr": ""
+        "answerFr": "Un produit ouvert n’est ni repris ni échangé. Un produit fermé peut être échangé, mais il n’est pas remboursé.",
+        "answerAr": "المنتج المفتوح لا يُستبدل ولا يُسترجع. المنتج المغلق يمكن استبداله، لكن لا يُسترَدّ ثمنه."
       }
     ]
   };

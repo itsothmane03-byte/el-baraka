@@ -238,10 +238,9 @@ h2{font-size:clamp(2rem,3.8vw,3.1rem);line-height:1.05}
 .brandrow p{margin:.2rem 0 0;color:var(--muted);font-size:.9rem}
 .brandrow .thumbs{display:flex;gap:.4rem}
 .brandrow .thumbs .tile{width:clamp(3.4rem,6vw,5rem);border-radius:10px;background:#fff}
-.brandrow .thumbs .tile.name{background:#ece3cc}
-.brandrow .thumbs .tile.name.own{background:var(--green)}
-.brandrow .thumbs .tile.name b{font-size:.6rem}
-.brandrow .thumbs .tile.name img{display:none}
+.brandrow .thumbs .tile.mark{background:#ece3cc}
+.brandrow .thumbs .tile.mark.own{background:var(--green)}
+.brandrow .thumbs .tile.mark img{inset:22%;width:56%;height:56%;mix-blend-mode:normal}
 
 /* instagram band */
 .band{background:var(--green-deep);color:var(--green-ink);padding-block:clamp(4rem,8vw,6.5rem);overflow:hidden}
@@ -296,6 +295,10 @@ h2{font-size:clamp(2rem,3.8vw,3.1rem);line-height:1.05}
 .tab[aria-selected="true"]{background:var(--ink);color:var(--cream)}
 .tab[aria-selected="true"] small{color:#c9c2b0}
 .tab:focus-visible{outline:2px solid var(--gold)}
+.product-name{font:inherit;color:inherit;text-align:inherit;background:none;border:0;padding:0;cursor:pointer}
+.product-name:hover{text-decoration:underline;text-underline-offset:3px}
+.filter-summary{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem 1rem;margin-top:.7rem;font-size:.88rem}
+.filter-summary[hidden]{display:none}
 .filters{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center}
 .filters select{appearance:none;background:var(--paper) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%231b281e' stroke-width='1.4'/%3E%3C/svg%3E") no-repeat right .85rem center;border:0;box-shadow:inset 0 0 0 1px var(--rule);border-radius:999px;padding:.5rem 2.1rem .5rem .95rem;font-size:.88rem;cursor:pointer}
 [dir=rtl] .filters select{background-position:left .85rem center;padding:.5rem .95rem .5rem 2.1rem}
@@ -316,15 +319,23 @@ h2{font-size:clamp(2rem,3.8vw,3.1rem);line-height:1.05}
 .visit dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:.7rem 1.4rem;font-size:1rem}
 .visit dt{color:var(--muted)}
 .visit dd{margin:0}
+.visit dd small{display:block;margin-top:.15rem;font-size:.86rem;color:var(--muted)}
 .visit .acts{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:.4rem}
 .map{border-radius:20px;overflow:hidden;background:var(--paper);min-height:22rem}
 .map iframe{display:block;width:100%;height:100%;min-height:22rem;border:0;filter:saturate(.8)}
-.steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(1rem,2.4vw,1.8rem)}
-.steps li{background:var(--paper);border-radius:20px;padding:clamp(1.3rem,2.6vw,2rem)}
-.steps b{display:block;font-family:var(--f-fr);font-weight:400;font-size:1.55rem;line-height:1.15;margin-bottom:.45rem}
-:lang(ar) .steps b{font-family:var(--f-ar);font-weight:700;font-size:1.7rem}
-.steps span{color:var(--muted)}
-.faq{max-width:52rem}
+.howto{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(2.5rem,6vw,5.5rem);align-items:start}
+.howto:has(> [hidden]){grid-template-columns:minmax(0,40rem)}
+.howto h2{margin-bottom:clamp(1.3rem,2.6vw,2rem)}
+.order{position:sticky;top:calc(var(--hh) + 2rem)}
+.steps{list-style:none;margin:0;padding:0;counter-reset:step}
+.steps li{counter-increment:step;display:grid;grid-template-columns:2.6rem minmax(0,1fr);column-gap:.6rem;row-gap:.2rem;padding-block:1.05rem;box-shadow:0 -1px 0 var(--rule)}
+.steps li::before{content:counter(step);grid-row:1/3;font-family:var(--f-fr);font-size:2.2rem;line-height:1;color:var(--honey)}
+.steps b{font-family:var(--f-fr);font-weight:400;font-size:1.45rem;line-height:1.15}
+:lang(ar) .steps b{font-family:var(--f-ar);font-weight:700;font-size:1.6rem}
+.steps span{grid-column:2;color:var(--muted)}
+.terms{margin:0;padding-top:1.2rem;box-shadow:0 -1px 0 var(--rule);display:grid;grid-template-columns:auto minmax(0,1fr);gap:.7rem 1.4rem;font-size:.95rem}
+.terms dt{color:var(--muted)}
+.terms dd{margin:0}
 .faq details{background:var(--paper);border-radius:14px;margin-bottom:.5rem}
 .faq summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:1rem;padding:1.05rem 1.2rem;font-weight:500}
 .faq summary::-webkit-details-marker{display:none}
@@ -379,6 +390,9 @@ dialog::backdrop{background:rgba(20,30,22,.42)}
 .rel .tile{border-radius:12px}
 .rel b{font-weight:500;font-size:.8rem;line-height:1.25;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .rel button:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.link.share{display:inline-flex;align-items:center;gap:.45rem;align-self:flex-start;padding-block:.4rem;margin-block:-.4rem;font-size:.92rem}
+.link.share svg{width:16px;height:16px;flex:none}
+:root[dir=rtl] :is(.meta h3,.rel b,.lines .n,.hit b){text-align:right}
 .h-small{margin:0 0 .6rem;font-family:var(--f-body)!important;font-size:.9rem!important;color:var(--muted);font-weight:400!important}
 .buyrow{display:flex;align-items:center;justify-content:space-between;gap:1rem}
 .buyrow .price{font-size:1.25rem;font-weight:500}
@@ -423,8 +437,9 @@ dialog.search[open]{display:flex;flex-direction:column;animation:pop 220ms var(-
 .hit .tile.name b{font-size:.5rem}
 .hit .tile.name img{display:none}
 .hit b{font-weight:500;display:block;line-height:1.25}
-.hit small{font-size:.8rem;color:var(--muted)}
+.hit small{display:block;font-size:.8rem;line-height:1.35;color:var(--muted)}
 .hit .p{font-size:.86rem;white-space:nowrap;color:var(--muted)}
+@media (max-width:600px){.hit .p{white-space:normal;max-width:4.6rem;text-align:end}}
 .sgroup{font-size:.84rem;color:var(--muted);padding:.8rem .6rem .35rem}
 .scats{display:flex;flex-wrap:wrap;gap:.45rem;padding:.3rem .6rem .8rem}
 .snone{padding:2rem 1rem;text-align:center;color:var(--muted)}
@@ -435,6 +450,7 @@ dialog.search[open]{display:flex;flex-direction:column;animation:pop 220ms var(-
   .lang button{padding:.6rem .5rem}
   .x{width:2.75rem;height:2.75rem}
   .add{width:2.75rem;height:2.75rem}
+  .link.share{padding-block:.7rem;margin-block:-.7rem}
 }
 .sfield input,.hsearch input{font-size:max(16px,1rem)}
 
@@ -451,6 +467,7 @@ dialog.search[open]{display:flex;flex-direction:column;animation:pop 220ms var(-
 .mlist button:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
 .mlinks{display:flex;flex-direction:column;gap:.2rem;margin-top:1rem}
 .mlinks a{padding:.7rem 0;text-decoration:none;font-weight:500}
+:root[dir=rtl] .mlinks .num{text-align:right}
 @media (max-width:760px){
   .top .vsep{display:none}
   .menubtn span,.cartbtn .t{display:none}
@@ -471,7 +488,8 @@ dialog.search[open]{display:flex;flex-direction:column;animation:pop 220ms var(-
 .toast{position:fixed;inset:auto auto calc(1.4rem + env(safe-area-inset-bottom,0px)) 50%;margin:0;border:0;transform:translate(-50%,160%);z-index:60;background:var(--ink);color:var(--cream);border-radius:999px;padding:.45rem .45rem .45rem .5rem;display:flex;align-items:center;gap:.8rem;font-size:.92rem;box-shadow:0 20px 40px -16px rgba(0,0,0,.45);transition:transform 420ms var(--ease)}
 .toast.on{transform:translate(-50%,0)}
 @supports selector(:popover-open){.toast:not(:popover-open){display:none}}
-.toast .tile{width:2.4rem;border-radius:50%;background:#fff}
+.toast .tile{width:2.4rem;border-radius:50%;background:#fff;flex:none}
+.toast #toastText{white-space:nowrap}
 .toast button{border:0;background:var(--gold);color:#1b1a14;border-radius:999px;padding:.4rem .9rem;cursor:pointer;font-weight:500}
 .fly{position:fixed;z-index:70;pointer-events:none;border-radius:50%;overflow:hidden;background:#fff}
 .fly img{width:100%;height:100%;object-fit:contain;mix-blend-mode:multiply}
@@ -486,7 +504,8 @@ dialog.search[open]{display:flex;flex-direction:column;animation:pop 220ms var(-
   .hero,.visit{grid-template-columns:1fr}
   .rayons{grid-template-columns:repeat(2,minmax(0,1fr))}
   .grid{grid-template-columns:repeat(3,minmax(0,1fr))}
-  .steps{grid-template-columns:1fr}
+  .howto{grid-template-columns:1fr}
+  .order{position:static}
   .ask .wrap{grid-template-columns:1fr}
   footer .wrap{grid-template-columns:1fr 1fr}
   .iconbtn .t{display:none}
@@ -498,8 +517,10 @@ dialog.search[open]{display:flex;flex-direction:column;animation:pop 220ms var(-
   .shelf .row{grid-template-columns:repeat(3,minmax(0,1fr))}
   .shelf .row .it:nth-child(n+4){display:none}
   .grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:1.6rem .8rem}
-  .brandrow{grid-template-columns:1fr}
-  .brandrow .thumbs .tile{width:3.4rem}
+  .brandrow{gap:.8rem;padding:.75rem .9rem;border-radius:16px}
+  .brandrow h3{font-size:1.45rem}
+  .brandrow .thumbs .tile{width:2.75rem;border-radius:8px}
+  .brandrow .thumbs .tile:nth-child(n+4){display:none}
   footer .wrap{grid-template-columns:1fr}
   .arrows{display:none}
   .filters{flex-wrap:nowrap}
@@ -507,9 +528,7 @@ dialog.search[open]{display:flex;flex-direction:column;animation:pop 220ms var(-
   .filters .count{display:none}
   .tabs{padding-bottom:.45rem}
   .tools{padding-block:.5rem}
-  .meta .price{grid-column:1/-1}
-  .meta .ctl{grid-column:1/-1;grid-row:5;justify-self:end;margin-top:.1rem}
-  .brandrow .thumbs .tile.name b{display:none}
+  .meta .ctl:has(.qty){grid-column:1/-1;grid-row:5;justify-self:end;margin-top:.1rem}
 }
 @media (max-width:1180px){ .nav{display:none} .menubtn{display:inline-flex} }
 @media (max-width:900px){
@@ -593,7 +612,7 @@ dialog.search[open]{display:flex;flex-direction:column;animation:pop 220ms var(-
   <div class="wrap">
     <a class="brand" href="#accueil"><img src="img/logo-green.png" alt="Herboristerie El Baraka" width="1400" height="451"></a>
     <nav class="nav" aria-label="Sections"><a href="#accueil"><span data-t="navRay"></span></a><a href="#marques"><span data-t="navBrands"></span></a><a href="#catalogue"><span data-t="navCat"></span></a><a href="#boutique"><span data-t="navShop"></span></a></nav>
-    <button class="menubtn" type="button" data-menu><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg><span data-t="tbRay"></span></button>
+    <button class="menubtn" type="button" data-menu data-t-aria="tbRay"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg><span data-t="tbRay"></span></button>
     <form class="hsearch" id="hform" role="search"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="8.5" cy="8.5" r="6" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M13 13l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg><input id="hq" type="search" autocomplete="off" spellcheck="false"></form>
     <button class="iconbtn" type="button" data-search data-t-aria="searchShort"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="8.5" cy="8.5" r="6" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M13 13l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
     <div class="lang" role="group" aria-label="Langue / اللغة"><button type="button" data-lang="fr" aria-pressed="true">FR</button><span aria-hidden="true">/</span><button type="button" data-lang="ar" lang="ar" aria-pressed="false">عربي</button></div>
@@ -655,6 +674,7 @@ dialog.search[open]{display:flex;flex-direction:column;animation:pop 220ms var(-
         <select id="fSort" data-t-aria="sortF"></select>
         <span class="count num" id="fCount" aria-live="polite"></span>
       </div>
+      <div class="filter-summary" id="filterSummary" hidden><span id="activeFilters" aria-live="polite"></span><button class="link" type="button" id="clearFilters" data-t="clearFilters"></button></div>
     </div></div>
     <div class="wrap">
       <div class="grid" id="grid" role="tabpanel" aria-labelledby="cTitle"></div>
@@ -676,6 +696,7 @@ dialog.search[open]{display:flex;flex-direction:column;animation:pop 220ms var(-
         <dl>
           <dt data-t="addrL"></dt><dd data-t="addr"></dd>
           <dt data-t="phoneL"></dt><dd><a class="num" dir="ltr" href="tel:+212671512954">06 71 51 29 54</a> · <a class="num" dir="ltr" href="tel:+212523329572">05 23 32 95 72</a></dd>
+          <dt data-t="hoursL"></dt><dd><span class="num" data-t="hours"></span><small data-t="hoursNote"></small></dd>
           <dt>Instagram</dt><dd><a href="https://www.instagram.com/herboristerieelbaraka/" target="_blank" rel="noopener" dir="ltr">@herboristerieelbaraka</a></dd>
         </dl>
         <div class="acts">
@@ -688,14 +709,20 @@ dialog.search[open]{display:flex;flex-direction:column;animation:pop 220ms var(-
   </section>
 
   <section class="sec" aria-labelledby="oTitle" style="padding-top:0">
-    <div class="wrap">
-      <div class="sec-head"><h2 id="oTitle" data-t="oTitle"></h2></div>
-      <ol class="steps"><li><b data-t="o1"></b><span data-t="o1s"></span></li><li><b data-t="o2"></b><span data-t="o2s"></span></li><li><b data-t="o3"></b><span data-t="o3s"></span></li></ol>
+    <div class="wrap howto">
+      <div class="order">
+        <h2 id="oTitle" data-t="oTitle"></h2>
+        <ol class="steps"><li><b data-t="o1"></b><span data-t="o1s"></span></li><li><b data-t="o2"></b><span data-t="o2s"></span></li><li><b data-t="o3"></b><span data-t="o3s"></span></li></ol>
+        <dl class="terms">
+          <dt data-t="delivL"></dt><dd data-t="deliv"></dd>
+          <dt data-t="payL"></dt><dd data-t="pay"></dd>
+        </dl>
+      </div>
+      <section id="faqSec" aria-labelledby="fTitle">
+        <h2 id="fTitle" data-t="fTitle"></h2>
+        <div class="faq" id="faq"></div>
+      </section>
     </div>
-  </section>
-
-  <section class="sec" id="faqSec" aria-labelledby="fTitle" style="padding-top:0">
-    <div class="wrap"><div class="sec-head"><h2 id="fTitle" data-t="fTitle"></h2></div><div class="faq" id="faq"></div></div>
   </section>
 </main>
 
@@ -703,7 +730,7 @@ dialog.search[open]{display:flex;flex-direction:column;animation:pop 220ms var(-
   <div class="wrap">
     <div><img class="logo" src="img/logo-cream.png" alt="Herboristerie El Baraka" width="1400" height="451"><p style="margin-top:1.2rem;max-width:26em" data-t="fAbout"></p></div>
     <div><h3 data-t="fRay"></h3><div id="footRay"></div></div>
-    <div><h3 data-t="fVisit"></h3><p data-t="addr"></p><p><a href="https://www.google.com/maps/search/?api=1&amp;query=Herboristerie+El+Baraka+593+Bd+de+Palestine+Mohammedia" target="_blank" rel="noopener" data-t="route"></a></p></div>
+    <div><h3 data-t="fVisit"></h3><p data-t="addr"></p><p class="num" data-t="hours"></p><p><a href="https://www.google.com/maps/search/?api=1&amp;query=Herboristerie+El+Baraka+593+Bd+de+Palestine+Mohammedia" target="_blank" rel="noopener" data-t="route"></a></p></div>
     <div><h3 data-t="fContact"></h3><p><a class="num" dir="ltr" href="tel:+212671512954">06 71 51 29 54</a></p><p><a class="num" dir="ltr" href="tel:+212523329572">05 23 32 95 72</a></p><p><a href="https://www.instagram.com/herboristerieelbaraka/" target="_blank" rel="noopener" dir="ltr">@herboristerieelbaraka</a></p></div>
     <p class="fine" data-t="fine"></p>
   </div>
@@ -712,7 +739,7 @@ dialog.search[open]{display:flex;flex-direction:column;animation:pop 220ms var(-
 <dialog class="sheet" id="detail" aria-labelledby="dTitle">
   <header><h2 id="dTitle" data-t="dTitle"></h2><button class="x" type="button" data-close data-t-aria="close"><svg viewBox="0 0 18 18" aria-hidden="true"><path d="M4 4l10 10M14 4 4 14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button></header>
   <div class="sc" id="dBody"></div>
-  <div class="act"><div class="buyrow"><span class="price num" id="dPrice"></span><span class="qty" id="dQty"><button type="button" id="dMinus" aria-label="−">−</button><span class="num" id="dN">1</span><button type="button" id="dPlus" aria-label="+">+</button></span></div><button class="btn btn-ink" type="button" id="dAdd"></button><button class="btn btn-line" type="button" id="dCart" hidden></button></div>
+  <div class="act"><div class="buyrow"><span class="price num" id="dPrice"></span><span class="qty" id="dQty"><button type="button" id="dMinus" data-t-aria="decrease">−</button><span class="num" id="dN">1</span><button type="button" id="dPlus" data-t-aria="increase">+</button></span></div><button class="btn btn-ink" type="button" id="dAdd"></button><button class="btn btn-line" type="button" id="dCart" hidden></button></div>
 </dialog>
 
 <dialog class="sheet" id="cart" aria-labelledby="ccTitle">
@@ -797,6 +824,11 @@ import { createHeroMotion } from "./hero-motion.mjs";
       pv: 'Voir le message envoyé', send: 'Envoyer la commande sur WhatsApp', copy: 'Copier le message', copied: 'Message copié.', copyFail: 'Copie impossible : sélectionnez le texte.',
       added: 'Ajouté au panier', seeCart: 'Voir', none: 'Aucun produit trouvé. Essayez un autre mot, ou demandez-nous sur WhatsApp.', sRay: 'Rayons', sBrand: 'Marques', sProd: 'Produits',
       mHead: 'Bonjour, je souhaite commander :', mName: 'Nom', mPhone: 'Téléphone', mAddr: 'Adresse', mNote: 'Remarque', need: 'Ajoutez un produit pour envoyer la commande.',
+      clearFilters: 'Effacer les filtres', share: 'Partager ce produit', linkCopied: 'Lien copié.', linkFail: 'Copie impossible.', decrease: 'Diminuer la quantité', increase: 'Augmenter la quantité',
+      hoursL: 'Horaires', hours: '9h30 – 13h30 · 15h30 – 21h', hoursNote: 'Les horaires changent selon les saisons.',
+      delivL: 'Livraison', deliv: 'À domicile, selon le transporteur. De 20 à 60 DH selon le poids, en 1 heure à 48 heures au maximum, hors jours fériés.',
+      payL: 'Paiement', pay: 'Virement bancaire (RIB), Wafacash ou autre moyen.',
+      shipNote: 'Si livraison : 20 à 60 DH en plus, selon le poids.', payNote: 'Paiement par virement (RIB), Wafacash ou autre moyen.',
       close: 'Fermer', prev: 'Précédent', next: 'Suivant'
     },
     ar: {
@@ -829,6 +861,11 @@ import { createHeroMotion } from "./hero-motion.mjs";
       pv: 'معاينة الرسالة', send: 'أرسل الطلب عبر واتساب', copy: 'نسخ الرسالة', copied: 'تم نسخ الرسالة.', copyFail: 'تعذّر النسخ، حدّد النص يدويًا.',
       added: 'أُضيف إلى السلة', seeCart: 'عرض', none: 'لم نجد أي نتيجة. جرّب كلمة أخرى أو راسلنا عبر واتساب.', sRay: 'الأقسام', sBrand: 'العلامات التجارية', sProd: 'المنتجات',
       mHead: 'السلام عليكم، أودّ أن أطلب:', mName: 'الاسم', mPhone: 'الهاتف', mAddr: 'العنوان', mNote: 'ملاحظة', need: 'أضف منتجًا لإرسال الطلب.',
+      clearFilters: 'إلغاء التصفية', share: 'مشاركة هذا المنتج', linkCopied: 'تم نسخ الرابط.', linkFail: 'تعذّر النسخ.', decrease: 'إنقاص الكمية', increase: 'زيادة الكمية',
+      hoursL: 'أوقات العمل', hours: 'من 9:30 إلى 13:30 · من 15:30 إلى 21:00', hoursNote: 'تتغير أوقات العمل حسب الفصول.',
+      delivL: 'التوصيل', deliv: 'إلى المنزل، حسب شركة النقل. من 20 إلى 60 درهمًا حسب الوزن، في مدة من ساعة واحدة إلى 48 ساعة على الأكثر، دون احتساب أيام العطل.',
+      payL: 'الدفع', pay: 'تحويل بنكي (RIB) أو وفاكاش أو وسيلة أخرى.',
+      shipNote: 'في حال التوصيل: تُضاف 20 إلى 60 درهمًا حسب الوزن.', payNote: 'الدفع عن طريق تحويل بنكي (RIB) أو وفاكاش أو وسيلة أخرى.',
       close: 'إغلاق', prev: 'السابق', next: 'التالي'
     }
   };
@@ -858,6 +895,8 @@ import { createHeroMotion } from "./hero-motion.mjs";
   const fmtLine = (p) => p.sizes.length > 1 ? p.sizes.map(s => s[0]).join(' · ') : p.sizes[0][0];
   const dirOf = (s) => /[؀-ۿ]/.test(s) ? 'rtl' : 'ltr';
   const ICON_PLUS = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>';
+  const ICON_SHARE = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 10V2.2M5.2 4.8 8 2l2.8 2.8M3.5 8v4.5a1 1 0 0 0 1 1h7a1 1 0 0 0 1-1V8" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  const SHARE_NOTE_MS = 2000;
 
   // a product's picture: its photo, or its name set as a tile (the shop's own products wait for their photos)
   function tile(p, small, extra = ''){
@@ -880,7 +919,7 @@ import { createHeroMotion } from "./hero-motion.mjs";
   function control(p){
     if (simple(p)) {
       const k = defKey(p), q = cart[k] || 0;
-      if (q) return `<span class="qty"><button type="button" data-dec="${esc(k)}" aria-label="−">−</button><span class="num">${q}</span><button type="button" data-inc="${esc(k)}" aria-label="+">+</button></span>`;
+      if (q) return `<span class="qty"><button type="button" data-dec="${esc(k)}" aria-label="${esc(t('decrease'))}">−</button><span class="num">${q}</span><button type="button" data-inc="${esc(k)}" aria-label="${esc(t('increase'))}">+</button></span>`;
       return `<button class="add" type="button" data-quick="${esc(p.id)}" aria-label="${esc(t('add'))} : ${esc(nm(p))}">${ICON_PLUS}</button>`;
     }
     return `<button class="add" type="button" data-open="${esc(p.id)}" aria-label="${esc(t('add'))} : ${esc(nm(p))}">${ICON_PLUS}</button>`;
@@ -888,7 +927,7 @@ import { createHeroMotion } from "./hero-motion.mjs";
   function card(p, i){
     return `<article class="card" style="--i:${i || 0}">
       <button class="open" type="button" data-open="${esc(p.id)}" aria-label="${esc(nm(p))}">${tile(p, true)}</button>
-      <div class="meta"><span class="brand-l">${esc(p.brand ? bn(p.brand) : cn(CAT[p.cat]))}</span><h3 dir="auto">${esc(nm(p))}</h3><span class="fmt">${esc(fmtLine(p))}</span><span class="price num">${priceHtml(p)}</span><span class="ctl" data-ctl="${esc(p.id)}">${control(p)}</span></div></article>`;
+      <div class="meta"><span class="brand-l">${esc(p.brand ? bn(p.brand) : cn(CAT[p.cat]))}</span><h3 dir="auto"><button class="product-name" type="button" data-open="${esc(p.id)}">${esc(nm(p))}</button></h3><span class="fmt">${esc(fmtLine(p))}</span><span class="price num">${priceHtml(p)}</span><span class="ctl" data-ctl="${esc(p.id)}">${control(p)}</span></div></article>`;
   }
   function refreshControls(id){ document.querySelectorAll(`[data-ctl="${CSS.escape(id)}"]`).forEach(el => { el.innerHTML = control(byId[id]); }); }
 
@@ -978,7 +1017,7 @@ import { createHeroMotion } from "./hero-motion.mjs";
     const open = [...document.querySelectorAll('dialog[open]')];
     if (open.length && sheetState) {
       sheetState = false;
-      try { if (history.state && history.state.sheet) history.replaceState(null, '', location.href); } catch (e) { /* history unavailable */ }
+      try { if (history.state && history.state.sheet) history.replaceState(null, '', productUrl(null)); } catch (e) { /* history unavailable */ }
     }
     open.forEach(d => d.close());
     go();
@@ -1007,7 +1046,14 @@ import { createHeroMotion } from "./hero-motion.mjs";
   }
   function renderBrands(){
     $('brands').innerHTML = BRANDS.map(b => `<button class="brandrow" type="button" data-brand="${esc(b.id)}"><span><h3 dir="ltr">${esc(b.id)}</h3><p>${t('products', b.list.length)}${b.id === 'El Baraka' ? ` · ${t('ownBrand')}` : ''}</p></span>
-      <span class="thumbs">${b.list.slice(0, 4).map(p => tile(p, true)).join('')}</span></button>`).join('');
+      <span class="thumbs">${brandThumbs(b)}</span></button>`).join('');
+  }
+  /* a brand shows its product photos; one without photos yet shows the shop mark instead of unreadable name squares */
+  function brandThumbs(b){
+    const withPhoto = b.list.filter(p => p.photo).slice(0, 4);
+    if (withPhoto.length) return withPhoto.map(p => tile(p, true)).join('');
+    const own = b.id === 'El Baraka';
+    return `<span class="tile mark${own ? ' own' : ''}"><img src="img/mark-${own ? 'cream' : 'green'}.png" alt="" loading="lazy" decoding="async"></span>`;
   }
   function renderMarquee(){
     const one = CATS.map(c => `<span><b>${esc(c.ar)}</b><em>${esc(c.fr)}</em></span>`).join('');
@@ -1024,7 +1070,8 @@ import { createHeroMotion } from "./hero-motion.mjs";
     return list;
   }
   function renderTabs(){
-    const tabs = [['all', t('all'), PRODUCTS.length]].concat(CATS.map(c => [c.id, cn(c), inCat(c.id).length]));
+    const available = PRODUCTS.filter(p => !brandF || p.brand === brandF);
+    const tabs = [['all', t('all'), available.length]].concat(CATS.map(c => [c.id, cn(c), available.filter(p => p.cat === c.id).length]));
     $('tabs').innerHTML = tabs.map(([id, label, n]) => `<button class="tab" role="tab" type="button" data-tab="${esc(id)}" aria-selected="${view === id}">${esc(label)}<small class="num">${n}</small></button>`).join('');
     $('fBrand').innerHTML = `<option value="">${t('allBrands')}</option>` + BRANDS.map(b => `<option value="${esc(b.id)}"${b.id === brandF ? ' selected' : ''}>${esc(b.id)}</option>`).join('');
     $('fSort').innerHTML = [['def', 'sortDef'], ['name', 'sortName'], ['up', 'sortUp'], ['down', 'sortDown']].map(([v, k]) => `<option value="${v}"${v === sort ? ' selected' : ''}>${t(k)}</option>`).join('');
@@ -1034,6 +1081,8 @@ import { createHeroMotion } from "./hero-motion.mjs";
     $('grid').innerHTML = part.length ? part.map((p, i) => card(p, animate ? i % PAGE : 0)).join('') : `<p class="empty-r" style="grid-column:1/-1">${t('noneR')}</p>`;
     if (!animate) $('grid').querySelectorAll('.card').forEach(c => { c.style.animation = 'none'; });
     $('fCount').textContent = t('products', list.length);
+    $('filterSummary').hidden = view === 'all' && !brandF && sort === 'def';
+    $('activeFilters').textContent = [view !== 'all' ? cn(CAT[view]) : '', brandF ? bn(brandF) : '', t('products', list.length)].filter(Boolean).join(' · ');
     const left = list.length - part.length;
     $('more').hidden = left <= 0;
     $('more').textContent = t('more', left);
@@ -1053,8 +1102,9 @@ import { createHeroMotion } from "./hero-motion.mjs";
     brandF = b; view = 'all'; shown = PAGE; renderTabs(); renderGrid(true);
     if (scroll) $('catalogue').scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' });
   }
-  $('fBrand').onchange = (e) => { brandF = e.target.value; shown = PAGE; renderGrid(true); };
+  $('fBrand').onchange = (e) => { brandF = e.target.value; shown = PAGE; renderTabs(); renderGrid(true); };
   $('fSort').onchange = (e) => { sort = e.target.value; shown = PAGE; renderGrid(true); };
+  $('clearFilters').onclick = () => { brandF = ''; sort = 'def'; renderTabs(); selectView('all', false); $('tabs').querySelector('button').focus({ preventScroll: true }); };
   $('more').onclick = () => { const before = shown; shown += PAGE * 2; renderGrid(false); const el = $('grid').children[before]; if (el) { const b = el.querySelector('button'); if (b) b.focus({ preventScroll: true }); } };
 
   /* ---------------- rails ---------------- */
@@ -1079,6 +1129,7 @@ import { createHeroMotion } from "./hero-motion.mjs";
       <div><div class="d-brand">${esc(p.brand ? bn(p.brand) + ' · ' : '')}<button class="link" type="button" data-cat="${esc(c.id)}">${esc(cn(c))}</button></div>
         <div class="d-name" dir="${dirOf(label)}">${esc(label)}</div>${nameAr}</div>
       ${sizes}
+      <a class="link share" href="${esc(productUrl(p.id))}" data-share>${ICON_SHARE}<span aria-live="polite">${t('share')}</span></a>
       ${rel.length ? `<div><h3 class="h-small">${t('related')}</h3><div class="rel">${rel.map(q => `<button type="button" data-open="${esc(q.id)}">${tile(q, true)}<b dir="auto">${esc(nm(q))}</b></button>`).join('')}</div></div>` : ''}`;
     $('dBody').scrollTop = 0;
     renderBar();
@@ -1090,16 +1141,36 @@ import { createHeroMotion } from "./hero-motion.mjs";
     $('dN').textContent = curQty;
     $('dAdd').textContent = known(price) ? t('addP', money(price * curQty)) : t('add');
   }
+  function productUrl(id){
+    const url = new URL(location.href);
+    if (id) url.searchParams.set('product', id); else url.searchParams.delete('product');
+    return url.pathname + url.search + url.hash;
+  }
   function openDetail(id){
     current = byId[id]; if (!current) return;
     curSize = current.def || 0; curQty = 1; $('dCart').hidden = true; $('dCart').textContent = t('seeCartLong');
     renderDetail();
     if (!$('detail').open) $('detail').showModal();
+    else if (sheetState) history.replaceState({ sheet: 'detail', product: id }, '', productUrl(id));
   }
   $('dBody').addEventListener('click', (e) => {
     const s = e.target.closest('[data-size]');
     if (s) { curSize = +s.dataset.size; $('dBody').querySelectorAll('[data-size]').forEach(b => b.setAttribute('aria-pressed', b === s ? 'true' : 'false')); renderBar(); }
+    const sh = e.target.closest('[data-share]');
+    if (sh && current) { e.preventDefault(); shareProduct(sh.querySelector('span')); }
   });
+  /* phones open their own share sheet; elsewhere the link is copied and the label says so for a moment */
+  let shareTimer = 0;
+  async function shareProduct(label){
+    const url = new URL(productUrl(current.id), location.href).href;
+    const say = (key) => { label.textContent = t(key); clearTimeout(shareTimer); shareTimer = setTimeout(() => { label.textContent = t('share'); }, SHARE_NOTE_MS); };
+    if (navigator.share && matchMedia('(pointer:coarse)').matches) {
+      try { await navigator.share({ title: nm(current), url }); return; }
+      catch (err) { if (err && err.name === 'AbortError') return; }
+    }
+    try { await navigator.clipboard.writeText(url); say('linkCopied'); }
+    catch (err) { say('linkFail'); }
+  }
   $('dMinus').onclick = () => { curQty = Math.max(1, curQty - 1); renderBar(); };
   $('dPlus').onclick = () => { curQty = Math.min(99, curQty + 1); renderBar(); };
   $('dAdd').onclick = () => {
@@ -1121,7 +1192,7 @@ import { createHeroMotion } from "./hero-motion.mjs";
   function bump(){ const b = $('openCart'); b.classList.remove('bump'); void b.offsetWidth; b.classList.add('bump'); }
   let toastTimer;
   function toast(p){
-    $('toastImg').innerHTML = p.photo ? `<img src="${esc(p.photo)}-s.jpg" alt="" style="width:100%;height:100%;object-fit:contain;mix-blend-mode:multiply">` : '';
+    $('toastImg').innerHTML = p.photo ? `<img src="${esc(p.photo)}-s.jpg" alt="" style="width:100%;height:100%;object-fit:contain;mix-blend-mode:multiply">` : '<img src="img/mark-green.png" alt="" style="inset:18%;width:64%;height:64%;object-fit:contain">';
     $('toastText').textContent = t('added');
     const el = $('toast');
     if (el.showPopover) { try { el.hidePopover(); } catch (e) { /* not open */ } try { el.showPopover(); } catch (e) { /* popover unsupported */ } }
@@ -1183,11 +1254,12 @@ import { createHeroMotion } from "./hero-motion.mjs";
     const keys = Object.keys(cart).filter(valid);
     const n = keys.reduce((s, k) => s + cart[k], 0);
     $('count').textContent = n; $('count').dataset.n = n;
-    $('lines').innerHTML = keys.map(k => { const x = parse(k); return `<li>${tile(x.p, true)}<div><div class="n" dir="auto">${esc(nm(x.p))}</div><div class="s num">${x.p.sizes[x.si][0] ? `<bdi>${esc(x.p.sizes[x.si][0])}</bdi> · ` : ''}<bdi>${money(unit(k))}</bdi></div></div><div class="r"><span class="num">${money(lineTotal(k))}</span><span class="qty"><button type="button" data-dec="${esc(k)}" aria-label="−">−</button><span class="num">${cart[k]}</span><button type="button" data-inc="${esc(k)}" aria-label="+">+</button></span></div></li>`; }).join('');
+    $('openCart').setAttribute('aria-label', `${t('cart')} (${n})`);
+    $('lines').innerHTML = keys.map(k => { const x = parse(k); return `<li>${tile(x.p, true)}<div><div class="n" dir="auto">${esc(nm(x.p))}</div><div class="s num">${x.p.sizes[x.si][0] ? `<bdi>${esc(x.p.sizes[x.si][0])}</bdi> · ` : ''}<bdi>${money(unit(k))}</bdi></div></div><div class="r"><span class="num">${money(lineTotal(k))}</span><span class="qty"><button type="button" data-dec="${esc(k)}" aria-label="${esc(t('decrease'))}">−</button><span class="num">${cart[k]}</span><button type="button" data-inc="${esc(k)}" aria-label="${esc(t('increase'))}">+</button></span></div></li>`; }).join('');
     const has = keys.length > 0;
     $('empty').hidden = has; $('form').hidden = !has; $('totals').hidden = !has; $('pvWrap').hidden = !has;
     const m = message();
-    $('totals').innerHTML = (m.sub ? `<div class="g"><span>${m.unknown ? t('totalKnown') : t('total')}</span><span class="num">${money(m.sub)}</span></div>` : '') + (m.unknown ? `<div class="small">${t('unknownNote', m.unknown)}</div>` : '');
+    $('totals').innerHTML = (m.sub ? `<div class="g"><span>${m.unknown ? t('totalKnown') : t('total')}</span><span class="num">${money(m.sub)}</span></div>` : '') + (m.unknown ? `<div class="small">${t('unknownNote', m.unknown)}</div>` : '') + `<div class="small">${t('shipNote')}</div><div class="small">${t('payNote')}</div>`;
     $('preview').textContent = m.n ? m.text : t('need');
     $('send').href = m.n ? `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(m.text)}` : '#';
     $('send').style.opacity = m.n ? '' : '.4'; $('send').style.pointerEvents = m.n ? '' : 'none';
@@ -1221,7 +1293,7 @@ import { createHeroMotion } from "./hero-motion.mjs";
     const words = q.split(/\s+/);
     const hits = HAY.filter(([, hay]) => words.every(w => hay.includes(w))).map(([p, , name]) => [p, words.some(w => name.includes(w)) ? 0 : 1]).sort((a, b) => a[1] - b[1]).map(x => x[0]);
     hitIdx = 0;
-    $('sres').innerHTML = hits.length ? `<div class="sgroup">${t('sProd')} · <span class="num">${hits.length}</span></div>` + hits.slice(0, 30).map((p, i) => `<button class="hit" type="button" role="option" data-open="${esc(p.id)}" aria-selected="${i === 0}">${tile(p, true)}<span><b dir="auto">${esc(nm(p))}</b><small>${esc([p.brand, fmtLine(p)].filter(Boolean).join(' · '))}</small></span><span class="p num">${priceHtml(p)}</span></button>`).join('') : `<p class="snone">${t('none')}</p>`;
+    $('sres').innerHTML = hits.length ? `<div class="sgroup">${t('sProd')} · <span class="num">${hits.length}</span></div>` + hits.slice(0, 30).map((p, i) => `<button class="hit" type="button" role="option" data-open="${esc(p.id)}" aria-selected="${i === 0}">${tile(p, true)}<span><b dir="auto">${esc(nm(p))}</b><small>${esc([p.brand, fmtLine(p)].filter(Boolean).join(' · '))}</small></span><span class="p num">${priceHtml(p)}</span></button>`).join('') : `<p class="snone">${t('none')}</p><a class="btn btn-line" href="https://wa.me/${WHATSAPP}?text=${encodeURIComponent(t('waAsk'))}">${t('aCta')}</a>`;
   }
   function openSearch(text){ ['detail', 'cart', 'menu'].forEach(id => { if ($(id).open) $(id).close(); }); $('q').placeholder = t('searchDlg'); $('q').value = text || ''; $('search').showModal(); $('q').focus(); runSearch(); }
   document.querySelectorAll('[data-search]').forEach(b => b.onclick = () => openSearch(''));
@@ -1245,16 +1317,33 @@ import { createHeroMotion } from "./hero-motion.mjs";
 
   /* ---------------- Back button closes sheets ---------------- */
   let sheetState = false;
+  function observeSheet(){
+    const d = document.querySelector('dialog[open]');
+    if (d) {
+      const state = { sheet: d.id, product: d.id === 'detail' ? current.id : null };
+      try {
+        history[sheetState ? 'replaceState' : 'pushState'](state, '', productUrl(state.product));
+        sheetState = true;
+      } catch (e) { /* history unavailable */ }
+    } else if (sheetState) {
+      sheetState = false;
+      if (history.state && history.state.sheet) history.back();
+    }
+  }
   document.querySelectorAll('dialog').forEach(d => {
-    new MutationObserver(() => {
-      if (d.open && !sheetState) { sheetState = true; try { history.pushState({ sheet: d.id }, ''); } catch (e) { sheetState = false; } }
-      if (!document.querySelector('dialog[open]') && sheetState) { sheetState = false; if (history.state && history.state.sheet) history.back(); }
-    }).observe(d, { attributes: true, attributeFilter: ['open'] });
+    new MutationObserver(observeSheet).observe(d, { attributes: true, attributeFilter: ['open'] });
   });
   addEventListener('popstate', () => {
-    if (!sheetState) return;
-    sheetState = false;
+    sheetState = !!(history.state && history.state.sheet);
     document.querySelectorAll('dialog[open]').forEach(d => d.close());
+    if (sheetState) {
+      const state = history.state;
+      if (state.sheet === 'detail' && byId[state.product]) openDetail(state.product);
+      else if (state.sheet === 'cart') openCart();
+      else if (state.sheet === 'menu') openMenu();
+      else if (state.sheet === 'search') $('search').showModal();
+      else sheetState = false;
+    }
   });
 
   /* ---------------- static bits ---------------- */
@@ -1301,10 +1390,13 @@ import { createHeroMotion } from "./hero-motion.mjs";
   addEventListener('hashchange', () => { const h = /^#rayon-([\w-]+)$/.exec(location.hash); if (h && CAT[h[1]] && view !== h[1]) selectView(h[1], true); });
   const m = /^#rayon-([\w-]+)$/.exec(location.hash);
   if (m && CAT[m[1]]) view = m[1];
+  const requestedProduct = new URL(location.href).searchParams.get('product');
+  if (requestedProduct) history.replaceState(null, '', productUrl(null));
   render();
   startCycle();
   spy();
-  if (m && CAT[m[1]]) requestAnimationFrame(() => selectView(m[1], true));
+  if (m && CAT[m[1]]) selectView(m[1], true);
+  if (byId[requestedProduct]) openDetail(requestedProduct);
 })();
 </script>
 </body>

@@ -316,6 +316,10 @@ h2{font-size:clamp(2rem,3.8vw,3.1rem);line-height:1.05}
 .ask p{margin:.7rem 0 0;color:#4a4120;max-width:36em}
 .visit{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:clamp(2rem,5vw,4.5rem);align-items:stretch}
 .visit .facts{display:flex;flex-direction:column;gap:1.4rem}
+.vhead{margin:0}
+.vhead h2{margin-top:.15rem}
+.since{margin:0;font-family:var(--f-sc);font-size:1.05rem;letter-spacing:.06em;color:var(--green)}
+.since:lang(ar){font-family:var(--f-kufi);letter-spacing:0;font-size:.98rem}
 .visit dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:.7rem 1.4rem;font-size:1rem}
 .visit dt{color:var(--muted)}
 .visit dd{margin:0}
@@ -573,8 +577,9 @@ dialog.search[open]{display:flex;flex-direction:column;animation:pop 220ms var(-
   .rrow .ic i{background:currentColor}
   .rrow:active .ic{transform:scale(.92)}
   .rrow[aria-current="true"] .ic{background:var(--forest);color:var(--forest-ink)}
-  .rrow[aria-current="true"] .nm,.rrow:hover .nm{color:var(--green)}
-  .rrow .scrib path{stroke:var(--gold)}
+  .rrow[aria-current="true"] .nm{color:var(--green)}
+  .rrow .scrib{display:none}
+  .rrow.previewing .arr{opacity:.5}
   .rrow:focus-visible .nm{outline-color:var(--green)}
   .btn-sq{order:4;grid-column:1/-1;display:flex;justify-content:space-between;margin-top:1.1rem;padding-block:1rem;padding-inline:1.3rem 1.1rem;border-radius:.8rem;background:var(--forest);color:var(--forest-ink);font-size:1rem}
   .btn-sq:hover{background:var(--green)}
@@ -692,7 +697,7 @@ dialog.search[open]{display:flex;flex-direction:column;animation:pop 220ms var(-
   <section class="sec" id="boutique" aria-labelledby="vTitle">
     <div class="wrap visit">
       <div class="facts">
-        <h2 id="vTitle" data-t="vTitle"></h2>
+        <hgroup class="vhead"><p class="since num" data-t="vSince"></p><h2 id="vTitle" data-t="vTitle"></h2></hgroup>
         <dl>
           <dt data-t="addrL"></dt><dd data-t="addr"></dd>
           <dt data-t="phoneL"></dt><dd><a class="num" dir="ltr" href="tel:+212671512954">06 71 51 29 54</a> · <a class="num" dir="ltr" href="tel:+212523329572">05 23 32 95 72</a></dd>
@@ -812,10 +817,10 @@ import { createHeroMotion } from "./hero-motion.mjs";
       products: (n) => `${n} produit${n > 1 ? 's' : ''}`, more: (n) => `Afficher plus · ${n} restant${n > 1 ? 's' : ''}`, noneR: 'Aucun produit pour ce choix.',
       from: 'dès', ask: 'Prix sur demande', askShort: 'prix à confirmer', ownBrand: 'Produits El Baraka',
       aTitle: 'Une question sur un produit ?', aLede: 'Écrivez-nous sur WhatsApp, avec le nom du produit ou sa photo.', aCta: 'Écrire sur WhatsApp', waAsk: 'Bonjour, j’ai une question :',
-      vTitle: 'La boutique', addrL: 'Adresse', addr: '593 bd de Palestine, Mohammedia', phoneL: 'Téléphone', route: 'Itinéraire', writeWa: 'WhatsApp',
+      vTitle: 'La boutique', vSince: 'Depuis 1998', addrL: 'Adresse', addr: '593 bd de Palestine, Mohammedia', phoneL: 'Téléphone', route: 'Itinéraire', writeWa: 'WhatsApp',
       oTitle: 'Commander', o1: 'Choisissez', o1s: 'Ajoutez vos produits au panier.', o2: 'Envoyez', o2s: 'La commande part sur WhatsApp, déjà rédigée.', o3: 'On vous répond', o3s: 'La boutique vous répond sur WhatsApp pour la suite.',
       fTitle: 'Questions fréquentes', todo: 'Réponse à écrire dans l’éditeur.',
-      fAbout: 'Produits de la ruche, cosmétiques, produits naturels et compléments alimentaires.', fRay: 'Rayons', fVisit: 'Nous trouver', fContact: 'Nous joindre',
+      fAbout: 'Produits de la ruche, cosmétiques, produits naturels et compléments alimentaires. Herboristerie depuis 1998.', fRay: 'Rayons', fVisit: 'Nous trouver', fContact: 'Nous joindre',
       fine: 'Photos des produits de marque : sites des fabricants et revendeurs. Planches botaniques : F. E. Köhler, Medizinal-Pflanzen (1887), domaine public.',
       dTitle: 'Produit', size: 'Format', brand: 'Marque', related: 'Dans le même rayon', add: 'Ajouter au panier', addP: (p) => `Ajouter · ${p}`, seeCartLong: 'Voir le panier',
       cTitle: 'Votre commande', emptyH: 'Le panier est vide', empty: 'Ajoutez un produit pour commencer.',
@@ -849,10 +854,10 @@ import { createHeroMotion } from "./hero-motion.mjs";
       products: (n) => `${n} منتج`, more: (n) => `عرض المزيد · بقي ${n}`, noneR: 'لا توجد منتجات تطابق هذا الاختيار.',
       from: 'ابتداءً من', ask: 'السعر عند الطلب', askShort: 'السعر للتأكيد', ownBrand: 'منتجات البركة',
       aTitle: 'لديك سؤال عن منتج؟', aLede: 'راسلنا عبر واتساب باسم المنتج أو بصورته.', aCta: 'راسلنا عبر واتساب', waAsk: 'السلام عليكم، لدي سؤال:',
-      vTitle: 'المتجر', addrL: 'العنوان', addr: '593 شارع فلسطين، المحمدية', phoneL: 'الهاتف', route: 'الاتجاهات', writeWa: 'واتساب',
+      vTitle: 'المتجر', vSince: 'منذ 1998', addrL: 'العنوان', addr: '593 شارع فلسطين، المحمدية', phoneL: 'الهاتف', route: 'الاتجاهات', writeWa: 'واتساب',
       oTitle: 'كيف تطلب', o1: 'اختر', o1s: 'أضف المنتجات إلى السلة.', o2: 'أرسل', o2s: 'يُرسَل طلبك عبر واتساب في رسالة جاهزة.', o3: 'نردّ عليك', o3s: 'يردّ عليك المتجر عبر واتساب لإتمام باقي التفاصيل.',
       fTitle: 'أسئلة شائعة', todo: 'يجب كتابة الجواب في المحرر.',
-      fAbout: 'منتجات النحل ومستحضرات التجميل والمنتجات الطبيعية والمكملات الغذائية.', fRay: 'الأقسام', fVisit: 'العنوان', fContact: 'تواصل معنا',
+      fAbout: 'منتجات النحل ومستحضرات التجميل والمنتجات الطبيعية والمكملات الغذائية. متجر أعشاب منذ 1998.', fRay: 'الأقسام', fVisit: 'العنوان', fContact: 'تواصل معنا',
       fine: 'صور منتجات العلامات التجارية: من مواقع المصنّعين والبائعين. الرسوم النباتية: ف. إ. كولر، 1887، ملكية عامة.',
       dTitle: 'المنتج', size: 'الحجم', brand: 'العلامة التجارية', related: 'من القسم نفسه', add: 'أضف إلى السلة', addP: (p) => `أضف · ${p}`, seeCartLong: 'عرض السلة',
       cTitle: 'طلبك', emptyH: 'السلة فارغة', empty: 'أضف منتجًا لتبدأ.',

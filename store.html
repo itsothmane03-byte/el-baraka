@@ -49,6 +49,8 @@ h2{font-size:clamp(2rem,3.8vw,3.1rem);line-height:1.05}
 :lang(ar) h2{font-size:clamp(2.1rem,3.8vw,3.2rem);line-height:1.25}
 .lede{font-size:1.08rem;color:var(--muted);max-width:36em;margin:0}
 .sec{padding-block:clamp(4.5rem,9vw,8rem)}
+/* ordering, the shelf and the shop follow each other on the same paper: one gap between them, not two */
+#commander,#etageres{padding-bottom:0}
 .sec-head{display:flex;justify-content:space-between;align-items:flex-end;gap:1.2rem;flex-wrap:wrap;margin-bottom:clamp(1.6rem,3vw,2.4rem)}
 .sec-head p{margin:.6rem 0 0;color:var(--muted)}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:.55rem;border:0;cursor:pointer;text-decoration:none;border-radius:999px;padding:.85rem 1.35rem;font-weight:500;font-size:.95rem;line-height:1.2;transition:transform 160ms var(--ease),background-color 200ms ease}
@@ -229,18 +231,6 @@ h2{font-size:clamp(2rem,3.8vw,3.1rem);line-height:1.05}
 .chip small{color:var(--muted);margin-inline-start:.35rem;font-size:.78rem}
 .sr{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 
-/* brands */
-.brands{display:flex;flex-direction:column;gap:.6rem}
-.brandrow{all:unset;box-sizing:border-box;cursor:pointer;display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:1.2rem;background:var(--paper);border-radius:18px;padding:clamp(.9rem,2vw,1.2rem) clamp(1rem,2.4vw,1.8rem);transition:background-color 200ms ease}
-.brandrow:hover{background:#fff}
-.brandrow:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
-.brandrow h3{font-family:var(--f-fr)!important;font-weight:400!important;font-size:clamp(1.6rem,3vw,2.4rem);line-height:1.1}
-.brandrow p{margin:.2rem 0 0;color:var(--muted);font-size:.9rem}
-.brandrow .thumbs{display:flex;gap:.4rem}
-.brandrow .thumbs .tile{width:clamp(3.4rem,6vw,5rem);border-radius:10px;background:#fff}
-.brandrow .thumbs .tile.mark{background:#ece3cc}
-.brandrow .thumbs .tile.mark.own{background:var(--green)}
-.brandrow .thumbs .tile.mark img{inset:22%;width:56%;height:56%;mix-blend-mode:normal}
 
 /* instagram band */
 .band{background:var(--green-deep);color:var(--green-ink);padding-block:clamp(4rem,8vw,6.5rem);overflow:hidden}
@@ -299,7 +289,17 @@ h2{font-size:clamp(2rem,3.8vw,3.1rem);line-height:1.05}
 .product-name:hover{text-decoration:underline;text-underline-offset:3px}
 .filter-summary{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem 1rem;margin-top:.7rem;font-size:.88rem}
 .filter-summary[hidden]{display:none}
-.filters{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center}
+.filters{display:flex;gap:.5rem;align-items:center}
+.blabel{flex:none;font-size:.82rem;color:var(--muted);margin-inline-end:.15rem}
+/* the brand chips scroll sideways inside their own strip; the padding leaves room for the focus ring */
+.bchips{display:flex;gap:.4rem;flex:1;min-width:0;overflow-x:auto;scrollbar-width:none;padding:.3rem;margin:-.3rem}
+.bchips::-webkit-scrollbar{display:none}
+.bchip{flex:none;display:inline-flex;align-items:center;white-space:nowrap}
+.bchip[aria-pressed="true"],.bchip[aria-pressed="true"]:hover{background:var(--green);color:#fff;box-shadow:none}
+.bchip[aria-pressed="true"]:hover{background:var(--green-deep)}
+.bchip[aria-pressed="true"] small{color:var(--green-muted)}
+.bchip .x{width:.6rem;height:.6rem;margin-inline-start:.5rem}
+.filters #fSort,.filters .count{flex:none;white-space:nowrap}
 .filters select{appearance:none;background:var(--paper) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%231b281e' stroke-width='1.4'/%3E%3C/svg%3E") no-repeat right .85rem center;border:0;box-shadow:inset 0 0 0 1px var(--rule);border-radius:999px;padding:.5rem 2.1rem .5rem .95rem;font-size:.88rem;cursor:pointer}
 [dir=rtl] .filters select{background-position:left .85rem center;padding:.5rem .95rem .5rem 2.1rem}
 .filters .count{margin-inline-start:auto;font-size:.86rem;color:var(--muted)}
@@ -521,15 +521,12 @@ dialog.search[open]{display:flex;flex-direction:column;animation:pop 220ms var(-
   .shelf .row{grid-template-columns:repeat(3,minmax(0,1fr))}
   .shelf .row .it:nth-child(n+4){display:none}
   .grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:1.6rem .8rem}
-  .brandrow{gap:.8rem;padding:.75rem .9rem;border-radius:16px}
-  .brandrow h3{font-size:1.45rem}
-  .brandrow .thumbs .tile{width:2.75rem;border-radius:8px}
-  .brandrow .thumbs .tile:nth-child(n+4){display:none}
   footer .wrap{grid-template-columns:1fr}
   .arrows{display:none}
-  .filters{flex-wrap:nowrap}
-  .filters select{flex:1;min-width:0;font-size:.82rem;padding-inline-start:.75rem}
-  .filters .count{display:none}
+  /* phones: the brand chips get the whole row; sorting shrinks to a round button and its choice is named in the filter line */
+  .blabel,.filters .count{display:none}
+  .filters select,[dir=rtl] .filters select{width:2.75rem;height:2.5rem;padding:0;color:transparent;background:var(--paper) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='12'%3E%3Cpath d='M1 2h14M3.5 6h9M6 10h4' fill='none' stroke='%231b281e' stroke-width='1.4' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat center}
+  .filters select option{color:var(--ink)}
   .tabs{padding-bottom:.45rem}
   .tools{padding-block:.5rem}
   .meta .ctl:has(.qty){grid-column:1/-1;grid-row:5;justify-self:end;margin-top:.1rem}
@@ -621,7 +618,7 @@ dialog.search[open]{display:flex;flex-direction:column;animation:pop 220ms var(-
 <header class="top" id="top">
   <div class="wrap">
     <a class="brand" href="#accueil"><img src="img/logo-green.png" alt="Herboristerie El Baraka" width="1400" height="451"></a>
-    <nav class="nav" aria-label="Sections"><a href="#accueil"><span data-t="navRay"></span></a><a href="#marques"><span data-t="navBrands"></span></a><a href="#catalogue"><span data-t="navCat"></span></a><a href="#boutique"><span data-t="navShop"></span></a></nav>
+    <nav class="nav" aria-label="Sections"><a href="#accueil"><span data-t="navRay"></span></a><a href="#catalogue"><span data-t="navCat"></span></a><a href="#commander"><span data-t="navOrder"></span></a><a href="#boutique"><span data-t="navShop"></span></a></nav>
     <button class="menubtn" type="button" data-menu data-t-aria="tbRay"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg><span data-t="tbRay"></span></button>
     <form class="hsearch" id="hform" role="search"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="8.5" cy="8.5" r="6" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M13 13l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg><input id="hq" type="search" autocomplete="off" spellcheck="false"></form>
     <button class="iconbtn" type="button" data-search data-t-aria="searchShort"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="8.5" cy="8.5" r="6" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M13 13l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
@@ -639,7 +636,7 @@ dialog.search[open]{display:flex;flex-direction:column;animation:pop 220ms var(-
         <h1 class="kicker" id="hTitle" data-t="h1"></h1>
         <h2 data-t="rTitle"></h2>
         <ul class="rlist" id="rlist"></ul>
-        <div class="hero-acts"><a class="btn-sq" href="#catalogue"><span data-t="explore"></span><svg class="arr" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15M13.5 6.5 19 12l-5.5 5.5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a><a class="lnk" href="#marques"><span data-t="allBrands"></span><svg class="arr" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15M13.5 6.5 19 12l-5.5 5.5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div>
+        <div class="hero-acts"><a class="btn-sq" href="#catalogue"><span data-t="explore"></span><svg class="arr" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15M13.5 6.5 19 12l-5.5 5.5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a><a class="lnk" href="#commander"><span data-t="howOrder"></span><svg class="arr" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15M13.5 6.5 19 12l-5.5 5.5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div>
         <p class="where"><span data-t="ribAddr"></span><a class="num" dir="ltr" href="tel:+212671512954">06 71 51 29 54</a></p>
       </div>
       <figure class="plate" id="plate" aria-hidden="true">
@@ -652,34 +649,13 @@ dialog.search[open]{display:flex;flex-direction:column;animation:pop 220ms var(-
 
   <div class="marquee" aria-hidden="true"><div class="row" id="marquee"></div></div>
 
-  <section class="sec shelves" aria-labelledby="sTitle">
-    <div class="wrap">
-      <div class="intro">
-        <h2 id="sTitle" data-t="shelfTitle"></h2>
-        <p data-t="shelfLede"></p>
-        <div class="pager"><button class="prev" type="button" id="setPrev" data-t-aria="prev"><svg class="arr" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15M13.5 6.5 19 12l-5.5 5.5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button><span class="num" id="counter" aria-live="polite"></span><button class="next" type="button" id="setNext" data-t-aria="next"><svg class="arr" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15M13.5 6.5 19 12l-5.5 5.5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
-      </div>
-      <div class="collage" id="collage">
-        <div id="cards"><a class="note" href="#boutique"><span data-t="noteT"></span><svg class="arr" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15M13.5 6.5 19 12l-5.5 5.5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div>
-        <a class="choix" href="https://www.instagram.com/herboristerieelbaraka/" target="_blank" rel="noopener" data-t="igNote"></a>
-        <svg class="choix-arrow" viewBox="0 0 100 120" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M60 4 C 96 38, 84 96, 8 104"/><path pathLength="1" d="M22 93 L 8 104 L 23 114"/></svg>
-      </div>
-    </div>
-  </section>
-
-  <section class="sec" id="marques" aria-labelledby="bTitle" style="padding-top:0">
-    <div class="wrap">
-      <div class="sec-head"><div><h2 id="bTitle" data-t="bTitle"></h2><p data-t="bLede"></p></div></div>
-      <div class="brands" id="brands"></div>
-    </div>
-  </section>
-
   <section id="catalogue" aria-labelledby="cTitle" class="sec" style="padding-top:clamp(2.5rem,5vw,4rem);padding-bottom:clamp(3rem,6vw,5rem)">
     <div class="wrap"><div class="sec-head" style="margin-bottom:1.2rem"><h2 id="cTitle" data-t="catTitle"></h2></div></div>
     <div class="tools"><div class="wrap">
       <div class="tabs" role="tablist" id="tabs" aria-labelledby="cTitle"></div>
       <div class="filters">
-        <select id="fBrand" data-t-aria="brandF"></select>
+        <span class="blabel" data-t="brandF" aria-hidden="true"></span>
+        <div class="bchips" id="bchips" role="group" data-t-aria="brandF"></div>
         <select id="fSort" data-t-aria="sortF"></select>
         <span class="count num" id="fCount" aria-live="polite"></span>
       </div>
@@ -691,10 +667,42 @@ dialog.search[open]{display:flex;flex-direction:column;animation:pop 220ms var(-
     </div>
   </section>
 
-  <section class="ask" aria-labelledby="aTitle">
+  <section class="ask" id="question" aria-labelledby="aTitle">
     <div class="wrap">
       <div><h2 id="aTitle" data-t="aTitle"></h2><p data-t="aLede"></p></div>
       <a class="btn btn-ink" id="askWa" target="_blank" rel="noopener" href="#"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg><span data-t="aCta"></span></a>
+    </div>
+  </section>
+
+  <section class="sec" id="commander" aria-labelledby="oTitle">
+    <div class="wrap howto">
+      <div class="order">
+        <h2 id="oTitle" data-t="oTitle"></h2>
+        <ol class="steps"><li><b data-t="o1"></b><span data-t="o1s"></span></li><li><b data-t="o2"></b><span data-t="o2s"></span></li><li><b data-t="o3"></b><span data-t="o3s"></span></li></ol>
+        <dl class="terms">
+          <dt data-t="delivL"></dt><dd data-t="deliv"></dd>
+          <dt data-t="payL"></dt><dd data-t="pay"></dd>
+        </dl>
+      </div>
+      <section id="faqSec" aria-labelledby="fTitle">
+        <h2 id="fTitle" data-t="fTitle"></h2>
+        <div class="faq" id="faq"></div>
+      </section>
+    </div>
+  </section>
+
+  <section class="sec shelves" id="etageres" aria-labelledby="sTitle">
+    <div class="wrap">
+      <div class="intro">
+        <h2 id="sTitle" data-t="shelfTitle"></h2>
+        <p data-t="shelfLede"></p>
+        <div class="pager"><button class="prev" type="button" id="setPrev" data-t-aria="prev"><svg class="arr" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15M13.5 6.5 19 12l-5.5 5.5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button><span class="num" id="counter" aria-live="polite"></span><button class="next" type="button" id="setNext" data-t-aria="next"><svg class="arr" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15M13.5 6.5 19 12l-5.5 5.5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
+      </div>
+      <div class="collage" id="collage">
+        <div id="cards"><a class="note" href="#boutique"><span data-t="noteT"></span><svg class="arr" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15M13.5 6.5 19 12l-5.5 5.5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div>
+        <a class="choix" href="https://www.instagram.com/herboristerieelbaraka/" target="_blank" rel="noopener" data-t="igNote"></a>
+        <svg class="choix-arrow" viewBox="0 0 100 120" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M60 4 C 96 38, 84 96, 8 104"/><path pathLength="1" d="M22 93 L 8 104 L 23 114"/></svg>
+      </div>
     </div>
   </section>
 
@@ -714,23 +722,6 @@ dialog.search[open]{display:flex;flex-direction:column;animation:pop 220ms var(-
         </div>
       </div>
       <div class="map"><iframe title="Herboristerie El Baraka, Mohammedia" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=593+Boulevard+de+Palestine,+Mohammedia,+Maroc&amp;output=embed"></iframe></div>
-    </div>
-  </section>
-
-  <section class="sec" aria-labelledby="oTitle" style="padding-top:0">
-    <div class="wrap howto">
-      <div class="order">
-        <h2 id="oTitle" data-t="oTitle"></h2>
-        <ol class="steps"><li><b data-t="o1"></b><span data-t="o1s"></span></li><li><b data-t="o2"></b><span data-t="o2s"></span></li><li><b data-t="o3"></b><span data-t="o3s"></span></li></ol>
-        <dl class="terms">
-          <dt data-t="delivL"></dt><dd data-t="deliv"></dd>
-          <dt data-t="payL"></dt><dd data-t="pay"></dd>
-        </dl>
-      </div>
-      <section id="faqSec" aria-labelledby="fTitle">
-        <h2 id="fTitle" data-t="fTitle"></h2>
-        <div class="faq" id="faq"></div>
-      </section>
     </div>
   </section>
 </main>
@@ -781,7 +772,7 @@ dialog.search[open]{display:flex;flex-direction:column;animation:pop 220ms var(-
   <header><h2 id="mTitle" data-t="tbRay"></h2><button class="x" type="button" data-close data-t-aria="close"><svg viewBox="0 0 18 18" aria-hidden="true"><path d="M4 4l10 10M14 4 4 14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button></header>
   <div class="sc">
     <ul class="mlist" id="mlist"></ul>
-    <div class="mlinks"><a href="#marques" data-t="allBrands"></a><a href="#catalogue" data-t="navCat"></a><a href="#boutique" data-t="navShop"></a><a class="num" dir="ltr" href="tel:+212671512954">06 71 51 29 54</a></div>
+    <div class="mlinks"><a href="#catalogue" data-t="navCat"></a><a href="#commander" data-t="howOrder"></a><a href="#boutique" data-t="navShop"></a><a class="num" dir="ltr" href="tel:+212671512954">06 71 51 29 54</a></div>
   </div>
 </dialog>
 
@@ -805,7 +796,7 @@ import { createHeroMotion } from "./hero-motion.mjs";
   const T = {
     fr: {
       ribAddr: '593 bd de Palestine, Mohammedia',
-      navRay: 'Rayons', navBrands: 'Marques', navCat: 'Produits', navShop: 'La boutique', cart: 'Panier', cur: 'DH',
+      navRay: 'Rayons', navCat: 'Produits', navOrder: 'Commander', howOrder: 'Comment commander', navShop: 'La boutique', cart: 'Panier', cur: 'DH',
       searchShort: 'Rechercher', searchGo: 'Rechercher', searchPh: () => 'Rechercher un produit ou une marque', searchDlg: 'Rechercher un produit ou une marque',
       tbRay: 'Rayons',
       h1: 'Herboristerie El Baraka · Mohammedia', city: 'Mohammedia', goldOther: 'أعشاب البركة — المحمدية', explore: 'Explorer la boutique', mint: 'Menthe poivrée',
@@ -814,15 +805,14 @@ import { createHeroMotion } from "./hero-motion.mjs";
       addrLine: '593 bd de Palestine, Mohammedia',
       shelfNote: 'Sur nos étagères',
       rTitle: 'Nos rayons',
-      bTitle: 'Les marques', bLede: 'Les marques que vous trouvez à la boutique, et nos propres produits.',
       iTitle: 'Vus sur notre Instagram', iLede: 'Les produits présentés sur le compte de la boutique,',
-      catTitle: 'Tous les produits', all: 'Tout', allBrands: 'Toutes les marques', brandF: 'Marque', sortF: 'Trier',
+      catTitle: 'Tous les produits', all: 'Tout', brandF: 'Marques', sortF: 'Trier',
       sortDef: 'Ordre de la boutique', sortName: 'Nom, de A à Z', sortUp: 'Prix croissant', sortDown: 'Prix décroissant',
       products: (n) => `${n} produit${n > 1 ? 's' : ''}`, more: (n) => `Afficher plus · ${n} restant${n > 1 ? 's' : ''}`, noneR: 'Aucun produit pour ce choix.',
       from: 'dès', ask: 'Prix sur demande', askShort: 'prix à confirmer', ownBrand: 'Produits El Baraka',
       aTitle: 'Une question sur un produit ?', aLede: 'Écrivez-nous sur WhatsApp, avec le nom du produit ou sa photo.', aCta: 'Écrire sur WhatsApp', waAsk: 'Bonjour, j’ai une question :',
       vTitle: 'La boutique', vSince: 'Depuis 1998', addrL: 'Adresse', addr: '593 bd de Palestine, Mohammedia', phoneL: 'Téléphone', route: 'Itinéraire', writeWa: 'WhatsApp',
-      oTitle: 'Commander', o1: 'Choisissez', o1s: 'Ajoutez vos produits au panier.', o2: 'Envoyez', o2s: 'La commande part sur WhatsApp, déjà rédigée.', o3: 'On vous répond', o3s: 'La boutique vous répond sur WhatsApp pour la suite.',
+      oTitle: 'Commander', o1: 'Choisissez', o1s: 'Ajoutez vos produits au panier.', o2: 'Envoyez', o2s: 'La commande part sur WhatsApp, déjà rédigée.', o3: 'On vous répond', o3s: 'La boutique vous confirme la livraison et le paiement sur WhatsApp.',
       fTitle: 'Questions fréquentes', todo: 'Réponse à écrire dans l’éditeur.',
       fAbout: 'Produits de la ruche, cosmétiques, produits naturels et compléments alimentaires. Herboristerie depuis 1998.', fRay: 'Rayons', fVisit: 'Nous trouver', fContact: 'Nous joindre',
       fine: 'Photos des produits de marque : sites des fabricants et revendeurs. Planches botaniques : F. E. Köhler, Medizinal-Pflanzen (1887), domaine public.',
@@ -842,7 +832,7 @@ import { createHeroMotion } from "./hero-motion.mjs";
     },
     ar: {
       ribAddr: '593 شارع فلسطين، المحمدية',
-      navRay: 'الأقسام', navBrands: 'العلامات', navCat: 'المنتجات', navShop: 'المتجر', cart: 'السلة', cur: 'درهم',
+      navRay: 'الأقسام', navCat: 'المنتجات', navOrder: 'الطلب', howOrder: 'طريقة الطلب', navShop: 'المتجر', cart: 'السلة', cur: 'درهم',
       searchShort: 'بحث', searchGo: 'ابحث', searchPh: () => 'ابحث عن منتج أو علامة تجارية', searchDlg: 'ابحث عن منتج أو علامة تجارية',
       tbRay: 'الأقسام',
       h1: 'أعشاب البركة · المحمدية', city: 'المحمدية', goldOther: 'Herboristerie El Baraka — Mohammedia', explore: 'تصفّح المتجر', mint: 'النعناع الفلفلي',
@@ -851,15 +841,14 @@ import { createHeroMotion } from "./hero-motion.mjs";
       addrLine: '593 شارع فلسطين، المحمدية',
       shelfNote: 'من رفوف المتجر',
       rTitle: 'أقسامنا',
-      bTitle: 'العلامات التجارية', bLede: 'العلامات التجارية المتوفرة في المتجر، ومنتجاتنا الخاصة.',
       iTitle: 'من حسابنا على إنستغرام', iLede: 'منتجات عُرضت على حساب المتجر،',
-      catTitle: 'جميع المنتجات', all: 'الكل', allBrands: 'جميع العلامات', brandF: 'العلامة التجارية', sortF: 'الترتيب',
+      catTitle: 'جميع المنتجات', all: 'الكل', brandF: 'العلامات', sortF: 'الترتيب',
       sortDef: 'ترتيب المتجر', sortName: 'الاسم (أ-ي)', sortUp: 'السعر تصاعديًا', sortDown: 'السعر تنازليًا',
       products: (n) => `${n} منتج`, more: (n) => `عرض المزيد · بقي ${n}`, noneR: 'لا توجد منتجات تطابق هذا الاختيار.',
       from: 'ابتداءً من', ask: 'السعر عند الطلب', askShort: 'السعر للتأكيد', ownBrand: 'منتجات البركة',
       aTitle: 'لديك سؤال عن منتج؟', aLede: 'راسلنا عبر واتساب باسم المنتج أو بصورته.', aCta: 'راسلنا عبر واتساب', waAsk: 'السلام عليكم، لدي سؤال:',
       vTitle: 'المتجر', vSince: 'منذ 1998', addrL: 'العنوان', addr: '593 شارع فلسطين، المحمدية', phoneL: 'الهاتف', route: 'الاتجاهات', writeWa: 'واتساب',
-      oTitle: 'كيف تطلب', o1: 'اختر', o1s: 'أضف المنتجات إلى السلة.', o2: 'أرسل', o2s: 'يُرسَل طلبك عبر واتساب في رسالة جاهزة.', o3: 'نردّ عليك', o3s: 'يردّ عليك المتجر عبر واتساب لإتمام باقي التفاصيل.',
+      oTitle: 'كيف تطلب', o1: 'اختر', o1s: 'أضف المنتجات إلى السلة.', o2: 'أرسل', o2s: 'يُرسَل طلبك عبر واتساب في رسالة جاهزة.', o3: 'نردّ عليك', o3s: 'يؤكّد لك المتجر تفاصيل التوصيل والدفع عبر واتساب.',
       fTitle: 'أسئلة شائعة', todo: 'يجب كتابة الجواب في المحرر.',
       fAbout: 'منتجات النحل ومستحضرات التجميل والمنتجات الطبيعية والمكملات الغذائية. متجر أعشاب منذ 1998.', fRay: 'الأقسام', fVisit: 'العنوان', fContact: 'تواصل معنا',
       fine: 'صور منتجات العلامات التجارية: من مواقع المصنّعين والبائعين. الرسوم النباتية: ف. إ. كولر، 1887، ملكية عامة.',
@@ -900,6 +889,9 @@ import { createHeroMotion } from "./hero-motion.mjs";
   const cn = (c) => lang === 'ar' ? c.ar : c.fr;
   const bn = (b) => b === 'El Baraka' ? t('ownBrand') : b;
   const minPrice = (p) => { const k = p.sizes.map(s => s[1]).filter(known); return k.length ? Math.min(...k) : Infinity; };
+  const PRICED = PRODUCTS.some(p => minPrice(p) !== Infinity);
+  const SORTS = [['def', 'sortDef'], ['name', 'sortName'], ['up', 'sortUp'], ['down', 'sortDown']];
+  const CHIP_X = '<svg class="x" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 2l6 6M8 2 2 8" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>';
   const priceHtml = (p) => { const m = minPrice(p); if (m === Infinity) return `<small>${t('ask')}</small>`; return p.sizes.length > 1 ? `<small>${t('from')} </small>${money(m)}` : money(p.sizes[0][1]); };
   const fmtLine = (p) => p.sizes.length > 1 ? p.sizes.map(s => s[0]).join(' · ') : p.sizes[0][0];
   const dirOf = (s) => /[؀-ۿ]/.test(s) ? 'rtl' : 'ltr';
@@ -963,7 +955,7 @@ import { createHeroMotion } from "./hero-motion.mjs";
   }
   const heroMotion = createHeroMotion({ hero: $('hero'), plate: $('plate'), list: $('rlist'), categories: CATS });
   // scroll spy: the top bar draws the line under the section on screen
-  const SPY = [['accueil', 'hero'], ['marques', 'marques'], ['catalogue', 'catalogue'], ['boutique', 'boutique']];
+  const SPY = [['accueil', 'hero'], ['catalogue', 'catalogue'], ['catalogue', 'question'], ['commander', 'commander'], ['boutique', 'etageres'], ['boutique', 'boutique']];
   document.querySelectorAll('.nav a').forEach(a => { a.insertAdjacentHTML('beforeend', SCRIB); });
   let spyRaf = 0;
   function spy(){
@@ -971,7 +963,6 @@ import { createHeroMotion } from "./hero-motion.mjs";
     const y = innerHeight * .4;
     let on = '';
     SPY.forEach(([href, id]) => { const el = $(id); if (!el) return; const r = el.getBoundingClientRect(); if (r.top <= y && r.bottom > y) on = href; });
-    if (!on && $('faqSec') && $('faqSec').getBoundingClientRect().top <= y) on = 'boutique';
     document.querySelectorAll('.nav a').forEach(a => a.setAttribute('aria-current', a.getAttribute('href') === '#' + on ? 'true' : 'false'));
   }
   addEventListener('scroll', () => { if (!spyRaf) spyRaf = requestAnimationFrame(spy); }, { passive: true });
@@ -1053,21 +1044,10 @@ import { createHeroMotion } from "./hero-motion.mjs";
   });
   try { history.scrollRestoration = 'manual'; } catch (e) { /* not supported */ }
   // an old saved or autocompleted address ending in a section (#boutique…) opens the shop at the top, not at that section
-  if (/^#(accueil|marques|catalogue|boutique|faqSec)$/.test(location.hash)) {
+  if (/^#(accueil|marques|catalogue|question|commander|etageres|boutique|faqSec)$/.test(location.hash)) {
     try { history.replaceState(null, '', location.pathname + location.search); } catch (e) { /* history unavailable */ }
     const toTop = () => scrollTo(0, 0);
     toTop(); addEventListener('load', toTop, { once: true });
-  }
-  function renderBrands(){
-    $('brands').innerHTML = BRANDS.map(b => `<button class="brandrow" type="button" data-brand="${esc(b.id)}"><span><h3 dir="ltr">${esc(b.id)}</h3><p>${t('products', b.list.length)}${b.id === 'El Baraka' ? ` · ${t('ownBrand')}` : ''}</p></span>
-      <span class="thumbs">${brandThumbs(b)}</span></button>`).join('');
-  }
-  /* a brand shows its product photos; one without photos yet shows the shop mark instead of unreadable name squares */
-  function brandThumbs(b){
-    const withPhoto = b.list.filter(p => p.photo).slice(0, 4);
-    if (withPhoto.length) return withPhoto.map(p => tile(p, true)).join('');
-    const own = b.id === 'El Baraka';
-    return `<span class="tile mark${own ? ' own' : ''}"><img src="img/mark-${own ? 'cream' : 'green'}.png" alt="" loading="lazy" decoding="async"></span>`;
   }
   function renderMarquee(){
     const one = CATS.map(c => `<span><b>${esc(c.ar)}</b><em>${esc(c.fr)}</em></span>`).join('');
@@ -1087,8 +1067,17 @@ import { createHeroMotion } from "./hero-motion.mjs";
     const available = PRODUCTS.filter(p => !brandF || p.brand === brandF);
     const tabs = [['all', t('all'), available.length]].concat(CATS.map(c => [c.id, cn(c), available.filter(p => p.cat === c.id).length]));
     $('tabs').innerHTML = tabs.map(([id, label, n]) => `<button class="tab" role="tab" type="button" data-tab="${esc(id)}" aria-selected="${view === id}">${esc(label)}<small class="num">${n}</small></button>`).join('');
-    $('fBrand').innerHTML = `<option value="">${t('allBrands')}</option>` + BRANDS.map(b => `<option value="${esc(b.id)}"${b.id === brandF ? ' selected' : ''}>${esc(b.id)}</option>`).join('');
-    $('fSort').innerHTML = [['def', 'sortDef'], ['name', 'sortName'], ['up', 'sortUp'], ['down', 'sortDown']].map(([v, k]) => `<option value="${v}"${v === sort ? ' selected' : ''}>${t(k)}</option>`).join('');
+    // sorting by price is offered only once the shop has given prices
+    $('fSort').innerHTML = SORTS.filter(([v]) => PRICED || (v !== 'up' && v !== 'down')).map(([v, k]) => `<option value="${v}"${v === sort ? ' selected' : ''}>${t(k)}</option>`).join('');
+    renderBrandChips();
+  }
+  /* brands are a filter of the product list: one chip each, counted for the rayon on screen; the chosen chip is pressed again to remove it */
+  function renderBrandChips(){
+    const inView = PRODUCTS.filter(p => view === 'all' || p.cat === view);
+    const chips = BRANDS.map(b => [b.id, inView.filter(p => p.brand === b.id).length]).filter(([id, n]) => n || id === brandF);
+    $('bchips').innerHTML = chips.map(([id, n]) => `<button class="chip bchip" type="button" data-bf="${esc(id)}" aria-pressed="${id === brandF}"><bdi>${esc(bn(id))}</bdi><small class="num">${n}</small>${id === brandF ? CHIP_X : ''}</button>`).join('');
+    const on = $('bchips').querySelector('[aria-pressed="true"]');
+    if (on) { const strip = $('bchips'), a = on.getBoundingClientRect(), s = strip.getBoundingClientRect(); strip.scrollBy({ left: (a.left + a.width / 2) - (s.left + s.width / 2), behavior: 'auto' }); }
   }
   function renderGrid(animate){
     const list = filtered(), part = list.slice(0, shown);
@@ -1096,7 +1085,7 @@ import { createHeroMotion } from "./hero-motion.mjs";
     if (!animate) $('grid').querySelectorAll('.card').forEach(c => { c.style.animation = 'none'; });
     $('fCount').textContent = t('products', list.length);
     $('filterSummary').hidden = view === 'all' && !brandF && sort === 'def';
-    $('activeFilters').textContent = [view !== 'all' ? cn(CAT[view]) : '', brandF ? bn(brandF) : '', t('products', list.length)].filter(Boolean).join(' · ');
+    $('activeFilters').textContent = [view !== 'all' ? cn(CAT[view]) : '', brandF ? bn(brandF) : '', sort !== 'def' ? t(SORTS.find(([v]) => v === sort)[1]) : '', t('products', list.length)].filter(Boolean).join(' · ');
     const left = list.length - part.length;
     $('more').hidden = left <= 0;
     $('more').textContent = t('more', left);
@@ -1108,6 +1097,7 @@ import { createHeroMotion } from "./hero-motion.mjs";
     // centre the active tab by scrolling the tab strip sideways only; scrollIntoView would also move the page and fight the scroll below
     const active = document.querySelector(`.tab[data-tab="${CSS.escape(id)}"]`);
     if (active) { const strip = $('tabs'), a = active.getBoundingClientRect(), s = strip.getBoundingClientRect(); strip.scrollBy({ left: (a.left + a.width / 2) - (s.left + s.width / 2), behavior: reduce ? 'auto' : 'smooth' }); }
+    renderBrandChips();
     renderGrid(true);
     try { history.replaceState(null, '', id === 'all' ? location.pathname + location.search : '#rayon-' + id); } catch (e) { /* history unavailable */ }
     if (scroll) $('catalogue').scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' });
@@ -1116,7 +1106,6 @@ import { createHeroMotion } from "./hero-motion.mjs";
     brandF = b; view = 'all'; shown = PAGE; renderTabs(); renderGrid(true);
     if (scroll) $('catalogue').scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' });
   }
-  $('fBrand').onchange = (e) => { brandF = e.target.value; shown = PAGE; renderTabs(); renderGrid(true); };
   $('fSort').onchange = (e) => { sort = e.target.value; shown = PAGE; renderGrid(true); };
   $('clearFilters').onclick = () => { brandF = ''; sort = 'def'; renderTabs(); selectView('all', false); $('tabs').querySelector('button').focus({ preventScroll: true }); };
   $('more').onclick = () => { const before = shown; shown += PAGE * 2; renderGrid(false); const el = $('grid').children[before]; if (el) { const b = el.querySelector('button'); if (b) b.focus({ preventScroll: true }); } };
@@ -1237,6 +1226,13 @@ import { createHeroMotion } from "./hero-motion.mjs";
       if (c.classList.contains('rrow') && !fine.matches && !heroMotion.reduced && newPreview) { rayonNavigation = setTimeout(go, 260); } else go();
       return;
     }
+    const bf = e.target.closest('[data-bf]');
+    if (bf) {
+      const id = bf.dataset.bf;
+      brandF = id === brandF ? '' : id; shown = PAGE; renderTabs(); renderGrid(true);
+      const again = $('bchips').querySelector(`[data-bf="${CSS.escape(id)}"]`); if (again) again.focus({ preventScroll: true });
+      return;
+    }
     const br = e.target.closest('[data-brand]'); if (br) { leaveSheets(() => selectBrand(br.dataset.brand, true)); return; }
     const tb = e.target.closest('[data-tab]'); if (tb) { selectView(tb.dataset.tab, false); return; }
     const o = e.target.closest('[data-open]'); if (o) { if ($('search').open) $('search').close(); openDetail(o.dataset.open); return; }
@@ -1301,7 +1297,7 @@ import { createHeroMotion } from "./hero-motion.mjs";
     const q = norm($('q').value.trim());
     if (!q) {
       $('sres').innerHTML = `<div class="sgroup">${t('sRay')}</div><div class="scats">${CATS.map(c => `<button class="chip" type="button" data-cat="${esc(c.id)}">${esc(cn(c))}</button>`).join('')}</div>
-        <div class="sgroup">${t('sBrand')}</div><div class="scats">${BRANDS.map(b => `<button class="chip" type="button" data-brand="${esc(b.id)}">${esc(b.id)}<small>${b.list.length}</small></button>`).join('')}</div>`;
+        <div class="sgroup">${t('sBrand')}</div><div class="scats">${BRANDS.map(b => `<button class="chip" type="button" data-brand="${esc(b.id)}">${esc(bn(b.id))}<small>${b.list.length}</small></button>`).join('')}</div>`;
       return;
     }
     const words = q.split(/\s+/);
@@ -1397,7 +1393,7 @@ import { createHeroMotion } from "./hero-motion.mjs";
   }
 
   function render(){
-    applyStatic(); renderRList(); showSet(setIdx, false); renderMarquee(); renderBrands(); renderTabs(); renderGrid(false); renderFaq(); renderCart();
+    applyStatic(); renderRList(); showSet(setIdx, false); renderMarquee(); renderTabs(); renderGrid(false); renderFaq(); renderCart();
     if ($('detail').open) renderDetail();
     if ($('search').open) runSearch();
   }
